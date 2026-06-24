@@ -102,7 +102,7 @@ export default function GamificationSystem({
       id: 'RWD-01',
       title: '7-Day Metro Transit Voucher',
       cost: 150,
-      icon: <Bus className="w-5 h-5 text-blue-500" />,
+      icon: <Bus className="w-5 h-5 text-[#8EB69B]" />,
       description: 'Free unlimited transit across all municipal metro and electric tramway networks.',
       category: 'transit',
       isClaimed: false
@@ -146,7 +146,7 @@ export default function GamificationSystem({
       id: 'BDG-01',
       title: 'Civic Pioneer',
       description: 'Submit your first community issue report.',
-      icon: <Compass className="w-5 h-5 text-blue-500" />,
+      icon: <Compass className="w-5 h-5 text-[#8EB69B]" />,
       category: 'reporting',
       unlocked: true,
       progressCurrent: 1,
@@ -314,24 +314,27 @@ export default function GamificationSystem({
       av5: 'bg-gradient-to-tr from-purple-500 to-violet-600 text-white',
       av6: 'bg-gradient-to-tr from-cyan-500 to-blue-600 text-white',
     };
-    return colors[avatarId] || 'bg-blue-600 text-white';
+    return colors[avatarId] || 'bg-[#8EB69B] text-white';
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#020617] text-slate-900 dark:text-slate-50 pt-24 pb-16 transition-colors duration-300">
+    <div className="min-h-screen bg-[#DAF1DE]/30 dark:bg-[#051F20] text-slate-900 dark:text-slate-50 pt-32 pb-16 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         
         {/* Page Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-slate-200 dark:border-slate-800">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-slate-200 dark:border-[#163832]">
           <div className="space-y-1.5">
             <button 
-              onClick={onBack}
-              className="inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-blue-600 transition-colors font-mono cursor-pointer"
+              onClick={() => {
+                window.scrollTo({ top: 0, behavior: 'instant' });
+                onBack();
+              }}
+              className="inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-[#8EB69B] transition-colors font-mono cursor-pointer"
             >
               ← RETURN TO LANDING
             </button>
             <h1 className="text-3.5xl sm:text-4xl font-extrabold tracking-tight text-slate-950 dark:text-white flex flex-wrap items-center gap-3">
-              <Award className="w-9 h-9 text-blue-600 animate-pulse" />
+              <Award className="w-9 h-9 text-[#8EB69B] animate-pulse" />
               Civic <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-emerald-500 to-indigo-600">Rewards & Achievements</span>
             </h1>
             <p className="text-slate-500 dark:text-slate-400 text-sm max-w-2xl">
@@ -346,7 +349,7 @@ export default function GamificationSystem({
               disabled={dailyClaimed}
               className={`px-5 py-3 rounded-2xl text-xs font-mono font-black flex items-center justify-center gap-2 cursor-pointer shadow-md transition-all duration-300 transform active:scale-98 border ${
                 dailyClaimed 
-                  ? 'bg-slate-100 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-400 cursor-not-allowed' 
+                  ? 'bg-slate-100 dark:bg-[#0B2B26] border-slate-200 dark:border-[#163832] text-slate-400 cursor-not-allowed' 
                   : 'bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white border-transparent'
               }`}
             >
@@ -365,7 +368,7 @@ export default function GamificationSystem({
               exit={{ opacity: 0, y: -40, scale: 0.9 }}
               className="fixed bottom-10 right-10 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3 z-50 border border-amber-400/20 font-sans"
             >
-              <div className="bg-white/20 p-2 rounded-xl">
+              <div className="bg-[#DAF1DE]/20/20 p-2 rounded-xl">
                 <Sparkles className="w-5 h-5 text-white animate-spin" />
               </div>
               <div>
@@ -383,8 +386,8 @@ export default function GamificationSystem({
           <div className="lg:col-span-7 space-y-6">
             
             {/* User Level Profile Card */}
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 relative overflow-hidden shadow-xs">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-bl-full pointer-events-none" />
+            <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] rounded-3xl p-6 relative overflow-hidden shadow-xs">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#8EB69B]/5 rounded-bl-full pointer-events-none" />
               
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
                 <div className="flex items-center gap-4">
@@ -398,7 +401,7 @@ export default function GamificationSystem({
                       <h2 className="text-lg font-black text-slate-950 dark:text-white">
                         {currentUser ? currentUser.fullName : 'Guest Explorer (Demo Profile)'}
                       </h2>
-                      <span className="text-[10px] bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/15 px-2 py-0.5 rounded-full font-mono uppercase font-extrabold">
+                      <span className="text-[10px] bg-[#8EB69B]/10 text-[#8EB69B] dark:text-blue-400 border border-[#235347]/15 px-2 py-0.5 rounded-full font-mono uppercase font-extrabold">
                         LEVEL {currentLevel}
                       </span>
                     </div>
@@ -410,7 +413,7 @@ export default function GamificationSystem({
 
                 <div className="text-left sm:text-right">
                   <p className="text-[9px] font-mono text-slate-400 uppercase tracking-wider font-bold">Total Reputation Balance</p>
-                  <p className="text-3xl font-black text-blue-600 dark:text-blue-400 tracking-tight">{localPoints} PTS</p>
+                  <p className="text-3xl font-black text-[#8EB69B] dark:text-blue-400 tracking-tight">{localPoints} PTS</p>
                 </div>
               </div>
 
@@ -420,7 +423,7 @@ export default function GamificationSystem({
                   <span className="text-slate-400">XP Progress to Level {currentLevel + 1}</span>
                   <span className="font-extrabold text-slate-800 dark:text-slate-200">{currentLevelProgress} / 100 PTS</span>
                 </div>
-                <div className="w-full bg-slate-100 dark:bg-slate-950 h-3 rounded-full overflow-hidden border border-slate-250 dark:border-slate-850">
+                <div className="w-full bg-slate-100 dark:bg-[#051F20] h-3 rounded-full overflow-hidden border border-slate-250 dark:border-slate-850">
                   <motion.div 
                     initial={{ width: 0 }}
                     animate={{ width: `${currentLevelProgress}%` }}
@@ -440,7 +443,7 @@ export default function GamificationSystem({
                   </div>
                   <button 
                     onClick={() => onNavigateToAuth?.('signup')}
-                    className="text-xs text-blue-500 hover:text-blue-600 font-bold shrink-0 cursor-pointer flex items-center gap-0.5 font-mono"
+                    className="text-xs text-[#8EB69B] hover:text-[#8EB69B] font-bold shrink-0 cursor-pointer flex items-center gap-0.5 font-mono"
                   >
                     SIGN UP <ArrowRight className="w-3 h-3" />
                   </button>
@@ -449,7 +452,7 @@ export default function GamificationSystem({
             </div>
 
             {/* Badge Collection Section */}
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-xs space-y-4">
+            <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] rounded-3xl p-6 shadow-xs space-y-4">
               <div>
                 <h3 className="text-base font-extrabold text-slate-950 dark:text-white flex items-center gap-2">
                   <Award className="w-5 h-5 text-indigo-500" />
@@ -467,15 +470,15 @@ export default function GamificationSystem({
                       key={badge.id}
                       className={`p-4 rounded-2xl border transition-all relative overflow-hidden flex items-start gap-3.5 ${
                         badge.unlocked 
-                          ? 'bg-slate-50/50 dark:bg-slate-950/20 border-slate-200 dark:border-slate-800' 
-                          : 'bg-slate-100/40 dark:bg-slate-950/5 border-slate-200/50 dark:border-slate-850/60 opacity-60'
+                          ? 'bg-[#DAF1DE]/30/50 dark:bg-[#051F20]/20 border-slate-200 dark:border-[#163832]' 
+                          : 'bg-slate-100/40 dark:bg-[#051F20]/5 border-slate-200/50 dark:border-slate-850/60 opacity-60'
                       }`}
                     >
                       {/* Badge Icon circle with glow */}
                       <div className={`w-11 h-11 rounded-xl shrink-0 flex items-center justify-center relative border shadow-xs ${
                         badge.unlocked 
-                          ? 'bg-white dark:bg-slate-900 border-indigo-500/30 text-indigo-500' 
-                          : 'bg-slate-100 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-400'
+                          ? 'bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border-indigo-500/30 text-indigo-500' 
+                          : 'bg-slate-100 dark:bg-[#051F20] border-slate-200 dark:border-[#163832] text-slate-400'
                       }`}>
                         {badge.icon}
                         {badge.unlocked && (
@@ -501,7 +504,7 @@ export default function GamificationSystem({
                               <span>Progress</span>
                               <span>{badge.progressCurrent} / {badge.progressTarget}</span>
                             </div>
-                            <div className="w-full bg-slate-200 dark:bg-slate-900 h-1 rounded-full overflow-hidden">
+                            <div className="w-full bg-slate-200 dark:bg-[#0B2B26] h-1 rounded-full overflow-hidden">
                               <div 
                                 className="bg-indigo-500 h-full rounded-full" 
                                 style={{ width: `${(badge.progressCurrent / badge.progressTarget) * 100}%` }}
@@ -536,7 +539,7 @@ export default function GamificationSystem({
                   {INITIAL_CHAMPIONS.map((champ, idx) => (
                     <div 
                       key={idx}
-                      className="bg-white/5 border border-white/10 p-4 rounded-2xl space-y-3 hover:border-white/20 transition-all text-xs"
+                      className="bg-[#DAF1DE]/20/5 border border-white/10 p-4 rounded-2xl space-y-3 hover:border-white/20 transition-all text-xs"
                     >
                       <div className="flex items-center justify-between pb-2 border-b border-white/5">
                         <span className="text-[10px] font-mono text-indigo-400 font-bold uppercase">{champ.month}</span>
@@ -568,19 +571,19 @@ export default function GamificationSystem({
           <div className="lg:col-span-5 space-y-6">
             
             {/* Live Leaderboard */}
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-xs space-y-5">
+            <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] rounded-3xl p-6 shadow-xs space-y-5">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100 dark:border-slate-850">
                 <h3 className="text-sm font-extrabold text-slate-950 dark:text-white font-mono uppercase tracking-wider flex items-center gap-1.5">
-                  <Users className="w-4 h-4 text-blue-500" />
+                  <Users className="w-4 h-4 text-[#8EB69B]" />
                   Live Hero Leaderboard
                 </h3>
 
-                <div className="flex rounded-lg bg-slate-100 dark:bg-slate-950 p-1 border border-slate-200 dark:border-slate-850">
+                <div className="flex rounded-lg bg-slate-100 dark:bg-[#051F20] p-1 border border-slate-200 dark:border-slate-850">
                   <button
                     onClick={() => setLeaderboardTab('monthly')}
                     className={`px-2.5 py-1 text-[10px] font-mono font-bold rounded-md transition-all cursor-pointer ${
                       leaderboardTab === 'monthly'
-                        ? 'bg-white dark:bg-slate-900 text-blue-600 dark:text-blue-400 shadow-xs'
+                        ? 'bg-[#DAF1DE]/20 dark:bg-[#0B2B26] text-[#8EB69B] dark:text-blue-400 shadow-xs'
                         : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'
                     }`}
                   >
@@ -590,7 +593,7 @@ export default function GamificationSystem({
                     onClick={() => setLeaderboardTab('lifetime')}
                     className={`px-2.5 py-1 text-[10px] font-mono font-bold rounded-md transition-all cursor-pointer ${
                       leaderboardTab === 'lifetime'
-                        ? 'bg-white dark:bg-slate-900 text-blue-600 dark:text-blue-400 shadow-xs'
+                        ? 'bg-[#DAF1DE]/20 dark:bg-[#0B2B26] text-[#8EB69B] dark:text-blue-400 shadow-xs'
                         : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'
                     }`}
                   >
@@ -609,8 +612,8 @@ export default function GamificationSystem({
                       key={item.id}
                       className={`p-3 rounded-2xl border transition-all flex items-center justify-between gap-3 ${
                         isCurrentUser 
-                          ? 'bg-blue-500/10 border-blue-500/55 shadow-xs' 
-                          : 'bg-slate-50 dark:bg-slate-950/30 border-slate-200 dark:border-slate-850'
+                          ? 'bg-[#8EB69B]/10 border-[#235347]/55 shadow-xs' 
+                          : 'bg-[#DAF1DE]/30 dark:bg-[#051F20]/30 border-slate-200 dark:border-slate-850'
                       }`}
                     >
                       <div className="flex items-center gap-3 min-w-0">
@@ -632,7 +635,7 @@ export default function GamificationSystem({
                           <h4 className="text-xs font-extrabold text-slate-950 dark:text-white truncate flex items-center gap-1">
                             {item.name}
                             {isCurrentUser && (
-                              <span className="text-[8px] bg-blue-500 text-white font-mono uppercase px-1.5 py-0.2 rounded">YOU</span>
+                              <span className="text-[8px] bg-[#8EB69B] text-white font-mono uppercase px-1.5 py-0.2 rounded">YOU</span>
                             )}
                           </h4>
                           <p className="text-[9px] font-mono text-slate-400 truncate">
@@ -651,7 +654,7 @@ export default function GamificationSystem({
             </div>
 
             {/* Volunteer Rewards Market */}
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-xs space-y-4">
+            <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] rounded-3xl p-6 shadow-xs space-y-4">
               <div className="space-y-1">
                 <h3 className="text-sm font-extrabold text-slate-950 dark:text-white font-mono uppercase tracking-wider flex items-center gap-1.5">
                   <Gift className="w-4 h-4 text-emerald-500" />
@@ -681,12 +684,12 @@ export default function GamificationSystem({
                       className={`p-4 rounded-2xl border transition-all space-y-3 relative overflow-hidden ${
                         reward.isClaimed 
                           ? 'bg-emerald-500/5 border-emerald-500/30' 
-                          : 'bg-slate-50 dark:bg-slate-950/30 border-slate-200 dark:border-slate-850'
+                          : 'bg-[#DAF1DE]/30 dark:bg-[#051F20]/30 border-slate-200 dark:border-slate-850'
                       }`}
                     >
                       <div className="flex items-start justify-between">
                         <div className="flex items-center gap-2.5">
-                          <div className="w-9 h-9 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center shrink-0">
+                          <div className="w-9 h-9 rounded-xl bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] flex items-center justify-center shrink-0">
                             {reward.icon}
                           </div>
                           <div>
@@ -745,7 +748,7 @@ export default function GamificationSystem({
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 w-full max-w-md shadow-2xl space-y-5 text-center relative"
+                className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] rounded-3xl p-6 w-full max-w-md shadow-2xl space-y-5 text-center relative"
               >
                 <div className="absolute top-4 right-4">
                   <button 
@@ -768,14 +771,14 @@ export default function GamificationSystem({
                   </p>
                 </div>
 
-                <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-dashed border-emerald-500/30 font-mono">
+                <div className="bg-[#DAF1DE]/30 dark:bg-[#051F20] p-4 rounded-2xl border border-dashed border-emerald-500/30 font-mono">
                   <p className="text-[10px] text-slate-400 uppercase tracking-wider mb-1">PROMOTION VOUCHER CODE</p>
                   <p className="text-lg font-black text-emerald-500 tracking-wider select-all">{redeemedReward.couponCode}</p>
                 </div>
 
                 <button
                   onClick={() => setRedeemedReward(null)}
-                  className="w-full bg-slate-950 dark:bg-white text-white dark:text-slate-950 py-3 rounded-xl font-black text-xs font-mono transition-colors cursor-pointer uppercase tracking-wider"
+                  className="w-full bg-slate-950 dark:bg-[#DAF1DE]/20 text-white dark:text-slate-950 py-3 rounded-xl font-black text-xs font-mono transition-colors cursor-pointer uppercase tracking-wider"
                 >
                   Return to Dashboard
                 </button>

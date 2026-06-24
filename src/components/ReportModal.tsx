@@ -183,12 +183,12 @@ export default function ReportModal({ isOpen, onClose, onSubmit }: ReportModalPr
         initial={{ scale: 0.95, opacity: 0, y: 15 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
         exit={{ scale: 0.95, opacity: 0, y: 15 }}
-        className="relative w-full max-w-3xl max-h-[90vh] bg-white dark:bg-slate-950 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-y-auto z-10"
+        className="relative w-full max-w-3xl max-h-[90vh] bg-[#DAF1DE]/20 dark:bg-[#051F20] rounded-2xl shadow-2xl border border-slate-200 dark:border-[#163832] overflow-y-auto z-10"
       >
         {/* Header */}
-        <div className="sticky top-0 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 px-6 py-4 flex items-center justify-between z-10">
+        <div className="sticky top-0 bg-[#DAF1DE]/20 dark:bg-[#051F20] border-b border-slate-200 dark:border-[#163832] px-6 py-4 flex items-center justify-between z-10">
           <div className="flex items-center gap-2">
-            <div className="p-1.5 bg-blue-100 dark:bg-blue-900/30 text-blue-600 rounded-lg">
+            <div className="p-1.5 bg-blue-100 dark:bg-blue-900/30 text-[#8EB69B] rounded-lg">
               <Sparkles className="w-5 h-5" />
             </div>
             <h2 className="font-display font-bold text-xl text-slate-950 dark:text-white">
@@ -206,8 +206,8 @@ export default function ReportModal({ isOpen, onClose, onSubmit }: ReportModalPr
         {/* Content */}
         <div className="p-6 space-y-6">
           {/* Quick presets for hackathon review */}
-          <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-4 border border-slate-200/60 dark:border-slate-800/60">
-            <div className="flex items-center gap-2 text-xs font-semibold text-blue-600 dark:text-blue-400 mb-2">
+          <div className="bg-[#DAF1DE]/30 dark:bg-[#0B2B26]/50 rounded-xl p-4 border border-slate-200/60 dark:border-[#163832]/60">
+            <div className="flex items-center gap-2 text-xs font-semibold text-[#8EB69B] dark:text-blue-400 mb-2">
               <Cpu className="w-4 h-4 animate-spin" />
               HACKATHON QUICK-FILL PRESETS (Click to test the AI analyzer)
             </div>
@@ -217,7 +217,7 @@ export default function ReportModal({ isOpen, onClose, onSubmit }: ReportModalPr
                   key={idx}
                   type="button"
                   onClick={() => applyPreset(preset)}
-                  className="text-left px-3 py-2 text-xs bg-white dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-slate-700/50 border border-slate-200 dark:border-slate-700 rounded-lg transition-all line-clamp-2 shadow-xs cursor-pointer hover:border-blue-400"
+                  className="text-left px-3 py-2 text-xs bg-[#DAF1DE]/20 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-slate-700/50 border border-slate-200 dark:border-slate-700 rounded-lg transition-all line-clamp-2 shadow-xs cursor-pointer hover:border-blue-400"
                 >
                   <span className="font-medium text-slate-900 dark:text-white block truncate">{preset.title}</span>
                   <span className="text-slate-400 dark:text-slate-400 text-[10px] block truncate">{preset.description}</span>
@@ -241,7 +241,7 @@ export default function ReportModal({ isOpen, onClose, onSubmit }: ReportModalPr
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     placeholder="Short descriptive name of the issue"
-                    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 focus:border-blue-500 dark:focus:border-blue-500 rounded-xl text-slate-900 dark:text-white text-sm outline-none transition-all"
+                    className="w-full px-4 py-2.5 bg-[#DAF1DE]/30 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] focus:border-[#235347] dark:focus:border-[#235347] rounded-xl text-slate-900 dark:text-white text-sm outline-none transition-all"
                   />
                 </div>
 
@@ -255,7 +255,7 @@ export default function ReportModal({ isOpen, onClose, onSubmit }: ReportModalPr
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     placeholder="Explain the incident, current impact on the community, and exact details..."
-                    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 focus:border-blue-500 dark:focus:border-blue-500 rounded-xl text-slate-900 dark:text-white text-sm outline-none transition-all resize-none"
+                    className="w-full px-4 py-2.5 bg-[#DAF1DE]/30 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] focus:border-[#235347] dark:focus:border-[#235347] rounded-xl text-slate-900 dark:text-white text-sm outline-none transition-all resize-none"
                   />
                 </div>
 
@@ -271,7 +271,7 @@ export default function ReportModal({ isOpen, onClose, onSubmit }: ReportModalPr
                       value={locationName}
                       onChange={(e) => setLocationName(e.target.value)}
                       placeholder="e.g. 15th Ave and Pine St corner"
-                      className="w-full pl-9 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 focus:border-blue-500 dark:focus:border-blue-500 rounded-xl text-slate-900 dark:text-white text-sm outline-none transition-all"
+                      className="w-full pl-9 pr-4 py-2.5 bg-[#DAF1DE]/30 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] focus:border-[#235347] dark:focus:border-[#235347] rounded-xl text-slate-900 dark:text-white text-sm outline-none transition-all"
                     />
                   </div>
                 </div>
@@ -289,7 +289,7 @@ export default function ReportModal({ isOpen, onClose, onSubmit }: ReportModalPr
                     className={`border-2 border-dashed rounded-xl p-6 flex flex-col items-center justify-center transition-all cursor-pointer ${
                       fileAdded 
                         ? 'border-emerald-500 bg-emerald-50/20 dark:bg-emerald-950/10' 
-                        : 'border-slate-300 dark:border-slate-800 hover:border-blue-500 dark:hover:border-blue-600 bg-slate-50/50 dark:bg-slate-900/30'
+                        : 'border-slate-300 dark:border-[#163832] hover:border-[#235347] dark:hover:border-[#235347] bg-[#DAF1DE]/30/50 dark:bg-[#0B2B26]/30'
                     }`}
                     onClick={() => {
                       setFileAdded(true);
@@ -326,7 +326,7 @@ export default function ReportModal({ isOpen, onClose, onSubmit }: ReportModalPr
                       type="button"
                       disabled={!title || !description || !locationName}
                       onClick={startAiAnalysis}
-                      className="w-full py-3 px-4 bg-slate-900 hover:bg-slate-800 dark:bg-blue-600 dark:hover:bg-blue-500 text-white font-sans text-sm font-medium rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-blue-500/10 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                      className="w-full py-3 px-4 bg-slate-900 hover:bg-slate-800 dark:bg-[#8EB69B] dark:hover:bg-[#8EB69B] text-white font-sans text-sm font-medium rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-[#051F20]/30 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                     >
                       <Sparkles className="w-4 h-4 animate-bounce" />
                       Verify Report with Community AI
@@ -336,7 +336,7 @@ export default function ReportModal({ isOpen, onClose, onSubmit }: ReportModalPr
                   {/* AI analyzing loading bar */}
                   {isAnalyzing && (
                     <div className="bg-blue-50/80 dark:bg-blue-950/20 border border-blue-200/50 dark:border-blue-800/40 rounded-xl p-4 space-y-3">
-                      <div className="flex items-center justify-between text-xs font-semibold text-blue-600 dark:text-blue-400">
+                      <div className="flex items-center justify-between text-xs font-semibold text-[#8EB69B] dark:text-blue-400">
                         <span className="flex items-center gap-2">
                           <Cpu className="w-4 h-4 animate-spin" />
                           RUNNING NEURAL MODEL
@@ -345,7 +345,7 @@ export default function ReportModal({ isOpen, onClose, onSubmit }: ReportModalPr
                       </div>
                       <div className="h-1.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
                         <motion.div 
-                          className="h-full bg-blue-600 dark:bg-blue-400"
+                          className="h-full bg-[#8EB69B] dark:bg-blue-400"
                           initial={{ width: '0%' }}
                           animate={{ 
                             width: `${analysisStep * 25}%` 
@@ -389,7 +389,7 @@ export default function ReportModal({ isOpen, onClose, onSubmit }: ReportModalPr
                           <span className="text-[10px] text-slate-400 dark:text-slate-500 block uppercase font-semibold">Suggested Severity</span>
                           <span className={`font-bold capitalize ${
                             aiAnalysisResult.suggestedPriority === 'critical' ? 'text-red-500' :
-                            aiAnalysisResult.suggestedPriority === 'high' ? 'text-amber-500' : 'text-blue-500'
+                            aiAnalysisResult.suggestedPriority === 'high' ? 'text-amber-500' : 'text-[#8EB69B]'
                           }`}>{aiAnalysisResult.suggestedPriority}</span>
                         </div>
                         <div>
@@ -399,7 +399,7 @@ export default function ReportModal({ isOpen, onClose, onSubmit }: ReportModalPr
                         <div>
                           <span className="text-[10px] text-slate-400 dark:text-slate-500 block uppercase font-semibold">Nearby Certified Volunteers</span>
                           <span className="font-semibold text-slate-900 dark:text-white flex items-center gap-1">
-                            <Users className="w-3.5 h-3.5 text-blue-500" />
+                            <Users className="w-3.5 h-3.5 text-[#8EB69B]" />
                             {aiAnalysisResult.volunteersAvailable} ready
                           </span>
                         </div>
@@ -411,7 +411,7 @@ export default function ReportModal({ isOpen, onClose, onSubmit }: ReportModalPr
             </div>
 
             {/* Bottom Actions */}
-            <div className="border-t border-slate-200 dark:border-slate-800 pt-5 flex items-center justify-between">
+            <div className="border-t border-slate-200 dark:border-[#163832] pt-5 flex items-center justify-between">
               <div className="text-xs text-slate-400 dark:text-slate-500 flex items-center gap-1">
                 <HelpCircle className="w-3.5 h-3.5" />
                 Community Hero uses decentralized AI validators to filter fake items.
@@ -420,14 +420,14 @@ export default function ReportModal({ isOpen, onClose, onSubmit }: ReportModalPr
                 <button
                   type="button"
                   onClick={onClose}
-                  className="px-4 py-2.5 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-xl font-sans text-sm font-medium transition-colors"
+                  className="px-4 py-2.5 border border-slate-200 dark:border-[#163832] text-slate-700 dark:text-slate-300 hover:bg-[#DAF1DE]/30 dark:hover:bg-slate-900 rounded-xl font-sans text-sm font-medium transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={!title || !description || !locationName || isAnalyzing}
-                  className="px-5 py-2.5 bg-[#2563EB] hover:bg-blue-700 text-white font-sans text-sm font-bold rounded-xl flex items-center gap-2 shadow-lg shadow-blue-500/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all cursor-pointer"
+                  className="px-5 py-2.5 bg-[#163832] hover:bg-[#0B2B26] text-white font-sans text-sm font-bold rounded-xl flex items-center gap-2 shadow-lg shadow-[#051F20]/30 disabled:opacity-50 disabled:cursor-not-allowed transition-all cursor-pointer"
                 >
                   <Send className="w-4 h-4" />
                   Submit Official Incident

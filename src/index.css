@@ -51,8 +51,8 @@ html {
 /* Smooth transition for light and dark theme switches */
 body, 
 #root,
-.bg-white,
-.bg-slate-50,
+.bg-[#DAF1DE]/20,
+.bg-[#DAF1DE]/30,
 .dark\:bg-slate-900,
 .dark\:bg-slate-950,
 .text-slate-950,

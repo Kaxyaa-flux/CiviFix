@@ -25,16 +25,16 @@ export default function Impact() {
   return (
     <section 
       id="impact" 
-      className="relative py-24 bg-white dark:bg-[#020617] border-b border-slate-200 dark:border-slate-900 transition-colors duration-300"
+      className="relative py-24 bg-[#DAF1DE]/20 dark:bg-[#051F20] border-b border-slate-200 dark:border-slate-900 transition-colors duration-300"
     >
       {/* Ambient backgrounds */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-blue-500/5 dark:bg-blue-500/10 rounded-full blur-3xl -z-10"></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-[#8EB69B]/5 dark:bg-[#8EB69B]/10 rounded-full blur-3xl -z-10"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         
         {/* Title Block */}
         <div className="text-center space-y-4">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-50 dark:bg-[#2563EB]/10 border border-blue-200/50 dark:border-[#2563EB]/20 rounded-full text-xs font-semibold text-blue-700 dark:text-[#2563EB] font-mono uppercase">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-50 dark:bg-[#163832]/10 border border-blue-200/50 dark:border-[#235347]/20 rounded-full text-xs font-semibold text-blue-700 dark:text-[#8EB69B] font-mono uppercase">
             <TrendingUp className="w-3.5 h-3.5" />
             Quantifiable Citizen Impact
           </div>
@@ -50,7 +50,7 @@ export default function Impact() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           
           {/* Comparison speed meters */}
-          <div className="bg-slate-50 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800/60 p-8 rounded-3xl space-y-8 shadow-xs">
+          <div className="bg-[#DAF1DE]/30 dark:bg-[#0B2B26]/60 border border-slate-200/60 dark:border-[#163832]/60 p-8 rounded-3xl space-y-8 shadow-xs">
             <h3 className="font-display font-bold text-xl text-slate-950 dark:text-white">
               Resolution Speed Breakdown
             </h3>
@@ -97,10 +97,10 @@ export default function Impact() {
           </div>
 
           {/* Interactive Savings Calculator */}
-          <div className="bg-slate-50 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800/60 p-8 rounded-3xl space-y-6 shadow-xs">
+          <div className="bg-[#DAF1DE]/30 dark:bg-[#0B2B26]/60 border border-slate-200/60 dark:border-[#163832]/60 p-8 rounded-3xl space-y-6 shadow-xs">
             <div className="space-y-2">
               <h3 className="font-display font-bold text-xl text-slate-950 dark:text-white flex items-center gap-1.5">
-                <Sparkles className="w-5 h-5 text-blue-500" />
+                <Sparkles className="w-5 h-5 text-[#8EB69B]" />
                 Municipal Savings Calculator
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400 font-sans">
@@ -112,7 +112,7 @@ export default function Impact() {
             <div className="space-y-2.5">
               <div className="flex justify-between text-xs font-bold font-mono">
                 <span className="text-slate-400 dark:text-slate-500">POPULATION SIZE</span>
-                <span className="text-blue-600 dark:text-blue-400">{population.toLocaleString()} Citizens</span>
+                <span className="text-[#8EB69B] dark:text-blue-400">{population.toLocaleString()} Citizens</span>
               </div>
               <input
                 type="range"
@@ -129,7 +129,7 @@ export default function Impact() {
             <div className="grid grid-cols-2 gap-4">
               
               {/* Dollar savings */}
-              <div className="p-4 bg-white dark:bg-slate-950 border border-slate-100 dark:border-slate-850 rounded-2xl">
+              <div className="p-4 bg-[#DAF1DE]/20 dark:bg-[#051F20] border border-slate-100 dark:border-slate-850 rounded-2xl">
                 <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500 block uppercase font-bold">Estimated Taxpayer Saving</span>
                 <div className="flex items-center gap-0.5 mt-1">
                   <DollarSign className="w-4 h-4 text-emerald-500" />
@@ -141,10 +141,10 @@ export default function Impact() {
               </div>
 
               {/* Hours Saved */}
-              <div className="p-4 bg-white dark:bg-slate-950 border border-slate-100 dark:border-slate-850 rounded-2xl">
+              <div className="p-4 bg-[#DAF1DE]/20 dark:bg-[#051F20] border border-slate-100 dark:border-slate-850 rounded-2xl">
                 <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500 block uppercase font-bold">Operational Hours Saved</span>
                 <div className="flex items-center gap-1 mt-1">
-                  <Hourglass className="w-4 h-4 text-blue-500" />
+                  <Hourglass className="w-4 h-4 text-[#8EB69B]" />
                   <span className="text-xl font-display font-extrabold text-slate-950 dark:text-white">
                     {savings.staffHoursSaved}
                   </span>
@@ -154,7 +154,7 @@ export default function Impact() {
 
             </div>
 
-            <div className="text-center font-mono text-xs text-[#2563EB] bg-blue-50 dark:bg-[#2563EB]/10 py-2.5 rounded-xl border border-blue-100/50 dark:border-blue-800/60 font-bold">
+            <div className="text-center font-mono text-xs text-[#8EB69B] bg-blue-50 dark:bg-[#163832]/10 py-2.5 rounded-xl border border-blue-100/50 dark:border-blue-800/60 font-bold">
               ⚡ Resolution Speed Up Index: {savings.speedFactor}
             </div>
 

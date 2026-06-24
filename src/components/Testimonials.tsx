@@ -32,7 +32,7 @@ export default function Testimonials() {
   return (
     <section 
       id="testimonials" 
-      className="relative py-24 bg-slate-50 dark:bg-[#020617] border-b border-slate-200 dark:border-slate-900 transition-colors duration-300"
+      className="relative py-24 bg-[#DAF1DE]/30 dark:bg-[#051F20] border-b border-slate-200 dark:border-slate-900 transition-colors duration-300"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         
@@ -59,10 +59,10 @@ export default function Testimonials() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.4, delay: idx * 0.1 }}
-              className="p-8 bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/60 rounded-3xl relative flex flex-col justify-between shadow-xs hover:shadow-lg transition-all duration-300"
+              className="p-8 bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200/60 dark:border-[#163832]/60 rounded-3xl relative flex flex-col justify-between shadow-xs hover:shadow-lg transition-all duration-300"
             >
               {/* Quote Decorator icon */}
-              <Quote className="absolute top-6 right-6 w-12 h-12 text-blue-500/10 dark:text-blue-400/5 select-none" />
+              <Quote className="absolute top-6 right-6 w-12 h-12 text-[#8EB69B]/10 dark:text-blue-400/5 select-none" />
 
               <div className="space-y-4">
                 {/* Rating */}
@@ -79,8 +79,8 @@ export default function Testimonials() {
               </div>
 
               {/* Author Info */}
-              <div className="mt-6 pt-6 border-t border-slate-100 dark:border-slate-800/60 flex items-center gap-3">
-                <span className="text-3xl bg-slate-100 dark:bg-slate-950 p-2.5 rounded-2xl">
+              <div className="mt-6 pt-6 border-t border-slate-100 dark:border-[#163832]/60 flex items-center gap-3">
+                <span className="text-3xl bg-slate-100 dark:bg-[#051F20] p-2.5 rounded-2xl">
                   {testimonial.avatar}
                 </span>
                 <div>

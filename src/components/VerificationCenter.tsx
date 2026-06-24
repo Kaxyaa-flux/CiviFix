@@ -288,7 +288,7 @@ export default function VerificationCenter({ onBack, onVerifyGameAction, onFlagG
   // Helper to render media mockup icons & canvas based on category
   const renderMediaMockup = (placeholder: string) => {
     let titleStr = "INCIDENT PHOTO EVIDENCE";
-    let colorText = "text-blue-500";
+    let colorText = "text-[#8EB69B]";
     let svgGraphic = null;
 
     if (placeholder === 'water_hydrant_spurt') {
@@ -393,7 +393,7 @@ export default function VerificationCenter({ onBack, onVerifyGameAction, onFlagG
 
         {/* Forensic metadata sidebar overlay */}
         <div className="absolute top-3 left-3 bg-slate-900/90 border border-slate-800/80 px-2.5 py-1.5 rounded text-[9px] font-mono text-slate-400 space-y-0.5 pointer-events-none max-w-xs z-10">
-          <p className="font-bold text-slate-300">INCIDENT ID: <span className="text-[#2563EB]">{activeIssue.id}</span></p>
+          <p className="font-bold text-slate-300">INCIDENT ID: <span className="text-[#8EB69B]">{activeIssue.id}</span></p>
           <p>CAMERA: SONY IMX586-MOBILE</p>
           <p>ISO: 100 | APERTURE: f/1.8</p>
           <p>GPS SYNC: 100% MATCHED</p>
@@ -420,7 +420,7 @@ export default function VerificationCenter({ onBack, onVerifyGameAction, onFlagG
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#020617] text-slate-900 dark:text-slate-50 pt-24 pb-16 transition-colors duration-300">
+    <div className="min-h-screen bg-[#DAF1DE]/30 dark:bg-[#051F20] text-slate-900 dark:text-slate-50 pt-32 pb-16 transition-colors duration-300">
       
       {/* Floating score toast points */}
       <AnimatePresence>
@@ -443,14 +443,17 @@ export default function VerificationCenter({ onBack, onVerifyGameAction, onFlagG
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="space-y-1">
             <button 
-              onClick={onBack}
-              className="inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-[#2563EB] transition-colors font-mono cursor-pointer"
+              onClick={() => {
+                window.scrollTo({ top: 0, behavior: 'instant' });
+                onBack();
+              }}
+              className="inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-[#8EB69B] transition-colors font-mono cursor-pointer"
             >
               ← RETURN TO LANDING
             </button>
             <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-950 dark:text-white flex items-center gap-2">
-              <ShieldCheck className="w-8 h-8 text-[#2563EB] animate-pulse" />
-              AI Verification <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] to-[#10B981]">Center</span>
+              <ShieldCheck className="w-8 h-8 text-[#8EB69B] animate-pulse" />
+              AI Verification <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8EB69B] to-[#10B981]">Center</span>
             </h1>
             <p className="text-slate-500 dark:text-slate-400 text-sm max-w-xl">
               Audit reported incidents using dual peer voting and multi-tiered server-side neural analysis. Prevent duplicates, capture fake reports, and ensure fast municipal routing.
@@ -458,15 +461,15 @@ export default function VerificationCenter({ onBack, onVerifyGameAction, onFlagG
           </div>
 
           {/* User Score Gauge */}
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-2xl shadow-xs flex items-center gap-3 shrink-0">
-            <div className="w-10 h-10 rounded-full bg-blue-50 dark:bg-[#2563EB]/15 flex items-center justify-center text-[#2563EB]">
+          <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] p-4 rounded-2xl shadow-xs flex items-center gap-3 shrink-0">
+            <div className="w-10 h-10 rounded-full bg-blue-50 dark:bg-[#163832]/15 flex items-center justify-center text-[#8EB69B]">
               <Trophy className="w-5 h-5" />
             </div>
             <div>
               <p className="text-[10px] text-slate-400 dark:text-slate-500 font-mono uppercase font-bold">Your Hero Rank</p>
               <p className="text-sm font-bold text-slate-850 dark:text-white flex items-center gap-2">
                 Level 4 Auditor
-                <span className="text-xs bg-[#2563EB] text-white px-2 py-0.5 rounded-md font-mono">
+                <span className="text-xs bg-[#163832] text-white px-2 py-0.5 rounded-md font-mono">
                   {userScore} pts
                 </span>
               </p>
@@ -477,8 +480,8 @@ export default function VerificationCenter({ onBack, onVerifyGameAction, onFlagG
         {/* 1. Statistics Cards Display */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-2xl shadow-xs relative overflow-hidden">
-            <div className="absolute right-4 top-4 text-blue-500/10">
+          <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] p-4 rounded-2xl shadow-xs relative overflow-hidden">
+            <div className="absolute right-4 top-4 text-[#8EB69B]/10">
               <Eye className="w-12 h-12" />
             </div>
             <p className="text-xs text-slate-400 dark:text-slate-500 font-mono uppercase font-bold">Total Audited</p>
@@ -489,7 +492,7 @@ export default function VerificationCenter({ onBack, onVerifyGameAction, onFlagG
             </div>
           </div>
 
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-2xl shadow-xs relative overflow-hidden">
+          <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] p-4 rounded-2xl shadow-xs relative overflow-hidden">
             <div className="absolute right-4 top-4 text-[#10B981]/10">
               <BarChart3 className="w-12 h-12" />
             </div>
@@ -500,7 +503,7 @@ export default function VerificationCenter({ onBack, onVerifyGameAction, onFlagG
             </div>
           </div>
 
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-2xl shadow-xs relative overflow-hidden">
+          <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] p-4 rounded-2xl shadow-xs relative overflow-hidden">
             <div className="absolute right-4 top-4 text-red-500/10">
               <ShieldAlert className="w-12 h-12" />
             </div>
@@ -511,7 +514,7 @@ export default function VerificationCenter({ onBack, onVerifyGameAction, onFlagG
             </div>
           </div>
 
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-2xl shadow-xs relative overflow-hidden">
+          <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] p-4 rounded-2xl shadow-xs relative overflow-hidden">
             <div className="absolute right-4 top-4 text-amber-500/10">
               <Users className="w-12 h-12" />
             </div>
@@ -528,11 +531,11 @@ export default function VerificationCenter({ onBack, onVerifyGameAction, onFlagG
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* LEFT PANEL: Pending Issues Sidebar List (Col-span 4) */}
-          <div className="lg:col-span-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-xs space-y-4">
+          <div className="lg:col-span-4 bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] rounded-3xl p-5 shadow-xs space-y-4">
             
             <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-850">
-              <span className="text-xs font-bold text-[#2563EB] font-mono uppercase tracking-wider flex items-center gap-1.5">
-                <Clock className="w-4 h-4 text-[#2563EB]" />
+              <span className="text-xs font-bold text-[#8EB69B] font-mono uppercase tracking-wider flex items-center gap-1.5">
+                <Clock className="w-4 h-4 text-[#8EB69B]" />
                 PENDING INCIDENTS QUEUE
               </span>
               <span className="text-[10px] bg-blue-50 dark:bg-slate-800 text-slate-500 dark:text-slate-400 px-2 py-0.5 rounded font-mono">
@@ -556,8 +559,8 @@ export default function VerificationCenter({ onBack, onVerifyGameAction, onFlagG
                     }}
                     className={`w-full text-left p-3.5 rounded-2xl border transition-all flex flex-col gap-2 relative cursor-pointer group ${
                       isSelected
-                        ? 'bg-[#2563EB]/5 border-[#2563EB] dark:bg-[#2563EB]/10'
-                        : 'bg-slate-50 dark:bg-slate-950/40 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
+                        ? 'bg-[#163832]/5 border-[#235347] dark:bg-[#163832]/10'
+                        : 'bg-[#DAF1DE]/30 dark:bg-[#051F20]/40 border-slate-200 dark:border-[#163832] hover:border-slate-300 dark:hover:border-slate-700'
                     }`}
                   >
                     {/* Priority badge & category name */}
@@ -571,7 +574,7 @@ export default function VerificationCenter({ onBack, onVerifyGameAction, onFlagG
                           ? 'bg-red-500/10 text-red-500 border border-red-500/20'
                           : issue.priority === 'high'
                             ? 'bg-amber-500/10 text-amber-500 border border-amber-500/20'
-                            : 'bg-slate-500/10 text-slate-500 border border-slate-500/20'
+                            : 'bg-[#DAF1DE]/300/10 text-slate-500 border border-slate-500/20'
                       }`}>
                         {issue.priority}
                       </span>
@@ -579,8 +582,8 @@ export default function VerificationCenter({ onBack, onVerifyGameAction, onFlagG
 
                     {/* Title and date */}
                     <div>
-                      <h4 className={`text-xs font-extrabold line-clamp-1 group-hover:text-[#2563EB] transition-colors ${
-                        isSelected ? 'text-[#2563EB] dark:text-[#2563EB]' : 'text-slate-800 dark:text-slate-200'
+                      <h4 className={`text-xs font-extrabold line-clamp-1 group-hover:text-[#8EB69B] transition-colors ${
+                        isSelected ? 'text-[#8EB69B] dark:text-[#8EB69B]' : 'text-slate-800 dark:text-slate-200'
                       }`}>
                         {issue.title}
                       </h4>
@@ -590,7 +593,7 @@ export default function VerificationCenter({ onBack, onVerifyGameAction, onFlagG
                     </div>
 
                     {/* Dynamic state markers */}
-                    <div className="flex items-center justify-between pt-1 border-t border-slate-200/50 dark:border-slate-800/80 text-[10px] font-mono text-slate-400">
+                    <div className="flex items-center justify-between pt-1 border-t border-slate-200/50 dark:border-[#163832]/80 text-[10px] font-mono text-slate-400">
                       <span className="flex items-center gap-1">
                         <MapPin className="w-3 h-3 text-rose-500" />
                         {issue.locationName.split(',')[0]}
@@ -622,8 +625,8 @@ export default function VerificationCenter({ onBack, onVerifyGameAction, onFlagG
             </div>
 
             {/* AI Warning guidelines banner */}
-            <div className="bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800/80 p-3.5 rounded-2xl flex gap-3 text-xs text-slate-500 dark:text-slate-400 leading-normal">
-              <Shield className="w-6 h-6 text-[#2563EB] shrink-0 mt-0.5" />
+            <div className="bg-[#DAF1DE]/30 dark:bg-[#051F20]/40 border border-slate-200 dark:border-[#163832]/80 p-3.5 rounded-2xl flex gap-3 text-xs text-slate-500 dark:text-slate-400 leading-normal">
+              <Shield className="w-6 h-6 text-[#8EB69B] shrink-0 mt-0.5" />
               <div>
                 <span className="font-bold text-slate-750 dark:text-slate-300">Auditing Standards:</span>
                 <p className="text-[11px] mt-0.5 text-slate-400">Validate claims using visual evidence and municipal grid overlaps. Do not verify duplicate entries.</p>
@@ -633,12 +636,12 @@ export default function VerificationCenter({ onBack, onVerifyGameAction, onFlagG
           </div>
 
           {/* RIGHT PANEL: Active Incident Workspace (Col-span 8) */}
-          <div className="lg:col-span-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-xs space-y-6">
+          <div className="lg:col-span-8 bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] rounded-3xl p-6 shadow-xs space-y-6">
             
             {/* Active Workspace Header details */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-850">
               <div className="space-y-0.5">
-                <span className="text-[10px] font-bold text-[#2563EB] font-mono uppercase">
+                <span className="text-[10px] font-bold text-[#8EB69B] font-mono uppercase">
                   ACTIVE AUDIT SCAN {activeIssue.id}
                 </span>
                 <h2 className="text-xl font-bold text-slate-950 dark:text-white">
@@ -666,10 +669,10 @@ export default function VerificationCenter({ onBack, onVerifyGameAction, onFlagG
                 {renderMediaMockup(activeIssue.mediaPlaceholder)}
 
                 {/* Issue details textual summary */}
-                <div className="space-y-3 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 p-4 rounded-2xl">
+                <div className="space-y-3 bg-[#DAF1DE]/30 dark:bg-[#051F20]/40 border border-slate-200 dark:border-[#163832] p-4 rounded-2xl">
                   <div className="flex items-center justify-between text-xs font-mono text-slate-400">
                     <span className="flex items-center gap-1">
-                      <Clock className="w-3.5 h-3.5 text-blue-500" />
+                      <Clock className="w-3.5 h-3.5 text-[#8EB69B]" />
                       Reported {activeIssue.reportedAt}
                     </span>
                     <span>By @{activeIssue.reporterName}</span>
@@ -696,13 +699,13 @@ export default function VerificationCenter({ onBack, onVerifyGameAction, onFlagG
               <div className="md:col-span-6 space-y-4 flex flex-col justify-between">
                 
                 {/* 1. Deep AI Scan Workspace Panel */}
-                <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 space-y-4 flex-1">
+                <div className="p-4 rounded-2xl bg-[#DAF1DE]/30 dark:bg-[#051F20]/40 border border-slate-200 dark:border-[#163832] space-y-4 flex-1">
                   
                   {isScanning ? (
                     <div className="py-16 text-center space-y-4 flex flex-col items-center justify-center">
                       <div className="relative">
-                        <div className="w-16 h-16 rounded-full border-2 border-blue-500/20 border-t-blue-500 animate-spin"></div>
-                        <Sparkles className="w-6 h-6 text-blue-500 absolute inset-0 m-auto animate-pulse" />
+                        <div className="w-16 h-16 rounded-full border-2 border-[#235347]/20 border-t-blue-500 animate-spin"></div>
+                        <Sparkles className="w-6 h-6 text-[#8EB69B] absolute inset-0 m-auto animate-pulse" />
                       </div>
                       <div className="space-y-1">
                         <p className="text-sm font-extrabold text-slate-800 dark:text-slate-200">Running AI Deep Forensic Audit...</p>
@@ -722,14 +725,14 @@ export default function VerificationCenter({ onBack, onVerifyGameAction, onFlagG
                       </div>
 
                       {/* Interactive Analytical Tabs selector */}
-                      <div className="grid grid-cols-4 gap-1 p-1 bg-slate-100 dark:bg-slate-900 rounded-xl border border-slate-250 dark:border-slate-800">
+                      <div className="grid grid-cols-4 gap-1 p-1 bg-slate-100 dark:bg-[#0B2B26] rounded-xl border border-slate-250 dark:border-[#163832]">
                         {(['details', 'duplicates', 'authenticity', 'fraud'] as const).map((tab) => (
                           <button
                             key={tab}
                             onClick={() => setActiveTab(tab)}
                             className={`py-1.5 text-[10px] uppercase font-bold tracking-tight rounded-lg cursor-pointer transition-all ${
                               activeTab === tab
-                                ? 'bg-[#2563EB] text-white'
+                                ? 'bg-[#163832] text-white'
                                 : 'text-slate-500 hover:text-slate-800 dark:hover:text-white'
                             }`}
                           >
@@ -799,11 +802,11 @@ export default function VerificationCenter({ onBack, onVerifyGameAction, onFlagG
                                 <span className="text-[9px] text-slate-500 font-mono">DUPLICATE AUDIT</span>
                                 <p className="text-xs font-extrabold text-slate-200">{activeScan.duplicateStatus}</p>
                               </div>
-                              <span className="text-xs font-mono font-bold text-[#2563EB]">
+                              <span className="text-xs font-mono font-bold text-[#8EB69B]">
                                 Similarity: {activeScan.duplicateSimilarity}%
                               </span>
                             </div>
-                            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-sans bg-slate-100 dark:bg-slate-900/60 p-3 rounded-xl border border-slate-200 dark:border-slate-800">
+                            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-sans bg-slate-100 dark:bg-[#0B2B26]/60 p-3 rounded-xl border border-slate-200 dark:border-[#163832]">
                               {activeScan.duplicateReasoning}
                             </p>
                           </motion.div>
@@ -825,7 +828,7 @@ export default function VerificationCenter({ onBack, onVerifyGameAction, onFlagG
                                 Score: {activeScan.authenticityScore}%
                               </span>
                             </div>
-                            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-sans bg-slate-100 dark:bg-slate-900/60 p-3 rounded-xl border border-slate-200 dark:border-slate-800">
+                            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-sans bg-slate-100 dark:bg-[#0B2B26]/60 p-3 rounded-xl border border-slate-200 dark:border-[#163832]">
                               {activeScan.authenticityDetails}
                             </p>
                           </motion.div>
@@ -847,7 +850,7 @@ export default function VerificationCenter({ onBack, onVerifyGameAction, onFlagG
                                 Fraud Prob: {activeScan.fraudProbability}%
                               </span>
                             </div>
-                            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-sans bg-slate-100 dark:bg-slate-900/60 p-3 rounded-xl border border-slate-200 dark:border-slate-800">
+                            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-sans bg-slate-100 dark:bg-[#0B2B26]/60 p-3 rounded-xl border border-slate-200 dark:border-[#163832]">
                               {activeScan.fraudDetails}
                             </p>
                           </motion.div>
@@ -857,7 +860,7 @@ export default function VerificationCenter({ onBack, onVerifyGameAction, onFlagG
                     </div>
                   ) : (
                     <div className="py-12 text-center text-slate-400 space-y-3 h-full flex flex-col justify-center items-center">
-                      <div className="w-12 h-12 rounded-full border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-400 dark:text-slate-500">
+                      <div className="w-12 h-12 rounded-full border border-slate-200 dark:border-[#163832] flex items-center justify-center text-slate-400 dark:text-slate-500">
                         <Activity className="w-6 h-6" />
                       </div>
                       <div className="space-y-1">
@@ -866,7 +869,7 @@ export default function VerificationCenter({ onBack, onVerifyGameAction, onFlagG
                       </div>
                       <button
                         onClick={handleRunAIDeepScan}
-                        className="mt-2 px-5 py-2.5 bg-[#2563EB] hover:bg-blue-600 font-sans text-xs font-bold text-white rounded-xl shadow-md transition-all duration-300 transform active:scale-[0.98] cursor-pointer"
+                        className="mt-2 px-5 py-2.5 bg-[#163832] hover:bg-[#8EB69B] font-sans text-xs font-bold text-white rounded-xl shadow-md transition-all duration-300 transform active:scale-[0.98] cursor-pointer"
                       >
                         Run AI Deep Audit Scan
                       </button>
@@ -883,8 +886,8 @@ export default function VerificationCenter({ onBack, onVerifyGameAction, onFlagG
                 </div>
 
                 {/* 2. Interactive Peer-Consensus Voter Section */}
-                <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 space-y-4">
-                  <span className="text-[10px] font-bold text-[#2563EB] font-mono uppercase tracking-wider block">
+                <div className="p-4 rounded-2xl bg-[#DAF1DE]/30 dark:bg-[#051F20]/40 border border-slate-200 dark:border-[#163832] space-y-4">
+                  <span className="text-[10px] font-bold text-[#8EB69B] font-mono uppercase tracking-wider block">
                     PEER CITIZEN ALIGNMENT & DEED CAST
                   </span>
 
@@ -906,7 +909,7 @@ export default function VerificationCenter({ onBack, onVerifyGameAction, onFlagG
 
                         <button
                           onClick={() => handleUserVote('disagree')}
-                          className="py-3 bg-white dark:bg-slate-850 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-250 dark:border-slate-850 text-slate-700 dark:text-slate-300 text-xs font-bold font-sans rounded-xl flex items-center justify-center gap-2 transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer"
+                          className="py-3 bg-[#DAF1DE]/20 dark:bg-slate-850 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-250 dark:border-slate-850 text-slate-700 dark:text-slate-300 text-xs font-bold font-sans rounded-xl flex items-center justify-center gap-2 transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer"
                         >
                           <ThumbsDown className="w-4 h-4 text-rose-500" />
                           Flag as Spam / Fake
@@ -932,9 +935,9 @@ export default function VerificationCenter({ onBack, onVerifyGameAction, onFlagG
         </div>
 
         {/* 3. Bottom Row: Community Activity Live Logs Feed */}
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-xs space-y-4">
+        <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] rounded-3xl p-6 shadow-xs space-y-4">
           <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-850">
-            <span className="text-xs font-bold text-[#2563EB] font-mono uppercase tracking-wider flex items-center gap-2">
+            <span className="text-xs font-bold text-[#8EB69B] font-mono uppercase tracking-wider flex items-center gap-2">
               <Activity className="w-4 h-4 text-rose-500 animate-pulse" />
               LIVE PEER VERIFICATION PULSE FEED
             </span>
@@ -951,10 +954,10 @@ export default function VerificationCenter({ onBack, onVerifyGameAction, onFlagG
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950/40 border border-slate-200/80 dark:border-slate-800/80 space-y-2 transition-all hover:scale-[1.01]"
+                  className="p-3.5 rounded-2xl bg-[#DAF1DE]/30 dark:bg-[#051F20]/40 border border-slate-200/80 dark:border-[#163832]/80 space-y-2 transition-all hover:scale-[1.01]"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-extrabold text-blue-500 font-mono">
+                    <span className="text-[10px] font-extrabold text-[#8EB69B] font-mono">
                       @{act.user}
                     </span>
                     <span className="text-[9px] text-slate-400 font-mono">
@@ -966,7 +969,7 @@ export default function VerificationCenter({ onBack, onVerifyGameAction, onFlagG
                     {act.action}
                   </p>
 
-                  <div className="flex items-center justify-between pt-1.5 border-t border-slate-200/40 dark:border-slate-800/50">
+                  <div className="flex items-center justify-between pt-1.5 border-t border-slate-200/40 dark:border-[#163832]/50">
                     <span className="text-[9px] text-slate-400 dark:text-slate-500 font-mono uppercase">
                       Action Result
                     </span>

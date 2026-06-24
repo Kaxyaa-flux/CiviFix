@@ -133,14 +133,14 @@ export default function CommunityMap({ issues, onUpvote, selectedIssueId, onSele
       case 'high': return 'bg-[#F97316] text-white';
       case 'medium': return 'bg-[#EAB308] text-slate-950';
       case 'low': return 'bg-[#10B981] text-white';
-      default: return 'bg-[#2563EB] text-white';
+      default: return 'bg-[#163832] text-white';
     }
   };
 
   const getStatusColor = (s: string) => {
     switch (s) {
       case 'resolved': return 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-400 border border-emerald-500/20';
-      case 'in-progress': return 'bg-blue-100 text-blue-800 dark:bg-blue-950/60 dark:text-blue-400 border border-blue-500/20';
+      case 'in-progress': return 'bg-blue-100 text-blue-800 dark:bg-blue-950/60 dark:text-blue-400 border border-[#235347]/20';
       case 'verified': return 'bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-400 border border-indigo-500/20';
       default: return 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-400 border border-amber-500/20';
     }
@@ -167,14 +167,14 @@ export default function CommunityMap({ issues, onUpvote, selectedIssueId, onSele
   return (
     <section 
       id="community-map" 
-      className="relative py-20 bg-slate-50 dark:bg-[#020617] border-b border-slate-200 dark:border-slate-900 transition-colors duration-300"
+      className="relative py-20 bg-[#DAF1DE]/30 dark:bg-[#051F20] border-b border-slate-200 dark:border-slate-900 transition-colors duration-300"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         
         {/* Title / Intro */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
           <div className="space-y-3">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#2563EB]/10 border border-[#2563EB]/20 rounded-full text-xs font-semibold text-[#2563EB] font-mono uppercase">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#163832]/10 border border-[#235347]/20 rounded-full text-xs font-semibold text-[#8EB69B] font-mono uppercase">
               <Layers className="w-3.5 h-3.5" />
               Advanced Geospatial Node Map
             </div>
@@ -188,7 +188,7 @@ export default function CommunityMap({ issues, onUpvote, selectedIssueId, onSele
 
           {/* Quick Metrics Info */}
           <div className="flex flex-wrap items-center gap-4">
-            <div className="flex items-center gap-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-4 py-2.5 rounded-2xl shadow-sm">
+            <div className="flex items-center gap-2 bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] px-4 py-2.5 rounded-2xl shadow-sm">
               <span className="flex h-2.5 w-2.5 relative">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-pulse"></span>
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
@@ -220,7 +220,7 @@ export default function CommunityMap({ issues, onUpvote, selectedIssueId, onSele
               className={`p-4 rounded-2xl transition-all cursor-pointer border flex items-start gap-3.5 relative overflow-hidden group ${
                 activeAlertId === alert.id 
                   ? 'bg-rose-500/10 border-rose-500 shadow-lg shadow-rose-500/10' 
-                  : 'bg-white dark:bg-slate-900/60 border-rose-500/20 hover:border-rose-500/50 hover:bg-slate-50 dark:hover:bg-slate-900'
+                  : 'bg-[#DAF1DE]/20 dark:bg-[#0B2B26]/60 border-rose-500/20 hover:border-rose-500/50 hover:bg-[#DAF1DE]/30 dark:hover:bg-slate-900'
               }`}
             >
               <div className="p-2.5 rounded-xl bg-rose-500/10 text-rose-500 shrink-0">
@@ -248,7 +248,7 @@ export default function CommunityMap({ issues, onUpvote, selectedIssueId, onSele
         </div>
 
         {/* Filter Controls Dashboard Grid */}
-        <div className="bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 p-5 rounded-3xl shadow-xl space-y-4 backdrop-blur-md">
+        <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26]/80 border border-slate-200 dark:border-[#163832] p-5 rounded-3xl shadow-xl space-y-4 backdrop-blur-md">
           
           {/* Top Line: Search Bar and Category selection */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
@@ -261,7 +261,7 @@ export default function CommunityMap({ issues, onUpvote, selectedIssueId, onSele
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search by title, department, or address..."
-                className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-850 rounded-2xl text-xs text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 outline-none focus:border-[#2563EB] focus:ring-1 focus:ring-[#2563EB]/40 transition-all"
+                className="w-full pl-10 pr-4 py-2.5 bg-[#DAF1DE]/30 dark:bg-[#051F20]/80 border border-slate-200 dark:border-slate-850 rounded-2xl text-xs text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 outline-none focus:border-[#235347] focus:ring-1 focus:ring-[#8EB69B]/40 transition-all"
               />
               {searchQuery && (
                 <button 
@@ -275,7 +275,7 @@ export default function CommunityMap({ issues, onUpvote, selectedIssueId, onSele
 
             {/* Filter tags header */}
             <div className="lg:col-span-8 flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-              <Filter className="w-3.5 h-3.5 text-[#2563EB] shrink-0" />
+              <Filter className="w-3.5 h-3.5 text-[#8EB69B] shrink-0" />
               <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider shrink-0 mr-1">Category:</span>
               {['all', 'Water & Utilities', 'Road Safety & Forestry', 'Environmental & Sanitation', 'Street Maintenance'].map((cat) => (
                 <button
@@ -283,8 +283,8 @@ export default function CommunityMap({ issues, onUpvote, selectedIssueId, onSele
                   onClick={() => setCategoryFilter(cat)}
                   className={`px-3 py-1.5 text-[11px] font-bold rounded-xl shrink-0 transition-all cursor-pointer border ${
                     categoryFilter === cat
-                      ? 'bg-[#2563EB] text-white border-[#2563EB]'
-                      : 'bg-slate-50 dark:bg-slate-950/60 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-850 hover:bg-slate-100 dark:hover:bg-slate-850'
+                      ? 'bg-[#163832] text-white border-[#235347]'
+                      : 'bg-[#DAF1DE]/30 dark:bg-[#051F20]/60 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-850 hover:bg-slate-100 dark:hover:bg-slate-850'
                   }`}
                 >
                   {cat === 'all' ? 'All' : cat}
@@ -295,7 +295,7 @@ export default function CommunityMap({ issues, onUpvote, selectedIssueId, onSele
           </div>
 
           {/* Bottom Line: Grid filters */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 pt-3 border-t border-slate-100 dark:border-slate-800/80">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 pt-3 border-t border-slate-100 dark:border-[#163832]/80">
             
             {/* Status Filter */}
             <div className="space-y-1.5">
@@ -303,7 +303,7 @@ export default function CommunityMap({ issues, onUpvote, selectedIssueId, onSele
               <select 
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="w-full bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-850 text-slate-700 dark:text-slate-300 rounded-xl px-3 py-2 text-xs outline-none transition-all focus:border-[#2563EB]"
+                className="w-full bg-[#DAF1DE]/30 dark:bg-[#051F20]/80 border border-slate-200 dark:border-slate-850 text-slate-700 dark:text-slate-300 rounded-xl px-3 py-2 text-xs outline-none transition-all focus:border-[#235347]"
               >
                 <option value="all">All States</option>
                 <option value="new">New Reports</option>
@@ -319,7 +319,7 @@ export default function CommunityMap({ issues, onUpvote, selectedIssueId, onSele
               <select 
                 value={severityFilter}
                 onChange={(e) => setSeverityFilter(e.target.value)}
-                className="w-full bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-850 text-slate-700 dark:text-slate-300 rounded-xl px-3 py-2 text-xs outline-none transition-all focus:border-[#2563EB]"
+                className="w-full bg-[#DAF1DE]/30 dark:bg-[#051F20]/80 border border-slate-200 dark:border-slate-850 text-slate-700 dark:text-slate-300 rounded-xl px-3 py-2 text-xs outline-none transition-all focus:border-[#235347]"
               >
                 <option value="all">All Priorities</option>
                 <option value="low">Low Priority</option>
@@ -335,7 +335,7 @@ export default function CommunityMap({ issues, onUpvote, selectedIssueId, onSele
               <select 
                 value={dateFilter}
                 onChange={(e) => setDateFilter(e.target.value)}
-                className="w-full bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-850 text-slate-700 dark:text-slate-300 rounded-xl px-3 py-2 text-xs outline-none transition-all focus:border-[#2563EB]"
+                className="w-full bg-[#DAF1DE]/30 dark:bg-[#051F20]/80 border border-slate-200 dark:border-slate-850 text-slate-700 dark:text-slate-300 rounded-xl px-3 py-2 text-xs outline-none transition-all focus:border-[#235347]"
               >
                 <option value="all">All History</option>
                 <option value="today">Today / Recent</option>
@@ -356,7 +356,7 @@ export default function CommunityMap({ issues, onUpvote, selectedIssueId, onSele
                   className={`py-2 text-[11px] font-bold rounded-xl border flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
                     showHeatmap 
                       ? 'bg-rose-500/10 text-rose-500 border-rose-500/30' 
-                      : 'bg-slate-50 dark:bg-slate-950/60 text-slate-500 border-slate-200 dark:border-slate-850 hover:bg-slate-100'
+                      : 'bg-[#DAF1DE]/30 dark:bg-[#051F20]/60 text-slate-500 border-slate-200 dark:border-slate-850 hover:bg-slate-100'
                   }`}
                 >
                   <Eye className="w-3.5 h-3.5" />
@@ -370,7 +370,7 @@ export default function CommunityMap({ issues, onUpvote, selectedIssueId, onSele
                   className={`py-2 text-[11px] font-bold rounded-xl border flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
                     showRiskZones 
                       ? 'bg-[#10B981]/10 text-[#10B981] border-[#10B981]/30' 
-                      : 'bg-slate-50 dark:bg-slate-950/60 text-slate-500 border-slate-200 dark:border-slate-850 hover:bg-slate-100'
+                      : 'bg-[#DAF1DE]/30 dark:bg-[#051F20]/60 text-slate-500 border-slate-200 dark:border-slate-850 hover:bg-slate-100'
                   }`}
                 >
                   <Flame className="w-3.5 h-3.5" />
@@ -388,10 +388,10 @@ export default function CommunityMap({ issues, onUpvote, selectedIssueId, onSele
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           
           {/* Interactive Map Core (Col-span 8) */}
-          <div className="lg:col-span-8 relative bg-slate-200 dark:bg-slate-950 border border-slate-300 dark:border-slate-850 rounded-3xl h-[520px] overflow-hidden shadow-2xl flex items-center justify-center transition-all">
+          <div className="lg:col-span-8 relative bg-slate-200 dark:bg-[#051F20] border border-slate-300 dark:border-slate-850 rounded-3xl h-[520px] overflow-hidden shadow-2xl flex items-center justify-center transition-all">
             
             {/* Layers selector at top-left of the Map */}
-            <div className="absolute top-4 left-4 z-30 bg-white/90 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-850 backdrop-blur-md p-1.5 rounded-2xl shadow-xl flex items-center gap-1">
+            <div className="absolute top-4 left-4 z-30 bg-[#DAF1DE]/20/90 dark:bg-[#0B2B26]/95 border border-slate-200 dark:border-slate-850 backdrop-blur-md p-1.5 rounded-2xl shadow-xl flex items-center gap-1">
               {(['streets', 'hybrid', 'topological'] as const).map((layer) => (
                 <button
                   key={layer}
@@ -409,14 +409,14 @@ export default function CommunityMap({ issues, onUpvote, selectedIssueId, onSele
 
             {/* Simulated Zoom & Navigation Controls at top-right */}
             <div className="absolute top-4 right-4 z-30 flex flex-col gap-2">
-              <div className="bg-white/90 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-850 backdrop-blur-md rounded-2xl shadow-xl p-1 flex flex-col">
+              <div className="bg-[#DAF1DE]/20/90 dark:bg-[#0B2B26]/95 border border-slate-200 dark:border-slate-850 backdrop-blur-md rounded-2xl shadow-xl p-1 flex flex-col">
                 <button 
                   onClick={() => setZoomLevel(prev => Math.min(2.5, prev + 0.2))}
                   className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-xl transition-all cursor-pointer"
                 >
                   <Plus className="w-4 h-4" />
                 </button>
-                <div className="border-t border-slate-200 dark:border-slate-800 my-1"></div>
+                <div className="border-t border-slate-200 dark:border-[#163832] my-1"></div>
                 <button 
                   onClick={() => setZoomLevel(prev => Math.max(0.6, prev - 0.2))}
                   className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-xl transition-all cursor-pointer"
@@ -431,8 +431,8 @@ export default function CommunityMap({ issues, onUpvote, selectedIssueId, onSele
                 title="Toggle Clusters"
                 className={`p-2.5 rounded-2xl shadow-xl backdrop-blur-md border transition-all cursor-pointer ${
                   showClusters 
-                    ? 'bg-[#2563EB]/15 text-[#2563EB] border-[#2563EB]/30' 
-                    : 'bg-white/90 dark:bg-slate-900/95 text-slate-500 border-slate-200 dark:border-slate-800'
+                    ? 'bg-[#163832]/15 text-[#8EB69B] border-[#235347]/30' 
+                    : 'bg-[#DAF1DE]/20/90 dark:bg-[#0B2B26]/95 text-slate-500 border-slate-200 dark:border-[#163832]'
                 }`}
               >
                 <Activity className="w-4 h-4" />
@@ -477,7 +477,7 @@ export default function CommunityMap({ issues, onUpvote, selectedIssueId, onSele
                 )}
 
                 {/* Background water body */}
-                <path d="M0,450 C300,430 400,500 800,450 L800,520 L0,520 Z" className="fill-[#2563EB]/15 dark:fill-blue-500/10 stroke-blue-500/20" strokeWidth="2" />
+                <path d="M0,450 C300,430 400,500 800,450 L800,520 L0,520 Z" className="fill-[#8EB69B]/15 dark:fill-blue-500/10 stroke-blue-500/20" strokeWidth="2" />
                 <path d="M0,210 C150,210 250,160 380,180 C500,195 620,240 800,230" stroke="rgba(37, 99, 235, 0.12)" strokeWidth="16" fill="none" />
 
                 {/* Parks and green areas */}
@@ -574,13 +574,13 @@ export default function CommunityMap({ issues, onUpvote, selectedIssueId, onSele
                       issue.status === 'resolved' ? 'bg-[#10B981]' :
                       issue.priority === 'critical' ? 'bg-[#EF4444]' :
                       issue.priority === 'high' ? 'bg-[#F97316]' :
-                      issue.priority === 'medium' ? 'bg-[#EAB308]' : 'bg-[#2563EB]'
+                      issue.priority === 'medium' ? 'bg-[#EAB308]' : 'bg-[#163832]'
                     }`} />
 
                     {/* Highly visually polished node pin body */}
                     <div className={`relative p-2 rounded-full border shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-125 ${
                       isSelected 
-                        ? 'bg-slate-950 text-white dark:bg-white dark:text-slate-950 border-[#2563EB] scale-125 ring-2 ring-blue-500/45' 
+                        ? 'bg-slate-950 text-white dark:bg-[#DAF1DE]/20 dark:text-slate-950 border-[#235347] scale-125 ring-2 ring-blue-500/45' 
                         : issue.status === 'resolved' 
                           ? 'bg-[#10B981] text-white border-emerald-600'
                           : issue.priority === 'critical'
@@ -589,7 +589,7 @@ export default function CommunityMap({ issues, onUpvote, selectedIssueId, onSele
                               ? 'bg-[#F97316] text-white border-orange-600'
                               : issue.priority === 'medium'
                                 ? 'bg-[#EAB308] text-slate-950 border-yellow-600'
-                                : 'bg-[#2563EB] text-white border-blue-700'
+                                : 'bg-[#163832] text-white border-blue-700'
                     }`}>
                       {issue.status === 'resolved' ? (
                         <Check className="w-4 h-4" />
@@ -615,9 +615,9 @@ export default function CommunityMap({ issues, onUpvote, selectedIssueId, onSele
             </div>
 
             {/* Micro instruction / search state indicator at the bottom left */}
-            <div className="absolute bottom-4 left-4 bg-white/90 dark:bg-slate-900/95 backdrop-blur-md px-4 py-2.5 rounded-2xl text-[11px] font-bold text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-850 shadow-xl flex items-center gap-1.5">
+            <div className="absolute bottom-4 left-4 bg-[#DAF1DE]/20/90 dark:bg-[#0B2B26]/95 backdrop-blur-md px-4 py-2.5 rounded-2xl text-[11px] font-bold text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-850 shadow-xl flex items-center gap-1.5">
               <span>🗺️ Active Layers:</span>
-              <span className="capitalize font-mono text-[#2563EB]">{activeLayer} Layout</span>
+              <span className="capitalize font-mono text-[#8EB69B]">{activeLayer} Layout</span>
               {filteredIssues.length !== issues.length && (
                 <span className="text-slate-400">({filteredIssues.length} of {issues.length} showing)</span>
               )}
@@ -629,7 +629,7 @@ export default function CommunityMap({ issues, onUpvote, selectedIssueId, onSele
           <div className="lg:col-span-4 space-y-6 flex flex-col justify-between">
             
             {/* Detail Drawer */}
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-xl overflow-hidden min-h-[380px] flex flex-col justify-between">
+            <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] rounded-3xl p-6 shadow-xl overflow-hidden min-h-[380px] flex flex-col justify-between">
               <AnimatePresence mode="wait">
                 {selectedIssue ? (
                   <motion.div
@@ -656,7 +656,7 @@ export default function CommunityMap({ issues, onUpvote, selectedIssueId, onSele
                           {selectedIssue.title}
                         </h3>
                         <p className="text-[10px] font-mono text-slate-400 dark:text-slate-500 flex items-center gap-1 mt-1.5">
-                          <MapPin className="w-3.5 h-3.5 text-[#2563EB]" />
+                          <MapPin className="w-3.5 h-3.5 text-[#8EB69B]" />
                           {selectedIssue.locationName}
                         </p>
                       </div>
@@ -675,8 +675,8 @@ export default function CommunityMap({ issues, onUpvote, selectedIssueId, onSele
                       </div>
 
                       {/* AI Core Routing Summary */}
-                      <div className="p-3 bg-slate-50 dark:bg-slate-950/60 border border-slate-100 dark:border-slate-850 rounded-2xl space-y-1.5">
-                        <div className="flex items-center justify-between text-[10px] text-[#2563EB] font-extrabold font-mono">
+                      <div className="p-3 bg-[#DAF1DE]/30 dark:bg-[#051F20]/60 border border-slate-100 dark:border-slate-850 rounded-2xl space-y-1.5">
+                        <div className="flex items-center justify-between text-[10px] text-[#8EB69B] font-extrabold font-mono">
                           <span className="flex items-center gap-1">
                             <Sparkles className="w-3.5 h-3.5" />
                             AI PRE-ROUTING ACTION
@@ -691,17 +691,17 @@ export default function CommunityMap({ issues, onUpvote, selectedIssueId, onSele
                     </div>
 
                     {/* Urgent Action button */}
-                    <div className="border-t border-slate-100 dark:border-slate-800/80 pt-4 mt-4 flex items-center gap-2.5">
+                    <div className="border-t border-slate-100 dark:border-[#163832]/80 pt-4 mt-4 flex items-center gap-2.5">
                       <button
                         onClick={() => onUpvote(selectedIssue.id)}
-                        className="flex-1 py-3 bg-[#2563EB] hover:bg-blue-700 text-white text-xs font-bold rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-blue-500/20 transition-all duration-200 transform active:scale-95 cursor-pointer"
+                        className="flex-1 py-3 bg-[#163832] hover:bg-[#0B2B26] text-white text-xs font-bold rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-[#051F20]/30 transition-all duration-200 transform active:scale-95 cursor-pointer"
                       >
                         <ArrowUp className="w-4 h-4" />
                         Upvote Priority ({selectedIssue.upvotes})
                       </button>
                       <button
                         onClick={() => onSelectIssue(null)}
-                        className="px-4 py-3 border border-slate-200 dark:border-slate-850 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 text-xs font-bold rounded-xl transition-all cursor-pointer"
+                        className="px-4 py-3 border border-slate-200 dark:border-slate-850 text-slate-700 dark:text-slate-300 hover:bg-[#DAF1DE]/30 dark:hover:bg-slate-800 text-xs font-bold rounded-xl transition-all cursor-pointer"
                       >
                         Close
                       </button>
@@ -713,7 +713,7 @@ export default function CommunityMap({ issues, onUpvote, selectedIssueId, onSele
                     animate={{ opacity: 1 }}
                     className="h-full flex-1 flex flex-col items-center justify-center text-center space-y-4 py-12"
                   >
-                    <div className="p-4 bg-[#2563EB]/10 text-[#2563EB] rounded-2xl animate-pulse">
+                    <div className="p-4 bg-[#163832]/10 text-[#8EB69B] rounded-2xl animate-pulse">
                       <Layers className="w-8 h-8" />
                     </div>
                     <div>
@@ -730,7 +730,7 @@ export default function CommunityMap({ issues, onUpvote, selectedIssueId, onSele
             </div>
 
             {/* High Tech Map Legend Map Widget */}
-            <div className="p-5 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl space-y-4">
+            <div className="p-5 rounded-3xl bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] shadow-xl space-y-4">
               <h4 className="text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest font-mono">
                 🗺️ Geospatial Map Legend
               </h4>
@@ -745,7 +745,7 @@ export default function CommunityMap({ issues, onUpvote, selectedIssueId, onSele
                   <span>High Priority</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="w-3.5 h-3.5 rounded-full bg-blue-600 border border-blue-700 shrink-0 block"></span>
+                  <span className="w-3.5 h-3.5 rounded-full bg-[#8EB69B] border border-blue-700 shrink-0 block"></span>
                   <span>Active Issue</span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -755,7 +755,7 @@ export default function CommunityMap({ issues, onUpvote, selectedIssueId, onSele
               </div>
 
               {/* Live Ticker System feed */}
-              <div className="pt-3 border-t border-slate-100 dark:border-slate-800/80 space-y-2">
+              <div className="pt-3 border-t border-slate-100 dark:border-[#163832]/80 space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-[9px] font-extrabold text-[#10B981] font-mono uppercase tracking-wider flex items-center gap-1 animate-pulse">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 block"></span>
@@ -774,7 +774,7 @@ export default function CommunityMap({ issues, onUpvote, selectedIssueId, onSele
                 <div className="space-y-1.5 max-h-16 overflow-y-auto scrollbar-none">
                   {recentLiveUpdates.map((update, idx) => (
                     <div key={idx} className="flex items-center gap-1.5 text-[10px] text-slate-500 dark:text-slate-400 font-mono truncate">
-                      <span className="text-[#2563EB] font-extrabold">›</span>
+                      <span className="text-[#8EB69B] font-extrabold">›</span>
                       <span>{update}</span>
                     </div>
                   ))}

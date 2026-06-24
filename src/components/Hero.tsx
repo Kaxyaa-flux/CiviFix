@@ -31,12 +31,12 @@ export default function Hero({ onOpenReportModal, onExploreMap }: HeroProps) {
   return (
     <section
       id="home"
-      className="relative min-h-[90vh] pt-32 pb-20 flex items-center justify-center overflow-hidden text-white"
+      className="relative min-h-[90vh] pt-40 pb-20 flex items-center justify-center overflow-hidden text-white"
       style={{
         background: 'linear-gradient(135deg, #020617 0%, #0B1530 50%, #020617 100%)'
       }}
     >
-      {/* Background Gradient Mesh based on requested #2563EB and #10B981 */}
+      {/* Background Gradient Mesh based on requested #8EB69B and #10B981 */}
       <div 
         className="absolute inset-0 opacity-40 mix-blend-screen pointer-events-none"
         style={{
@@ -55,7 +55,7 @@ export default function Hero({ onOpenReportModal, onExploreMap }: HeroProps) {
           rotate: [0, 10, 0]
         }}
         transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
-        className="absolute top-24 left-[10%] w-32 h-32 bg-gradient-to-tr from-[#2563EB]/25 to-[#10B981]/20 rounded-full blur-2xl pointer-events-none"
+        className="absolute top-24 left-[10%] w-32 h-32 bg-gradient-to-tr from-[#8EB69B]/25 to-[#10B981]/20 rounded-full blur-2xl pointer-events-none"
       />
       <motion.div 
         animate={{ 
@@ -64,7 +64,7 @@ export default function Hero({ onOpenReportModal, onExploreMap }: HeroProps) {
           rotate: [0, -15, 0]
         }}
         transition={{ repeat: Infinity, duration: 8, ease: "easeInOut", delay: 1 }}
-        className="absolute bottom-20 right-[15%] w-48 h-48 bg-gradient-to-br from-[#8B5CF6]/20 to-[#2563EB]/25 rounded-full blur-3xl pointer-events-none"
+        className="absolute bottom-20 right-[15%] w-48 h-48 bg-gradient-to-br from-[#8B5CF6]/20 to-[#8EB69B]/25 rounded-full blur-3xl pointer-events-none"
       />
 
       {/* Floating Civic Glass Elements */}
@@ -112,8 +112,8 @@ export default function Hero({ onOpenReportModal, onExploreMap }: HeroProps) {
               className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/60 backdrop-blur-md border border-slate-800 text-slate-200 text-xs font-semibold w-fit mx-auto lg:mx-0 shadow-lg"
             >
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2563EB] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#2563EB]"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#163832] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#163832]"></span>
               </span>
               <span className="font-mono tracking-wider text-slate-300">CiviFix • "See It. Report It. Fix It."</span>
             </motion.div>
@@ -124,7 +124,7 @@ export default function Hero({ onOpenReportModal, onExploreMap }: HeroProps) {
               className="font-display font-extrabold text-5xl sm:text-6xl md:text-7xl leading-[1.1] tracking-tighter"
             >
               See It. Report It. <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] to-[#10B981] drop-shadow-sm">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8EB69B] to-[#10B981] drop-shadow-sm">
                 Fix It.
               </span>
             </motion.h1>
@@ -144,7 +144,7 @@ export default function Hero({ onOpenReportModal, onExploreMap }: HeroProps) {
             >
               <button
                 onClick={onOpenReportModal}
-                className="w-full sm:w-auto px-8 py-4 bg-[#2563EB] hover:bg-blue-600 text-white font-sans font-bold rounded-xl transition-all shadow-lg shadow-blue-500/20 hover:shadow-blue-600/30 transform hover:-translate-y-1 cursor-pointer flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-8 py-4 bg-[#163832] hover:bg-[#8EB69B] text-white font-sans font-bold rounded-xl transition-all shadow-lg shadow-[#051F20]/30 hover:shadow-[#051F20]/30 transform hover:-translate-y-1 cursor-pointer flex items-center justify-center gap-2"
               >
                 <FileText className="w-5 h-5" />
                 Report An Issue
@@ -169,7 +169,7 @@ export default function Hero({ onOpenReportModal, onExploreMap }: HeroProps) {
                 Government-Grade Transparency
               </div>
               <div className="flex items-center gap-1.5 text-xs font-mono">
-                <Shield className="w-4 h-4 text-[#2563EB]" />
+                <Shield className="w-4 h-4 text-[#8EB69B]" />
                 Municipal Dispatch Integration
               </div>
             </motion.div>
@@ -182,11 +182,11 @@ export default function Hero({ onOpenReportModal, onExploreMap }: HeroProps) {
             transition={{ type: 'spring', stiffness: 80, damping: 20, delay: 0.3 }}
             className="lg:col-span-5 relative w-full h-[480px] flex items-center justify-center"
           >
-            {/* The Stunning Gradient Backdrop Card representing: linear-gradient(135deg, #2563EB, #10B981) */}
+            {/* The Stunning Gradient Backdrop Card representing: linear-gradient(135deg, #8EB69B, #10B981) */}
             <div 
               className="absolute inset-0 rounded-[2.5rem] opacity-30 blur-2xl transform scale-95"
               style={{
-                background: 'linear-gradient(135deg, #2563EB, #10B981)'
+                background: 'linear-gradient(135deg, #8EB69B, #10B981)'
               }}
             />
 
@@ -219,7 +219,7 @@ export default function Hero({ onOpenReportModal, onExploreMap }: HeroProps) {
                   <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-[#8B5CF6]/10 to-transparent pointer-events-none" />
 
                   <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 bg-[#2563EB]/10 border border-[#2563EB]/25 rounded-xl flex items-center justify-center text-[#2563EB] font-bold text-sm">
+                    <div className="w-10 h-10 bg-[#163832]/10 border border-[#235347]/25 rounded-xl flex items-center justify-center text-[#8EB69B] font-bold text-sm">
                       <Sparkles className="w-5 h-5 text-[#8B5CF6] animate-pulse" />
                     </div>
                     <div>
@@ -236,7 +236,7 @@ export default function Hero({ onOpenReportModal, onExploreMap }: HeroProps) {
                     <span className="bg-[#8B5CF6]/10 text-[#8B5CF6] border border-[#8B5CF6]/20 text-[9px] px-2 py-0.5 rounded-md font-mono">
                       AI Categorized
                     </span>
-                    <span className="bg-[#2563EB]/10 text-blue-400 border border-blue-500/20 text-[9px] px-2 py-0.5 rounded-md font-mono">
+                    <span className="bg-[#163832]/10 text-blue-400 border border-[#235347]/20 text-[9px] px-2 py-0.5 rounded-md font-mono">
                       Water Utilities
                     </span>
                   </div>
@@ -252,7 +252,7 @@ export default function Hero({ onOpenReportModal, onExploreMap }: HeroProps) {
                         initial={{ width: 0 }}
                         animate={{ width: "99.4%" }}
                         transition={{ duration: 1.5, ease: "easeOut" }}
-                        className="h-full bg-gradient-to-r from-[#2563EB] to-[#8B5CF6]"
+                        className="h-full bg-gradient-to-r from-[#8EB69B] to-[#8B5CF6]"
                       />
                     </div>
                   </div>
@@ -290,7 +290,7 @@ export default function Hero({ onOpenReportModal, onExploreMap }: HeroProps) {
             </div>
 
             {/* Glowing background halo of colors */}
-            <div className="absolute -z-10 w-72 h-72 bg-gradient-to-r from-[#2563EB]/15 to-[#10B981]/15 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -z-10 w-72 h-72 bg-gradient-to-r from-[#8EB69B]/15 to-[#10B981]/15 rounded-full blur-3xl pointer-events-none" />
           </motion.div>
 
         </div>

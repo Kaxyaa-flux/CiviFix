@@ -32,7 +32,7 @@ export default function AboutPage({ onBack }: AboutPageProps) {
       metric: '1.2M',
       subMetric: 'Reports Audited',
       icon: Cpu,
-      color: 'text-[#2563EB]',
+      color: 'text-[#8EB69B]',
       bgColor: 'bg-blue-50 dark:bg-blue-950/30 border-blue-200/50 dark:border-blue-900/30'
     },
     {
@@ -148,16 +148,19 @@ export default function AboutPage({ onBack }: AboutPageProps) {
   ];
 
   return (
-    <div className="pt-24 pb-20 bg-slate-50 dark:bg-slate-950 transition-colors duration-300 min-h-screen">
+    <div className="pt-32 pb-20 bg-[#DAF1DE]/30 dark:bg-[#051F20] transition-colors duration-300 min-h-screen">
       {/* Outer wrapper to contain bento designs & maintain responsiveness */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
         
         {/* Navigation / Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-[#163832]">
           <div className="space-y-1.5">
             <button
-              onClick={onBack}
-              className="group inline-flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-slate-900 border border-slate-250 dark:border-slate-800 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#2563EB] dark:hover:text-blue-400 hover:border-blue-500/30 hover:shadow-sm transition-all duration-200 cursor-pointer mb-2"
+              onClick={() => {
+                window.scrollTo({ top: 0, behavior: 'instant' });
+                onBack();
+              }}
+              className="group inline-flex items-center gap-2 px-3 py-1.5 bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-250 dark:border-[#163832] rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#8EB69B] dark:hover:text-blue-400 hover:border-[#235347]/30 hover:shadow-sm transition-all duration-200 cursor-pointer mb-2"
             >
               <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
               Back to Home
@@ -171,14 +174,14 @@ export default function AboutPage({ onBack }: AboutPageProps) {
           </div>
 
           {/* Quick Filter Tabs */}
-          <div className="flex flex-wrap gap-1.5 bg-slate-200/50 dark:bg-slate-900 p-1 rounded-xl border border-slate-300/40 dark:border-slate-800/80">
+          <div className="flex flex-wrap gap-1.5 bg-slate-200/50 dark:bg-[#0B2B26] p-1 rounded-xl border border-slate-300/40 dark:border-[#163832]/80">
             {(['all', 'mission', 'ai', 'impact', 'sustainability'] as const).map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
                 className={`px-3.5 py-1.5 rounded-lg text-xs font-bold font-sans capitalize transition-all cursor-pointer ${
                   activeTab === tab
-                    ? 'bg-[#2563EB] text-white shadow-md shadow-blue-500/10'
+                    ? 'bg-[#163832] text-white shadow-md shadow-[#051F20]/30'
                     : 'text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white'
                 }`}
               >
@@ -199,13 +202,13 @@ export default function AboutPage({ onBack }: AboutPageProps) {
               className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch"
             >
               {/* Mission Bento Card */}
-              <div className="lg:col-span-7 p-8 sm:p-10 bg-gradient-to-tr from-blue-600 to-indigo-700 text-white rounded-3xl relative overflow-hidden shadow-2xl shadow-blue-500/10 flex flex-col justify-between">
+              <div className="lg:col-span-7 p-8 sm:p-10 bg-gradient-to-tr from-blue-600 to-indigo-700 text-white rounded-3xl relative overflow-hidden shadow-2xl shadow-[#051F20]/30 flex flex-col justify-between">
                 <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
                   <Target className="w-48 h-48" />
                 </div>
                 
                 <div className="space-y-6">
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/10 border border-white/20 rounded-full text-[10px] font-extrabold uppercase font-mono tracking-wider">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#DAF1DE]/20/10 border border-white/20 rounded-full text-[10px] font-extrabold uppercase font-mono tracking-wider">
                     <Target className="w-3.5 h-3.5 text-amber-300 animate-pulse" />
                     Our Core Mission
                   </div>
@@ -230,7 +233,7 @@ export default function AboutPage({ onBack }: AboutPageProps) {
               </div>
 
               {/* Vision Bento Card */}
-              <div className="lg:col-span-5 p-8 sm:p-10 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl flex flex-col justify-between hover:shadow-xl dark:hover:shadow-blue-500/5 transition-all duration-300">
+              <div className="lg:col-span-5 p-8 sm:p-10 bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] rounded-3xl flex flex-col justify-between hover:shadow-xl dark:hover:shadow-[#051F20]/30 transition-all duration-300">
                 <div className="space-y-6">
                   <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200/50 dark:border-emerald-900/30 rounded-full text-[10px] font-extrabold text-emerald-700 dark:text-emerald-400 uppercase font-mono tracking-wider">
                     <Eye className="w-3.5 h-3.5" />
@@ -293,7 +296,7 @@ export default function AboutPage({ onBack }: AboutPageProps) {
                   return (
                     <div 
                       key={idx}
-                      className="p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl space-y-4 hover:shadow-lg hover:border-purple-500/20 dark:hover:border-purple-500/10 transition-all duration-300 flex flex-col justify-between"
+                      className="p-6 bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] rounded-2xl space-y-4 hover:shadow-lg hover:border-purple-500/20 dark:hover:border-purple-500/10 transition-all duration-300 flex flex-col justify-between"
                     >
                       <div className="space-y-3">
                         <span className="inline-block px-2.5 py-0.5 bg-purple-500/10 text-purple-600 dark:text-purple-400 font-mono text-[9px] font-black uppercase rounded">
@@ -368,7 +371,7 @@ export default function AboutPage({ onBack }: AboutPageProps) {
                           </p>
                         </div>
                       </div>
-                      <div className="pt-4 border-t border-slate-200/30 dark:border-slate-800/30 mt-4 flex items-center justify-between text-[10px] font-mono text-slate-400 uppercase">
+                      <div className="pt-4 border-t border-slate-200/30 dark:border-[#163832]/30 mt-4 flex items-center justify-between text-[10px] font-mono text-slate-400 uppercase">
                         <span>TARGET: Q4 2026</span>
                         <span className="font-extrabold">{goal.subMetric}</span>
                       </div>
@@ -412,7 +415,7 @@ export default function AboutPage({ onBack }: AboutPageProps) {
                   return (
                     <div
                       key={idx}
-                      className="p-6 sm:p-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl flex flex-col justify-between hover:shadow-lg hover:border-emerald-500/20 dark:hover:border-emerald-500/10 transition-all duration-300"
+                      className="p-6 sm:p-8 bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] rounded-2xl flex flex-col justify-between hover:shadow-lg hover:border-emerald-500/20 dark:hover:border-emerald-500/10 transition-all duration-300"
                     >
                       <div className="space-y-6">
                         <div className="w-12 h-12 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded-xl flex items-center justify-center">
@@ -477,10 +480,10 @@ export default function AboutPage({ onBack }: AboutPageProps) {
                   <motion.div
                     key={idx}
                     whileHover={{ y: -5, transition: { duration: 0.2 } }}
-                    className="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden hover:shadow-xl dark:hover:shadow-blue-500/5 hover:border-blue-300 dark:hover:border-blue-900 transition-all duration-300 flex flex-col h-full"
+                    className="group bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] rounded-2xl overflow-hidden hover:shadow-xl dark:hover:shadow-[#051F20]/30 hover:border-blue-300 dark:hover:border-blue-900 transition-all duration-300 flex flex-col h-full"
                   >
                     {/* Member image with dark zoom overlay */}
-                    <div className="relative overflow-hidden aspect-square bg-slate-100 dark:bg-slate-950">
+                    <div className="relative overflow-hidden aspect-square bg-slate-100 dark:bg-[#051F20]">
                       <img
                         src={member.image}
                         alt={member.name}
@@ -506,7 +509,7 @@ export default function AboutPage({ onBack }: AboutPageProps) {
                       
                       {/* Socials Link Row */}
                       <div className="pt-4 border-t border-slate-100 dark:border-slate-850 flex items-center gap-3">
-                        <a href={member.linkedin} className="text-slate-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors" aria-label="LinkedIn">
+                        <a href={member.linkedin} className="text-slate-400 hover:text-[#8EB69B] dark:hover:text-blue-400 transition-colors" aria-label="LinkedIn">
                           <Linkedin className="w-4 h-4" />
                         </a>
                         <a href={member.twitter} className="text-slate-400 hover:text-blue-400 transition-colors" aria-label="Twitter">
@@ -558,9 +561,9 @@ export default function AboutPage({ onBack }: AboutPageProps) {
                   return (
                     <div
                       key={idx}
-                      className="p-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl flex flex-col items-center text-center justify-center hover:border-emerald-500/30 dark:hover:border-emerald-500/20 hover:shadow-md transition-all duration-300 group"
+                      className="p-5 bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] rounded-2xl flex flex-col items-center text-center justify-center hover:border-emerald-500/30 dark:hover:border-emerald-500/20 hover:shadow-md transition-all duration-300 group"
                     >
-                      <div className="w-10 h-10 bg-slate-50 dark:bg-slate-950 text-slate-450 dark:text-slate-500 group-hover:text-emerald-500 dark:group-hover:text-emerald-400 group-hover:bg-emerald-500/10 rounded-xl flex items-center justify-center transition-all duration-350 mb-3 shrink-0">
+                      <div className="w-10 h-10 bg-[#DAF1DE]/30 dark:bg-[#051F20] text-slate-450 dark:text-slate-500 group-hover:text-emerald-500 dark:group-hover:text-emerald-400 group-hover:bg-emerald-500/10 rounded-xl flex items-center justify-center transition-all duration-350 mb-3 shrink-0">
                         <Icon className="w-5 h-5" />
                       </div>
                       <p className="text-xs font-extrabold text-slate-850 dark:text-slate-100 line-clamp-1 mb-0.5">{partner.name}</p>
@@ -574,8 +577,8 @@ export default function AboutPage({ onBack }: AboutPageProps) {
         </AnimatePresence>
 
         {/* CTA Banner Section */}
-        <div className="p-8 sm:p-12 bg-slate-900 dark:bg-[#020617] border border-slate-850 rounded-3xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left shadow-2xl">
-          <div className="absolute top-0 left-0 w-96 h-96 bg-[#2563EB]/10 rounded-full blur-3xl opacity-50 -z-10 translate-y-[-50%] translate-x-[-50%]"></div>
+        <div className="p-8 sm:p-12 bg-slate-900 dark:bg-[#051F20] border border-slate-850 rounded-3xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left shadow-2xl">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-[#163832]/10 rounded-full blur-3xl opacity-50 -z-10 translate-y-[-50%] translate-x-[-50%]"></div>
           <div className="space-y-3 max-w-xl">
             <h3 className="font-display font-extrabold text-2xl text-white tracking-tight">
               Ready to restore your neighborhood?
@@ -585,8 +588,11 @@ export default function AboutPage({ onBack }: AboutPageProps) {
             </p>
           </div>
           <button
-            onClick={onBack}
-            className="px-6 py-3 bg-[#2563EB] hover:bg-blue-600 text-white font-sans text-sm font-bold rounded-xl shadow-lg shadow-blue-500/20 transition-all duration-200 transform hover:-translate-y-0.5 shrink-0 cursor-pointer"
+            onClick={() => {
+                window.scrollTo({ top: 0, behavior: 'instant' });
+                onBack();
+              }}
+            className="px-6 py-3 bg-[#163832] hover:bg-[#8EB69B] text-white font-sans text-sm font-bold rounded-xl shadow-lg shadow-[#051F20]/30 transition-all duration-200 transform hover:-translate-y-0.5 shrink-0 cursor-pointer"
           >
             Explore Active Reports
           </button>

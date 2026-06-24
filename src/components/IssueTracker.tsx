@@ -251,7 +251,7 @@ const MONTHLY_REPORTS_DATA = [
   { month: 'Jun', reports: 144, resolved: 118, participation: 790 },
 ];
 
-const COLORS = ['#2563EB', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6'];
+const COLORS = ['#8EB69B', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6'];
 
 interface IssueTrackerProps {
   onBack: () => void;
@@ -343,7 +343,7 @@ export default function IssueTracker({ onBack }: IssueTrackerProps) {
   // Status Badge styling helper
   const getStatusBadge = (status: TrackedIssue['status']) => {
     const styles = {
-      new: 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20',
+      new: 'bg-[#8EB69B]/10 text-[#8EB69B] dark:text-blue-400 border border-[#235347]/20',
       verified: 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20',
       'in-progress': 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20',
       resolved: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20',
@@ -356,7 +356,7 @@ export default function IssueTracker({ onBack }: IssueTrackerProps) {
   const getPriorityBadge = (priority: TrackedIssue['priority']) => {
     const styles = {
       low: 'text-slate-500 dark:text-slate-400',
-      medium: 'text-blue-500',
+      medium: 'text-[#8EB69B]',
       high: 'text-amber-500',
       critical: 'text-red-500 font-extrabold animate-pulse'
     };
@@ -369,7 +369,7 @@ export default function IssueTracker({ onBack }: IssueTrackerProps) {
   // SVG Media Mockup Render
   const renderMediaPreview = (placeholder: string) => {
     return (
-      <div className="relative h-44 bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center overflow-hidden">
+      <div className="relative h-44 bg-slate-950 rounded-xl border border-slate-200 dark:border-[#163832] flex flex-col items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:12px_12px] pointer-events-none" />
         <div className="absolute top-2 left-2 bg-slate-900/90 text-[8px] font-mono text-slate-400 px-2 py-0.5 rounded border border-slate-800 z-10">
           MEDIA INDEX: MATCHED
@@ -413,21 +413,24 @@ export default function IssueTracker({ onBack }: IssueTrackerProps) {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#020617] text-slate-900 dark:text-slate-50 pt-24 pb-16 transition-colors duration-300">
+    <div className="min-h-screen bg-[#DAF1DE]/30 dark:bg-[#051F20] text-slate-900 dark:text-slate-50 pt-32 pb-16 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         
         {/* Navigation & Title Section */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="space-y-1">
             <button 
-              onClick={onBack}
-              className="inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-[#2563EB] transition-colors font-mono cursor-pointer"
+              onClick={() => {
+                window.scrollTo({ top: 0, behavior: 'instant' });
+                onBack();
+              }}
+              className="inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-[#8EB69B] transition-colors font-mono cursor-pointer"
             >
               ← RETURN TO LANDING
             </button>
             <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-950 dark:text-white flex items-center gap-2.5">
-              <Building2 className="w-8 h-8 text-[#2563EB]" />
-              Municipal <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] to-purple-600">Issue Tracker</span>
+              <Building2 className="w-8 h-8 text-[#8EB69B]" />
+              Municipal <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8EB69B] to-purple-600">Issue Tracker</span>
             </h1>
             <p className="text-slate-500 dark:text-slate-400 text-sm max-w-xl">
               Professional administrative workspace monitoring live reports, tracking response metrics, and exploring AI forensic authenticity audits.
@@ -435,7 +438,7 @@ export default function IssueTracker({ onBack }: IssueTrackerProps) {
           </div>
 
           {/* Quick Refresh Tracker */}
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-4 py-2.5 rounded-2xl flex items-center gap-2 shadow-xs shrink-0 text-xs font-mono font-bold text-slate-500 dark:text-slate-400">
+          <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] px-4 py-2.5 rounded-2xl flex items-center gap-2 shadow-xs shrink-0 text-xs font-mono font-bold text-slate-500 dark:text-slate-400">
             <Clock className="w-4 h-4 text-emerald-500" />
             Last Sync: Just Now
             <RefreshCw className="w-3.5 h-3.5 ml-1 text-slate-400 dark:hover:text-white cursor-pointer hover:rotate-180 transition-all duration-500" />
@@ -445,15 +448,15 @@ export default function IssueTracker({ onBack }: IssueTrackerProps) {
         {/* 1. Statistics Cards Display */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4.5 rounded-2xl relative overflow-hidden shadow-xs">
+          <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] p-4.5 rounded-2xl relative overflow-hidden shadow-xs">
             <p className="text-[10px] text-slate-400 dark:text-slate-500 font-mono uppercase font-bold tracking-tight">Total Reports</p>
             <p className="text-3xl font-black mt-1 text-slate-950 dark:text-white">{metrics.total}</p>
             <div className="text-[10px] text-slate-400 font-mono mt-1 flex items-center gap-1">
-              <span className="text-blue-500 font-bold">100%</span> indexed
+              <span className="text-[#8EB69B] font-bold">100%</span> indexed
             </div>
           </div>
 
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4.5 rounded-2xl relative overflow-hidden shadow-xs">
+          <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] p-4.5 rounded-2xl relative overflow-hidden shadow-xs">
             <p className="text-[10px] text-slate-400 dark:text-slate-500 font-mono uppercase font-bold tracking-tight">Pending Dispatch</p>
             <p className="text-3xl font-black mt-1 text-amber-500">{metrics.pending}</p>
             <div className="text-[10px] text-slate-400 font-mono mt-1">
@@ -461,7 +464,7 @@ export default function IssueTracker({ onBack }: IssueTrackerProps) {
             </div>
           </div>
 
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4.5 rounded-2xl relative overflow-hidden shadow-xs">
+          <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] p-4.5 rounded-2xl relative overflow-hidden shadow-xs">
             <p className="text-[10px] text-slate-400 dark:text-slate-500 font-mono uppercase font-bold tracking-tight">Resolved Reports</p>
             <p className="text-3xl font-black mt-1 text-emerald-500">{metrics.resolved}</p>
             <div className="text-[10px] text-emerald-400 font-mono mt-1">
@@ -469,7 +472,7 @@ export default function IssueTracker({ onBack }: IssueTrackerProps) {
             </div>
           </div>
 
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4.5 rounded-2xl relative overflow-hidden shadow-xs">
+          <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] p-4.5 rounded-2xl relative overflow-hidden shadow-xs">
             <p className="text-[10px] text-slate-400 dark:text-slate-500 font-mono uppercase font-bold tracking-tight">Escalated</p>
             <p className="text-3xl font-black mt-1 text-red-500">{metrics.escalated}</p>
             <div className="text-[10px] text-red-500 font-mono mt-1 flex items-center gap-1">
@@ -477,7 +480,7 @@ export default function IssueTracker({ onBack }: IssueTrackerProps) {
             </div>
           </div>
 
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4.5 rounded-2xl relative overflow-hidden shadow-xs">
+          <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] p-4.5 rounded-2xl relative overflow-hidden shadow-xs">
             <p className="text-[10px] text-slate-400 dark:text-slate-500 font-mono uppercase font-bold tracking-tight">Resolution Rate</p>
             <p className="text-3xl font-black mt-1 text-purple-500">{metrics.rate}%</p>
             <div className="text-[10px] text-slate-400 font-mono mt-1">
@@ -485,9 +488,9 @@ export default function IssueTracker({ onBack }: IssueTrackerProps) {
             </div>
           </div>
 
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4.5 rounded-2xl relative overflow-hidden shadow-xs">
+          <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] p-4.5 rounded-2xl relative overflow-hidden shadow-xs">
             <p className="text-[10px] text-slate-400 dark:text-slate-500 font-mono uppercase font-bold tracking-tight">Avg Resolution Time</p>
-            <p className="text-3xl font-black mt-1 text-[#2563EB]">{metrics.avgTime} hrs</p>
+            <p className="text-3xl font-black mt-1 text-[#8EB69B]">{metrics.avgTime} hrs</p>
             <div className="text-[10px] text-slate-400 font-mono mt-1">
               From report to sign-off
             </div>
@@ -499,13 +502,13 @@ export default function IssueTracker({ onBack }: IssueTrackerProps) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           
           {/* Chart A: Monthly Reports and Resolution Trend (Line + Area) */}
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-3xl shadow-xs space-y-4">
+          <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] p-5 rounded-3xl shadow-xs space-y-4">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-sm font-extrabold text-slate-950 dark:text-white">Monthly Reports & Resolution Trends</h3>
                 <p className="text-[10px] text-slate-400 dark:text-slate-500 font-mono">Incident volume trajectory over last six periods</p>
               </div>
-              <TrendingUp className="w-4 h-4 text-[#2563EB]" />
+              <TrendingUp className="w-4 h-4 text-[#8EB69B]" />
             </div>
 
             <div className="h-64 w-full">
@@ -513,8 +516,8 @@ export default function IssueTracker({ onBack }: IssueTrackerProps) {
                 <AreaChart data={MONTHLY_REPORTS_DATA} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
                   <defs>
                     <linearGradient id="colorReports" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#2563EB" stopOpacity={0.2}/>
-                      <stop offset="95%" stopColor="#2563EB" stopOpacity={0}/>
+                      <stop offset="5%" stopColor="#8EB69B" stopOpacity={0.2}/>
+                      <stop offset="95%" stopColor="#8EB69B" stopOpacity={0}/>
                     </linearGradient>
                     <linearGradient id="colorResolved" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="5%" stopColor="#10B981" stopOpacity={0.2}/>
@@ -535,7 +538,7 @@ export default function IssueTracker({ onBack }: IssueTrackerProps) {
                     }} 
                   />
                   <Legend verticalAlign="top" height={36} iconSize={10} wrapperStyle={{ fontSize: '11px', fontFamily: 'monospace' }} />
-                  <Area type="monotone" name="Report Volume" dataKey="reports" stroke="#2563EB" strokeWidth={2} fillOpacity={1} fill="url(#colorReports)" />
+                  <Area type="monotone" name="Report Volume" dataKey="reports" stroke="#8EB69B" strokeWidth={2} fillOpacity={1} fill="url(#colorReports)" />
                   <Area type="monotone" name="Resolved Tickets" dataKey="resolved" stroke="#10B981" strokeWidth={2} fillOpacity={1} fill="url(#colorResolved)" />
                 </AreaChart>
               </ResponsiveContainer>
@@ -546,7 +549,7 @@ export default function IssueTracker({ onBack }: IssueTrackerProps) {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             
             {/* Category Pie Chart */}
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4.5 rounded-3xl shadow-xs flex flex-col justify-between">
+            <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] p-4.5 rounded-3xl shadow-xs flex flex-col justify-between">
               <div>
                 <h3 className="text-sm font-extrabold text-slate-950 dark:text-white">Category Distribution</h3>
                 <p className="text-[10px] text-slate-400 dark:text-slate-500 font-mono">Reports spread by municipal sector</p>
@@ -598,7 +601,7 @@ export default function IssueTracker({ onBack }: IssueTrackerProps) {
             </div>
 
             {/* Resolution Performance by Status (Bar Chart) */}
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4.5 rounded-3xl shadow-xs flex flex-col justify-between">
+            <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] p-4.5 rounded-3xl shadow-xs flex flex-col justify-between">
               <div>
                 <h3 className="text-sm font-extrabold text-slate-950 dark:text-white">Resolution Status Distribution</h3>
                 <p className="text-[10px] text-slate-400 dark:text-slate-500 font-mono">Current state volume tracker</p>
@@ -630,7 +633,7 @@ export default function IssueTracker({ onBack }: IssueTrackerProps) {
         </div>
 
         {/* Chart Row 3: Citizen Participation Frequency */}
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-3xl shadow-xs space-y-4">
+        <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] p-5 rounded-3xl shadow-xs space-y-4">
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-sm font-extrabold text-slate-950 dark:text-white">Citizen Voting & Validation Participation</h3>
@@ -658,7 +661,7 @@ export default function IssueTracker({ onBack }: IssueTrackerProps) {
           {/* LEFT COLUMN: Issue Search, Interactive Filtering, and Main List (Col-span 7) */}
           <div className="lg:col-span-7 space-y-4">
             
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-3xl shadow-xs space-y-4">
+            <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] p-5 rounded-3xl shadow-xs space-y-4">
               
               {/* Search input field */}
               <div className="relative">
@@ -668,7 +671,7 @@ export default function IssueTracker({ onBack }: IssueTrackerProps) {
                   placeholder="Search issues by keyword, ID, location, or reporter..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-850 rounded-2xl py-3 pl-11 pr-4 text-sm focus:outline-hidden focus:border-[#2563EB] dark:focus:border-[#2563EB] transition-colors"
+                  className="w-full bg-[#DAF1DE]/30 dark:bg-[#051F20] border border-slate-200 dark:border-slate-850 rounded-2xl py-3 pl-11 pr-4 text-sm focus:outline-hidden focus:border-[#235347] dark:focus:border-[#235347] transition-colors"
                 />
               </div>
 
@@ -681,7 +684,7 @@ export default function IssueTracker({ onBack }: IssueTrackerProps) {
                   <select 
                     value={selectedCategory}
                     onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-850 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 focus:outline-hidden"
+                    className="w-full bg-[#DAF1DE]/30 dark:bg-[#051F20] border border-slate-200 dark:border-slate-850 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 focus:outline-hidden"
                   >
                     <option value="All">All Sectors</option>
                     <option value="Water & Utilities">Water & Utilities</option>
@@ -698,7 +701,7 @@ export default function IssueTracker({ onBack }: IssueTrackerProps) {
                   <select 
                     value={selectedPriority}
                     onChange={(e) => setSelectedPriority(e.target.value)}
-                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-850 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 focus:outline-hidden"
+                    className="w-full bg-[#DAF1DE]/30 dark:bg-[#051F20] border border-slate-200 dark:border-slate-850 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 focus:outline-hidden"
                   >
                     <option value="All">All Priorities</option>
                     <option value="low">Low</option>
@@ -714,7 +717,7 @@ export default function IssueTracker({ onBack }: IssueTrackerProps) {
                   <select 
                     value={selectedStatus}
                     onChange={(e) => setSelectedStatus(e.target.value)}
-                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-850 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 focus:outline-hidden"
+                    className="w-full bg-[#DAF1DE]/30 dark:bg-[#051F20] border border-slate-200 dark:border-slate-850 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 focus:outline-hidden"
                   >
                     <option value="All">All Statuses</option>
                     <option value="new">New</option>
@@ -733,7 +736,7 @@ export default function IssueTracker({ onBack }: IssueTrackerProps) {
                 {(searchQuery || selectedCategory !== 'All' || selectedPriority !== 'All' || selectedStatus !== 'All') && (
                   <button 
                     onClick={handleResetFilters}
-                    className="text-[#2563EB] font-bold hover:underline cursor-pointer"
+                    className="text-[#8EB69B] font-bold hover:underline cursor-pointer"
                   >
                     Clear All Filters
                   </button>
@@ -753,21 +756,21 @@ export default function IssueTracker({ onBack }: IssueTrackerProps) {
                       onClick={() => setSelectedIssueId(issue.id)}
                       className={`w-full text-left p-4 rounded-2xl border transition-all flex flex-col sm:flex-row justify-between items-start gap-4 cursor-pointer group ${
                         isSelected 
-                          ? 'bg-blue-50/50 dark:bg-[#2563EB]/10 border-[#2563EB]' 
-                          : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
+                          ? 'bg-blue-50/50 dark:bg-[#163832]/10 border-[#235347]' 
+                          : 'bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border-slate-200 dark:border-[#163832] hover:border-slate-300 dark:hover:border-slate-700'
                       }`}
                     >
                       <div className="space-y-2 flex-1">
                         <div className="flex flex-wrap items-center gap-2">
-                          <span className="text-[10px] font-mono font-bold text-slate-400 bg-slate-100 dark:bg-slate-950 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-800">
+                          <span className="text-[10px] font-mono font-bold text-slate-400 bg-slate-100 dark:bg-[#051F20] px-2 py-0.5 rounded border border-slate-200 dark:border-[#163832]">
                             {issue.id}
                           </span>
                           <span className="text-xs font-mono text-slate-400">{issue.category}</span>
                         </div>
 
                         <div>
-                          <h4 className={`text-sm font-extrabold line-clamp-1 group-hover:text-[#2563EB] transition-colors ${
-                            isSelected ? 'text-[#2563EB]' : 'text-slate-900 dark:text-slate-100'
+                          <h4 className={`text-sm font-extrabold line-clamp-1 group-hover:text-[#8EB69B] transition-colors ${
+                            isSelected ? 'text-[#8EB69B]' : 'text-slate-900 dark:text-slate-100'
                           }`}>
                             {issue.title}
                           </h4>
@@ -798,7 +801,7 @@ export default function IssueTracker({ onBack }: IssueTrackerProps) {
                   );
                 })
               ) : (
-                <div className="text-center py-16 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl space-y-3">
+                <div className="text-center py-16 bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] rounded-3xl space-y-3">
                   <Inbox className="w-12 h-12 mx-auto text-slate-300 dark:text-slate-700" />
                   <p className="text-sm font-bold text-slate-700 dark:text-slate-300">No matching tracking records</p>
                   <p className="text-xs text-slate-400 max-w-xs mx-auto">Try refining your search keyword or clearing the status/sector filtering selectors.</p>
@@ -809,14 +812,14 @@ export default function IssueTracker({ onBack }: IssueTrackerProps) {
           </div>
 
           {/* RIGHT COLUMN: Selected Issue Details and Timeline (Col-span 5) */}
-          <div className="lg:col-span-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-xs space-y-6">
+          <div className="lg:col-span-5 bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] rounded-3xl p-6 shadow-xs space-y-6">
             
             {/* Header / ID */}
             <div className="flex items-center justify-between pb-3 border-b border-slate-250 dark:border-slate-850">
-              <span className="text-xs font-mono font-black text-[#2563EB] uppercase">
+              <span className="text-xs font-mono font-black text-[#8EB69B] uppercase">
                 DETAILED INSPECTION WORKSPACE
               </span>
-              <span className="text-xs bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 px-3 py-1 rounded font-mono text-slate-500 dark:text-slate-400">
+              <span className="text-xs bg-slate-100 dark:bg-[#051F20] border border-slate-200 dark:border-[#163832] px-3 py-1 rounded font-mono text-slate-500 dark:text-slate-400">
                 {activeIssue.id}
               </span>
             </div>
@@ -843,7 +846,7 @@ export default function IssueTracker({ onBack }: IssueTrackerProps) {
                   {activeIssue.locationName}
                 </p>
 
-                <p className="text-xs text-slate-650 dark:text-slate-300 leading-relaxed bg-slate-50 dark:bg-slate-950/40 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800/80">
+                <p className="text-xs text-slate-650 dark:text-slate-300 leading-relaxed bg-[#DAF1DE]/30 dark:bg-[#051F20]/40 p-3.5 rounded-xl border border-slate-200 dark:border-[#163832]/80">
                   {activeIssue.description}
                 </p>
               </div>
@@ -867,11 +870,11 @@ export default function IssueTracker({ onBack }: IssueTrackerProps) {
               {/* Comprehensive Activity Timeline */}
               <div className="space-y-3 pt-2">
                 <h4 className="text-xs font-bold text-slate-700 dark:text-slate-400 uppercase font-mono tracking-tight flex items-center gap-1.5">
-                  <Clock className="w-4 h-4 text-blue-500" />
+                  <Clock className="w-4 h-4 text-[#8EB69B]" />
                   INCIDENT ACTIVITY TIMELINE
                 </h4>
 
-                <div className="relative pl-6 border-l border-slate-200 dark:border-slate-800 space-y-4 ml-2.5">
+                <div className="relative pl-6 border-l border-slate-200 dark:border-[#163832] space-y-4 ml-2.5">
                   {activeIssue.timeline.map((step, idx) => {
                     return (
                       <div key={idx} className="relative">
@@ -880,7 +883,7 @@ export default function IssueTracker({ onBack }: IssueTrackerProps) {
                         <div className={`absolute -left-[31px] top-1 w-4.5 h-4.5 rounded-full border-2 flex items-center justify-center transition-all ${
                           step.completed
                             ? 'bg-[#10B981] border-[#10B981] text-white'
-                            : 'bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-800 text-slate-400'
+                            : 'bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border-slate-300 dark:border-[#163832] text-slate-400'
                         }`}>
                           {step.completed ? (
                             <Check className="w-2.5 h-2.5" />
