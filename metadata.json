@@ -1,0 +1,6 @@
+{
+  "name": "CiviFix",
+  "description": "AI-Powered Community Problem Solving Platform - See It. Report It. Fix It.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
