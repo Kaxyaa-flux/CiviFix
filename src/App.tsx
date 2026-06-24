@@ -14,7 +14,8 @@ import ReportModal from './components/ReportModal';
 import ReportPage from './components/ReportPage';
 import VerificationCenter from './components/VerificationCenter';
 import IssueTracker from './components/IssueTracker';
-import AuthPage from './components/AuthPage';
+import SignInPage from './components/SignInPage';
+import SignUpPage from './components/SignUpPage';
 import AiAnalyticsDashboard from './components/AiAnalyticsDashboard';
 import GamificationSystem from './components/GamificationSystem';
 import AuthorityDashboard from './components/AuthorityDashboard';
@@ -22,6 +23,7 @@ import AboutPage from './components/AboutPage';
 import ContactPage from './components/ContactPage';
 import { CivicIssue, CivicStats, User } from './types';
 import { ToastItem, ToastType } from './lib/toast';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 
 
 const INITIAL_ISSUES: CivicIssue[] = [
@@ -104,6 +106,8 @@ const INITIAL_ISSUES: CivicIssue[] = [
 ];
 
 export default function App() {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
     const savedTheme = localStorage.getItem('civic_theme');
     if (savedTheme !== null) {
@@ -111,8 +115,7 @@ export default function App() {
     }
     return true; // default to glorious dark mode
   });
-  const [currentView, setCurrentView] = useState<'landing' | 'report' | 'verification' | 'tracker' | 'analytics' | 'gamification' | 'authority' | 'auth' | 'about' | 'contact'>('landing');
-  const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signin');
+  const currentView = location.pathname.substring(1) || 'landing';
   const [currentUser, setCurrentUser] = useState<User | null>(() => {
     const saved = localStorage.getItem('civic_current_user');
     if (saved) {
@@ -168,7 +171,6 @@ export default function App() {
   const handleAuthSuccess = (user: User) => {
     setCurrentUser(user);
     localStorage.setItem('civic_current_user', JSON.stringify(user));
-    setCurrentView('landing');
     
     // Trigger toast using browser event
     const event = new CustomEvent('civic_toast', {
@@ -180,7 +182,7 @@ export default function App() {
   const handleSignOut = () => {
     setCurrentUser(null);
     localStorage.removeItem('civic_current_user');
-    setCurrentView('landing');
+    navigate('/');
     
     const event = new CustomEvent('civic_toast', {
       detail: { message: 'Signed out securely. Session ended.', type: 'info' }
@@ -189,8 +191,7 @@ export default function App() {
   };
 
   const handleNavigateToAuth = (mode: 'signin' | 'signup') => {
-    setAuthMode(mode);
-    setCurrentView('auth');
+    navigate('/' + mode);
   };
 
 
@@ -205,6 +206,10 @@ export default function App() {
       localStorage.setItem('civic_theme', 'light');
     }
   }, [isDarkMode]);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [currentView]);
 
   const handleToggleTheme = () => {
     const nextMode = !isDarkMode;
@@ -221,7 +226,7 @@ export default function App() {
   };
 
   const handleOpenReportModal = () => {
-    setCurrentView('report');
+    navigate('/report');
   };
 
   const handleCloseReportModal = () => {
@@ -287,7 +292,7 @@ export default function App() {
     window.dispatchEvent(event);
 
     // Switch view back and scroll to map
-    setCurrentView('landing');
+    navigate('/');
     setTimeout(() => {
       handleScrollToMap();
     }, 400);
@@ -348,7 +353,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen font-sans bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300 antialiased selection:bg-blue-500 selection:text-white overflow-x-hidden">
+    <div className="min-h-screen font-sans bg-[#DAF1DE]/30 dark:bg-[#051F20] text-slate-900 dark:text-slate-100 transition-colors duration-300 antialiased selection:bg-[#8EB69B] selection:text-white overflow-x-hidden">
       {/* Animated Startup Loader Screen */}
       <AnimatePresence>
         {isLoading && (
@@ -366,18 +371,18 @@ export default function App() {
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: 0.1, duration: 0.4 }}
               >
-                <div className="p-3 bg-[#2563EB] rounded-2xl shadow-lg shadow-blue-500/20">
+                <div className="p-3 bg-[#163832] rounded-2xl shadow-lg shadow-[#051F20]/30">
                   <Shield className="w-8 h-8 text-white animate-pulse" />
                 </div>
                 <span className="font-display font-extrabold text-2xl tracking-tight text-white">
-                  Civi<span className="text-[#2563EB]">Fix</span>
+                  Civi<span className="text-[#8EB69B]">Fix</span>
                 </span>
               </motion.div>
 
               <div className="space-y-4">
                 <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
                   <motion.div 
-                    className="h-full bg-blue-500 rounded-full"
+                    className="h-full bg-[#8EB69B] rounded-full"
                     initial={{ width: "0%" }}
                     animate={{ width: "100%" }}
                     transition={{ duration: 1.4, ease: "easeInOut" }}
@@ -385,7 +390,7 @@ export default function App() {
                 </div>
                 
                 <div className="h-6 text-xs text-slate-400 font-mono flex items-center justify-center space-x-2">
-                  <Cpu className="w-3.5 h-3.5 text-blue-500 animate-spin" />
+                  <Cpu className="w-3.5 h-3.5 text-[#8EB69B] animate-spin" />
                   <motion.span
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -405,109 +410,90 @@ export default function App() {
         isDarkMode={isDarkMode} 
         onToggleTheme={handleToggleTheme} 
         onOpenReportModal={handleOpenReportModal}
-        onNavigateToVerification={() => setCurrentView('verification')}
-        onNavigateToTracker={() => setCurrentView('tracker')}
-        onNavigateToAnalytics={() => setCurrentView('analytics')}
-        onNavigateToGamification={() => setCurrentView('gamification')}
-        onNavigateToAuthority={() => setCurrentView('authority')}
-        onNavigateToHome={() => setCurrentView('landing')}
-        onNavigateToAbout={() => setCurrentView('about')}
-        onNavigateToContact={() => setCurrentView('contact')}
-        currentView={currentView}
+        onNavigateToVerification={() => navigate('/verification')}
+        onNavigateToTracker={() => navigate('/tracker')}
+        onNavigateToAnalytics={() => navigate('/analytics')}
+        onNavigateToGamification={() => navigate('/gamification')}
+        onNavigateToAuthority={() => navigate('/authority')}
+        onNavigateToHome={() => navigate('/')}
+        currentView={currentView as 'landing' | 'report' | 'verification' | 'tracker' | 'analytics' | 'gamification' | 'authority' | 'auth' | 'about' | 'contact'}
         currentUser={currentUser}
         onSignOut={handleSignOut}
         onNavigateToAuth={handleNavigateToAuth}
       />
 
       <AnimatePresence mode="wait">
-        <motion.div
-          key={currentView}
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -15 }}
-          transition={{ duration: 0.25, ease: 'easeInOut' }}
-        >
-          {currentView === 'report' ? (
-            <ReportPage 
-              onBack={() => setCurrentView('landing')}
-              onSubmit={handleNewReport}
-            />
-          ) : currentView === 'verification' ? (
-            <VerificationCenter 
-              onBack={() => setCurrentView('landing')}
-              onVerifyGameAction={handleVerifyGameAction}
-              onFlagGameAction={handleFlagGameAction}
-            />
-          ) : currentView === 'tracker' ? (
-            <IssueTracker 
-              onBack={() => setCurrentView('landing')}
-            />
-          ) : currentView === 'analytics' ? (
-            <AiAnalyticsDashboard 
-              onBack={() => setCurrentView('landing')}
-            />
-          ) : currentView === 'gamification' ? (
-            <GamificationSystem 
-              currentUser={currentUser}
-              onUpdateUserPoints={handleUpdateUserPoints}
-              onNavigateToAuth={handleNavigateToAuth}
-              onBack={() => setCurrentView('landing')}
-            />
-          ) : currentView === 'authority' ? (
-            <AuthorityDashboard 
-              currentUser={currentUser}
-              onBack={() => setCurrentView('landing')}
-            />
-          ) : currentView === 'auth' ? (
-            <AuthPage 
-              onAuthSuccess={handleAuthSuccess}
-              onCancel={() => setCurrentView('landing')}
-              initialMode={authMode}
-            />
-          ) : currentView === 'about' ? (
-            <AboutPage 
-              onBack={() => setCurrentView('landing')}
-            />
-          ) : currentView === 'contact' ? (
-            <ContactPage 
-              onBack={() => setCurrentView('landing')}
-            />
-          ) : (
-            <main className="relative">
-              {/* Sections */}
-              <Hero 
-                onOpenReportModal={handleOpenReportModal} 
-                onExploreMap={handleScrollToMap} 
-              />
-              
-              <Stats stats={stats} />
-              
-              <CommunityMap 
-                issues={issues} 
-                onUpvote={handleUpvoteIssue}
-                selectedIssueId={selectedIssueId}
-                onSelectIssue={setSelectedIssueId}
-              />
-              
-              <CivicDashboard 
-                onVerifyIssue={handleVerifyGameAction}
-                onFlagIssue={handleFlagGameAction}
-              />
-              
-              <Features />
-              
-              <Impact />
-              
-              <Testimonials />
-            </main>
-          )}
-        </motion.div>
+        <Routes location={location}>
+          <Route path="/report" element={
+            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.25 }}>
+              <ReportPage onBack={() => navigate('/')} onSubmit={handleNewReport} />
+            </motion.div>
+          } />
+          <Route path="/verification" element={
+            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.25 }}>
+              <VerificationCenter onBack={() => navigate('/')} onVerifyGameAction={handleVerifyGameAction} onFlagGameAction={handleFlagGameAction} />
+            </motion.div>
+          } />
+          <Route path="/tracker" element={
+            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.25 }}>
+              <IssueTracker onBack={() => navigate('/')} />
+            </motion.div>
+          } />
+          <Route path="/analytics" element={
+            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.25 }}>
+              <AiAnalyticsDashboard onBack={() => navigate('/')} />
+            </motion.div>
+          } />
+          <Route path="/gamification" element={
+            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.25 }}>
+              <GamificationSystem currentUser={currentUser} onUpdateUserPoints={handleUpdateUserPoints} onNavigateToAuth={handleNavigateToAuth} onBack={() => navigate('/')} />
+            </motion.div>
+          } />
+          <Route path="/authority" element={
+            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.25 }}>
+              <AuthorityDashboard currentUser={currentUser} onBack={() => navigate('/')} />
+            </motion.div>
+          } />
+          <Route path="/signin" element={
+            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.25 }}>
+              <SignInPage onAuthSuccess={handleAuthSuccess} />
+            </motion.div>
+          } />
+          <Route path="/signup" element={
+            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.25 }}>
+              <SignUpPage onAuthSuccess={handleAuthSuccess} />
+            </motion.div>
+          } />
+          <Route path="/about" element={
+            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.25 }}>
+              <AboutPage onBack={() => navigate('/')} />
+            </motion.div>
+          } />
+          <Route path="/contact" element={
+            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.25 }}>
+              <ContactPage onBack={() => navigate('/')} />
+            </motion.div>
+          } />
+          <Route path="/" element={
+            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.25 }}>
+              <main className="relative">
+                <Hero onOpenReportModal={handleOpenReportModal} onExploreMap={handleScrollToMap} />
+                <Stats stats={stats} />
+                <CommunityMap issues={issues} onUpvote={handleUpvoteIssue} selectedIssueId={selectedIssueId} onSelectIssue={setSelectedIssueId} />
+                <CivicDashboard onVerifyIssue={handleVerifyGameAction} onFlagIssue={handleFlagGameAction} />
+                <Features />
+                <Impact />
+                <Testimonials />
+              </main>
+            </motion.div>
+          } />
+        </Routes>
       </AnimatePresence>
 
       {/* Styled Footer */}
       <Footer 
-        onNavigateToAbout={() => setCurrentView('about')} 
-        onNavigateToContact={() => setCurrentView('contact')} 
+        onNavigateToAbout={() => navigate('/about')} 
+        onNavigateToContact={() => navigate('/contact')} 
       />
 
       {/* AI Incident Reporter drawer modal */}
@@ -527,7 +513,7 @@ export default function App() {
               initial={{ opacity: 0, y: 30, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, scale: 0.85, transition: { duration: 0.15 } }}
-              className="pointer-events-auto w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-4 flex items-start gap-3 backdrop-blur-md bg-opacity-95 dark:bg-opacity-95"
+              className="pointer-events-auto w-full bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] rounded-2xl shadow-xl p-4 flex items-start gap-3 backdrop-blur-md bg-opacity-95 dark:bg-opacity-95"
             >
               {toast.type === 'success' ? (
                 <div className="p-1.5 bg-emerald-100 dark:bg-emerald-950/50 rounded-lg text-emerald-600 dark:text-emerald-400">
@@ -542,7 +528,7 @@ export default function App() {
                   <AlertCircle className="w-5 h-5" />
                 </div>
               ) : (
-                <div className="p-1.5 bg-blue-100 dark:bg-blue-950/50 rounded-lg text-blue-600 dark:text-blue-400">
+                <div className="p-1.5 bg-blue-100 dark:bg-blue-950/50 rounded-lg text-[#8EB69B] dark:text-blue-400">
                   <Info className="w-5 h-5" />
                 </div>
               )}
