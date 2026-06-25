@@ -32,7 +32,7 @@ export default function SignUpPage({ onAuthSuccess }: SignUpPageProps) {
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSignUpSubmit = (e: React.FormEvent) => {
+  const handleSignUpSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setSuccessMsg(null);
@@ -52,44 +52,43 @@ export default function SignUpPage({ onAuthSuccess }: SignUpPageProps) {
 
     setIsLoading(true);
 
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      const res = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: signUpEmail.trim().toLowerCase(),
+          password: signUpPassword,
+          fullName: signUpName.trim(),
+          role: signUpRole
+        })
+      });
 
-      const newUser: User = {
-        id: `usr-${Date.now()}`,
-        fullName: signUpName.trim(),
-        email: signUpEmail.trim().toLowerCase(),
-        avatar: selectedAvatar,
-        role: signUpRole,
-        reputationPoints: signUpRole === 'moderator' ? 150 : 25,
-        joinedAt: new Date().toISOString().split('T')[0]
-      };
-
-      const savedAccountsRaw = localStorage.getItem('civic_registered_users');
-      let registeredUsers: User[] = [];
-      if (savedAccountsRaw) {
-        try {
-          registeredUsers = JSON.parse(savedAccountsRaw);
-        } catch (err) {
-          console.error(err);
-        }
-      }
-
-      if (registeredUsers.some(u => u.email === newUser.email)) {
-        setError('An account with this email address already exists.');
-        return;
-      }
-
-      registeredUsers.push(newUser);
-      localStorage.setItem('civic_registered_users', JSON.stringify(registeredUsers));
-
-      setSuccessMsg('Account registered successfully! Redirecting you...');
+      const data = await res.json();
       
-      setTimeout(() => {
-        onAuthSuccess(newUser);
-        navigate('/');
-      }, 1000);
-    }, 1000);
+      if (!res.ok) {
+        setError(data.error || 'Failed to sign up');
+      } else {
+        localStorage.setItem('civic_token', data.token);
+        
+        // Ensure user object has the selected avatar and correct structure
+        const newUser = {
+          ...data.user,
+          avatar: selectedAvatar,
+        };
+        
+        setSuccessMsg('Account registered successfully! Redirecting you...');
+        setTimeout(() => {
+          onAuthSuccess(newUser);
+          navigate('/');
+        }, 1000);
+      }
+    } catch (err) {
+      setError('An error occurred during sign up.');
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

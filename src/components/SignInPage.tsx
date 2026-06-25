@@ -47,7 +47,7 @@ export default function SignInPage({ onAuthSuccess }: SignInPageProps) {
     }, 700);
   };
 
-  const handleSignInSubmit = (e: React.FormEvent) => {
+  const handleSignInSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
 
@@ -58,55 +58,27 @@ export default function SignInPage({ onAuthSuccess }: SignInPageProps) {
 
     setIsLoading(true);
 
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      const res = await fetch('/api/auth/signin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: signInEmail.trim().toLowerCase(), password: signInPassword })
+      });
 
-      const savedAccountsRaw = localStorage.getItem('civic_registered_users');
-      let registeredUsers: User[] = [];
-      if (savedAccountsRaw) {
-        try {
-          registeredUsers = JSON.parse(savedAccountsRaw);
-        } catch (err) {
-          console.error(err);
-        }
-      }
-
-      const matched = registeredUsers.find(
-        (u) => u.email.toLowerCase() === signInEmail.trim().toLowerCase()
-      );
-
-      if (matched) {
-        onAuthSuccess(matched);
-        navigate('/');
-        return;
-      }
-
-      if (signInEmail.includes('mod') && signInPassword.length >= 4) {
-        onAuthSuccess({
-          id: 'user-mod-1',
-          email: signInEmail.trim(),
-          fullName: 'Clara J. (Gov Moderator)',
-          avatar: 'av2',
-          role: 'moderator',
-          reputationPoints: 340,
-          joinedAt: '2026-04-01'
-        });
-        navigate('/');
-      } else if (signInPassword.length >= 4) {
-        onAuthSuccess({
-          id: 'user-cit-1',
-          email: signInEmail.trim(),
-          fullName: signInEmail.split('@')[0] || 'Civic Citizen',
-          avatar: 'av1',
-          role: 'citizen',
-          reputationPoints: 50,
-          joinedAt: '2026-06-24'
-        });
-        navigate('/');
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error || 'Failed to sign in');
       } else {
-        setError('Incorrect password. (Try entering at least 4 characters for instant demo access)');
+        localStorage.setItem('civic_token', data.token);
+        onAuthSuccess(data.user);
+        navigate('/');
       }
-    }, 800);
+    } catch (err) {
+      setError('An error occurred during sign in.');
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
