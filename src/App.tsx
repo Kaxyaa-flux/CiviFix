@@ -26,84 +26,7 @@ import { ToastItem, ToastType } from './lib/toast';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 
 
-const INITIAL_ISSUES: CivicIssue[] = [
-  {
-    id: 'iss-1',
-    title: 'Major street water main leakage',
-    description: 'A pressurized underground clean water pipe has ruptured, flooding the pedestrian walk and causing water to bubble onto Elm Road. It is washing away soil under the sidewalk tiles.',
-    category: 'Water & Utilities',
-    priority: 'high',
-    status: 'in-progress',
-    locationName: '450 Elm Road (Opposite Public Library)',
-    coordinates: { x: 25, y: 35 }, // percentage on SVG
-    reportedAt: '2 hours ago',
-    upvotes: 42,
-    reporterName: 'John Doe',
-    timeline: [
-      { status: 'reported', label: 'Reported', date: '2 hours ago', completed: true },
-      { status: 'verified', label: 'AI & Peer Verified', date: '1.8 hours ago', completed: true },
-      { status: 'dispatched', label: 'Dispatched to Utilities Team', date: '1.2 hours ago', completed: true },
-      { status: 'resolved', label: 'Resolution Scheduled', date: 'Today at 5 PM', completed: false }
-    ]
-  },
-  {
-    id: 'iss-2',
-    title: 'Severe pothole damaging tires',
-    description: 'A massive 8-inch deep asphalt pothole has formed in the center lane of Civic Boulevard, causing cars to swerve dangerously. Multiple drivers have suffered blown tire walls here.',
-    category: 'Street Maintenance',
-    priority: 'critical',
-    status: 'new',
-    locationName: 'Civic Boulevard, East intersection',
-    coordinates: { x: 15, y: 75 },
-    reportedAt: '12 mins ago',
-    upvotes: 68,
-    reporterName: 'Alice Vance',
-    timeline: [
-      { status: 'reported', label: 'Reported', date: '12 mins ago', completed: true },
-      { status: 'verified', label: 'AI Validation Running', date: 'Pending', completed: false },
-      { status: 'dispatched', label: 'Pending Road Dispatch', date: 'Pending', completed: false },
-      { status: 'resolved', label: 'Pending Repair', date: 'Pending', completed: false }
-    ]
-  },
-  {
-    id: 'iss-3',
-    title: 'Illegal battery pile dump behind park',
-    description: 'Dozens of discarded lithium car batteries and electronic waste monitors have been dumped in the bush corridor behind Green Park north gate. Dangerous chemical fluid is pooling on dirt.',
-    category: 'Environmental & Sanitation',
-    priority: 'high',
-    status: 'verified',
-    locationName: 'Green Park North gate corridor',
-    coordinates: { x: 48, y: 65 },
-    reportedAt: '1 hour ago',
-    upvotes: 31,
-    reporterName: 'Raymond G.',
-    timeline: [
-      { status: 'reported', label: 'Reported', date: '1 hour ago', completed: true },
-      { status: 'verified', label: 'Community Peer Approved', date: '45 mins ago', completed: true },
-      { status: 'dispatched', label: 'Environmental Board Notified', date: 'Pending Dispatch', completed: false },
-      { status: 'resolved', label: 'Pending Cleanup', date: 'Pending', completed: false }
-    ]
-  },
-  {
-    id: 'iss-4',
-    title: 'Main street light cover completely shattered',
-    description: 'A low-hanging historical street light globe has been shattered, exposing active bare wires. The section of the dark alley is pitch black, presenting a major public security risk.',
-    category: 'Road Safety & Forestry',
-    priority: 'medium',
-    status: 'resolved',
-    locationName: 'Sunset Boulevard alley near 3rd Ave',
-    coordinates: { x: 72, y: 22 },
-    reportedAt: '1 day ago',
-    upvotes: 18,
-    reporterName: 'S. Cooper',
-    timeline: [
-      { status: 'reported', label: 'Reported', date: '1 day ago', completed: true },
-      { status: 'verified', label: 'AI Categorized', date: '23 hours ago', completed: true },
-      { status: 'dispatched', label: 'City Power Crew Dispatched', date: '20 hours ago', completed: true },
-      { status: 'resolved', label: 'Globe replaced & re-wired', date: '3 hours ago', completed: true }
-    ]
-  }
-];
+// INITIAL_ISSUES moved to backend database
 
 export default function App() {
   const location = useLocation();
@@ -120,7 +43,15 @@ export default function App() {
     const saved = localStorage.getItem('civic_current_user');
     if (saved) {
       try {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        // Handle old schema migration to prevent crashes
+        if (parsed && !parsed.fullName && parsed.name) {
+          parsed.fullName = parsed.name;
+        }
+        if (parsed && !parsed.fullName) {
+          return null; // Force sign out if corrupted
+        }
+        return parsed;
       } catch (err) {
         return null;
       }
@@ -129,7 +60,7 @@ export default function App() {
   });
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const [selectedIssueId, setSelectedIssueId] = useState<string | null>(null);
-  const [issues, setIssues] = useState<CivicIssue[]>(INITIAL_ISSUES);
+  const [issues, setIssues] = useState<CivicIssue[]>([]);
   const [stats, setStats] = useState<CivicStats>({
     issuesReported: 14258,
     issuesResolved: 12891,
@@ -141,12 +72,27 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [toasts, setToasts] = useState<ToastItem[]>([]);
 
-  // Simulation loading delay for premium hackathon startup feel
+  // Fetch issues and stats from backend
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1800);
-    return () => clearTimeout(timer);
+    const fetchData = async () => {
+      try {
+        const issuesRes = await fetch('/api/issues');
+        if (issuesRes.ok) {
+          const data = await issuesRes.json();
+          setIssues(data);
+        }
+        const statsRes = await fetch('/api/stats');
+        if (statsRes.ok) {
+          const statsData = await statsRes.json();
+          setStats(statsData);
+        }
+      } catch (err) {
+        console.error('Error fetching data:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
   }, []);
 
   // Capture global toast events
@@ -182,6 +128,7 @@ export default function App() {
   const handleSignOut = () => {
     setCurrentUser(null);
     localStorage.removeItem('civic_current_user');
+    localStorage.removeItem('civic_token');
     navigate('/');
     
     const event = new CustomEvent('civic_toast', {
@@ -242,22 +189,28 @@ export default function App() {
   };
 
   // Upvote issue on Map
-  const handleUpvoteIssue = (id: string) => {
-    setIssues(prevIssues =>
-      prevIssues.map(issue =>
-        issue.id === id ? { ...issue, upvotes: issue.upvotes + 1 } : issue
-      )
-    );
-
-    // Trigger toast using browser event
-    const event = new CustomEvent('civic_toast', {
-      detail: { message: 'Upvoted successfully! Thank you for verifying.', type: 'success' }
-    });
-    window.dispatchEvent(event);
+  const handleUpvoteIssue = async (id: string) => {
+    try {
+      const res = await fetch(`/api/issues/${id}/upvote`, { method: 'PATCH' });
+      if (res.ok) {
+        const data = await res.json();
+        setIssues(prevIssues =>
+          prevIssues.map(issue =>
+            issue.id === id ? { ...issue, upvotes: data.upvotes } : issue
+          )
+        );
+        const event = new CustomEvent('civic_toast', {
+          detail: { message: 'Upvoted successfully! Thank you for verifying.', type: 'success' }
+        });
+        window.dispatchEvent(event);
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   // Adding a new verified report from modal or report page
-  const handleNewReport = (newReport: Omit<CivicIssue, 'id' | 'reportedAt' | 'upvotes' | 'timeline'>) => {
+  const handleNewReport = async (newReport: Omit<CivicIssue, 'id' | 'reportedAt' | 'upvotes' | 'timeline'>) => {
     const freshId = `iss-${Math.random().toString(36).substr(2, 9)}`;
     const createdIssue: CivicIssue = {
       ...newReport,
@@ -272,37 +225,62 @@ export default function App() {
       ]
     };
 
-    setIssues(prev => [createdIssue, ...prev]);
-    setSelectedIssueId(freshId); // Auto select on map to showcase the magic
-    
-    // Update global indicators
-    setStats(prev => ({
-      ...prev,
-      issuesReported: prev.issuesReported + 1,
-      impactScore: Math.min(100, prev.impactScore + 0.1)
-    }));
+    try {
+      const token = localStorage.getItem('civic_token');
+      await fetch('/api/issues', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+        },
+        body: JSON.stringify({ ...createdIssue, reporterName: currentUser?.fullName || newReport.reporterName })
+      });
 
-    // Trigger success toast
-    const event = new CustomEvent('civic_toast', {
-      detail: { 
-        message: `Report geodispatched! NLP categorized as ${newReport.category}.`, 
-        type: 'success' 
-      }
-    });
-    window.dispatchEvent(event);
+      setIssues(prev => [createdIssue, ...prev]);
+      setSelectedIssueId(freshId); // Auto select on map to showcase the magic
+      
+      // Update global indicators
+      setStats(prev => ({
+        ...prev,
+        issuesReported: prev.issuesReported + 1,
+        impactScore: Math.min(100, prev.impactScore + 0.1)
+      }));
 
-    // Switch view back and scroll to map
-    navigate('/');
-    setTimeout(() => {
-      handleScrollToMap();
-    }, 400);
+      // Trigger success toast
+      const event = new CustomEvent('civic_toast', {
+        detail: { 
+          message: `Report geodispatched! NLP categorized as ${newReport.category}.`, 
+          type: 'success' 
+        }
+      });
+      window.dispatchEvent(event);
+
+      // Switch view back and scroll to map
+      navigate('/');
+      setTimeout(() => {
+        handleScrollToMap();
+      }, 400);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  const handleUpdateUserPoints = (newPoints: number) => {
+  const handleUpdateUserPoints = async (newPoints: number) => {
     if (currentUser) {
       const updatedUser = { ...currentUser, reputationPoints: newPoints };
       setCurrentUser(updatedUser);
       localStorage.setItem('civic_current_user', JSON.stringify(updatedUser));
+      const token = localStorage.getItem('civic_token');
+      if (token) {
+        await fetch(`/api/users/${currentUser.id}/points`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ points: newPoints })
+        });
+      }
     }
   };
 
@@ -437,6 +415,11 @@ export default function App() {
           <Route path="/tracker" element={
             <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.25 }}>
               <IssueTracker onBack={() => navigate('/')} />
+            </motion.div>
+          } />
+          <Route path="/civic" element={
+            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.25 }}>
+              <CivicDashboard onBack={() => navigate('/')} onVerifyIssue={handleVerifyGameAction} onFlagIssue={handleFlagGameAction} />
             </motion.div>
           } />
           <Route path="/analytics" element={

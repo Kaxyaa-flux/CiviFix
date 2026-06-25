@@ -9,6 +9,7 @@ import { CommunityHero, Activity } from '../types';
 interface DashboardProps {
   onVerifyIssue: () => void;
   onFlagIssue: () => void;
+  onBack?: () => void;
 }
 
 const HEROES_LEADERBOARD: CommunityHero[] = [
@@ -53,7 +54,7 @@ const QUEUE_INCIDENTS = [
   }
 ];
 
-export default function CivicDashboard({ onVerifyIssue, onFlagIssue }: DashboardProps) {
+export default function CivicDashboard({ onVerifyIssue, onFlagIssue, onBack }: DashboardProps) {
   const [activities, setActivities] = useState<Activity[]>(INITIAL_ACTIVITIES);
   const [queueIndex, setQueueIndex] = useState(0);
   const [userScore, setUserScore] = useState(340);
@@ -107,6 +108,17 @@ export default function CivicDashboard({ onVerifyIssue, onFlagIssue }: Dashboard
         
         {/* Header */}
         <div className="text-center space-y-3">
+          {onBack && (
+            <button 
+              onClick={() => {
+                window.scrollTo({ top: 0, behavior: 'instant' });
+                onBack();
+              }}
+              className="inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-[#8EB69B] transition-colors font-mono cursor-pointer mb-2"
+            >
+              ← RETURN TO LANDING
+            </button>
+          )}
           <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-50 dark:bg-[#163832]/10 border border-[#E2E8F0] dark:border-[#1E293B] rounded-full text-xs font-semibold text-[#8EB69B] font-mono uppercase">
             <Trophy className="w-3.5 h-3.5" />
             Civic Action Hub
