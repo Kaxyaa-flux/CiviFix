@@ -3,8 +3,66 @@ import path from "path";
 import { createServer as createViteServer } from "vite";
 import { GoogleGenAI, Type } from "@google/genai";
 import dotenv from "dotenv";
+import { Pool } from "pg";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 dotenv.config();
+
+// Initialize Database connection
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+});
+
+async function setupDatabase() {
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS users (
+      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      email VARCHAR(255) UNIQUE NOT NULL,
+      password_hash VARCHAR(255) NOT NULL,
+      full_name VARCHAR(255) NOT NULL,
+      role VARCHAR(50) DEFAULT 'citizen',
+      reputation_points INTEGER DEFAULT 0,
+      joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+
+    CREATE TABLE IF NOT EXISTS issues (
+      id VARCHAR(50) PRIMARY KEY,
+      title TEXT NOT NULL,
+      description TEXT NOT NULL,
+      category VARCHAR(100) NOT NULL,
+      priority VARCHAR(50) NOT NULL,
+      status VARCHAR(50) NOT NULL,
+      location_name TEXT NOT NULL,
+      coord_x NUMERIC NOT NULL,
+      coord_y NUMERIC NOT NULL,
+      reported_at VARCHAR(100),
+      upvotes INTEGER DEFAULT 0,
+      reporter_name VARCHAR(255) NOT NULL,
+      user_id UUID REFERENCES users(id) ON DELETE SET NULL
+    );
+
+    CREATE TABLE IF NOT EXISTS issue_timeline (
+      id SERIAL PRIMARY KEY,
+      issue_id VARCHAR(50) REFERENCES issues(id) ON DELETE CASCADE,
+      status VARCHAR(50) NOT NULL,
+      label VARCHAR(255) NOT NULL,
+      date VARCHAR(100) NOT NULL,
+      completed BOOLEAN DEFAULT false
+    );
+
+    CREATE TABLE IF NOT EXISTS stats (
+      id INTEGER PRIMARY KEY,
+      issues_reported INTEGER DEFAULT 14258,
+      issues_resolved INTEGER DEFAULT 12891,
+      active_volunteers INTEGER DEFAULT 4320,
+      impact_score FLOAT DEFAULT 98.4
+    );
+
+    INSERT INTO stats (id) VALUES (1) ON CONFLICT (id) DO NOTHING;
+  `);
+  console.log("Database tables initialized.");
+}
 
 // Initialize Gemini Client safely
 let ai: GoogleGenAI | null = null;
@@ -24,11 +82,205 @@ if (key) {
   console.log("No GEMINI_API_KEY found in env. Initializing with local fallback system.");
 }
 
+// Auth Middleware
+const authenticateToken = (req: any, res: any, next: any) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  if (!token) return res.sendStatus(401);
+
+  jwt.verify(token, process.env.JWT_SECRET as string, (err: any, user: any) => {
+    if (err) return res.sendStatus(403);
+    req.user = user;
+    next();
+  });
+};
+
 async function startServer() {
   const app = express();
   const PORT = 3000;
 
   app.use(express.json({ limit: '10mb' }));
+
+  await setupDatabase();
+
+  // ------------------------------------------
+  // DB & AUTH API ROUTES
+  // ------------------------------------------
+
+  app.post("/api/auth/signup", async (req, res) => {
+    try {
+      const { email, password, fullName, role } = req.body;
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const result = await pool.query(
+        "INSERT INTO users (email, password_hash, full_name, role, reputation_points) VALUES ($1, $2, $3, $4, 0) RETURNING id, email, full_name, role, reputation_points, joined_at",
+        [email, hashedPassword, fullName, role || 'citizen']
+      );
+      const dbUser = result.rows[0];
+      const user = {
+        id: dbUser.id,
+        email: dbUser.email,
+        fullName: dbUser.full_name,
+        role: dbUser.role,
+        reputationPoints: dbUser.reputation_points,
+        joinedAt: dbUser.joined_at
+      };
+      const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET as string, { expiresIn: '7d' });
+      res.json({ user, token });
+    } catch (error: any) {
+      if (error.code === '23505') {
+        res.status(400).json({ error: "Email already exists" });
+      } else {
+        res.status(500).json({ error: error.message });
+      }
+    }
+  });
+
+  app.post("/api/auth/signin", async (req, res) => {
+    try {
+      const { email, password } = req.body;
+      const result = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
+      if (result.rows.length === 0) return res.status(400).json({ error: "Invalid credentials" });
+
+      const dbUser = result.rows[0];
+      const valid = await bcrypt.compare(password, dbUser.password_hash);
+      if (!valid) return res.status(400).json({ error: "Invalid credentials" });
+
+      const user = {
+        id: dbUser.id,
+        email: dbUser.email,
+        fullName: dbUser.full_name,
+        role: dbUser.role,
+        reputationPoints: dbUser.reputation_points,
+        joinedAt: dbUser.joined_at
+      };
+
+      const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET as string, { expiresIn: '7d' });
+      res.json({ user, token });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  app.get("/api/issues", async (req, res) => {
+    try {
+      const issuesResult = await pool.query("SELECT * FROM issues ORDER BY upvotes DESC");
+      const timelineResult = await pool.query("SELECT * FROM issue_timeline");
+
+      const issues = issuesResult.rows.map(issue => {
+        const timeline = timelineResult.rows.filter(t => t.issue_id === issue.id).map(t => ({
+          status: t.status,
+          label: t.label,
+          date: t.date,
+          completed: t.completed
+        }));
+
+        return {
+          id: issue.id,
+          title: issue.title,
+          description: issue.description,
+          category: issue.category,
+          priority: issue.priority,
+          status: issue.status,
+          locationName: issue.location_name,
+          coordinates: { x: issue.coord_x, y: issue.coord_y },
+          reportedAt: issue.reported_at,
+          upvotes: issue.upvotes,
+          reporterName: issue.reporter_name,
+          timeline
+        };
+      });
+
+      res.json(issues);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  app.post("/api/issues", authenticateToken, async (req: any, res: any) => {
+    try {
+      const { id, title, description, category, priority, status, locationName, coordinates, reportedAt, upvotes, reporterName, timeline } = req.body;
+      const userId = req.user.id;
+
+      await pool.query(
+        "INSERT INTO issues (id, title, description, category, priority, status, location_name, coord_x, coord_y, reported_at, upvotes, reporter_name, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)",
+        [id, title, description, category, priority, status, locationName, coordinates.x, coordinates.y, reportedAt, upvotes, reporterName, userId]
+      );
+
+      if (timeline && timeline.length > 0) {
+        for (const t of timeline) {
+          await pool.query(
+            "INSERT INTO issue_timeline (issue_id, status, label, date, completed) VALUES ($1, $2, $3, $4, $5)",
+            [id, t.status, t.label, t.date, t.completed]
+          );
+        }
+      }
+
+      await pool.query("UPDATE stats SET issues_reported = issues_reported + 1 WHERE id = 1");
+
+      res.status(201).json({ message: "Issue created" });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  app.patch("/api/issues/:id/upvote", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const result = await pool.query("UPDATE issues SET upvotes = upvotes + 1 WHERE id = $1 RETURNING upvotes", [id]);
+      if (result.rows.length === 0) return res.status(404).json({ error: "Issue not found" });
+      res.json({ upvotes: result.rows[0].upvotes });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  app.get("/api/stats", async (req, res) => {
+    try {
+      const result = await pool.query("SELECT issues_reported, issues_resolved, active_volunteers, impact_score FROM stats WHERE id = 1");
+      if (result.rows.length > 0) {
+        res.json({
+          issuesReported: result.rows[0].issues_reported,
+          issuesResolved: result.rows[0].issues_resolved,
+          activeVolunteers: result.rows[0].active_volunteers,
+          impactScore: result.rows[0].impact_score
+        });
+      } else {
+        res.json({ issuesReported: 0, issuesResolved: 0, activeVolunteers: 0, impactScore: 0 });
+      }
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  app.patch("/api/users/:id/points", authenticateToken, async (req: any, res: any) => {
+    try {
+      const { id } = req.params;
+      const { points } = req.body;
+      
+      // Additional check to make sure the user is only updating their own points
+      if (req.user.id !== id) return res.sendStatus(403);
+
+      const result = await pool.query("UPDATE users SET reputation_points = $1 WHERE id = $2 RETURNING *", [points, id]);
+      if (result.rows.length === 0) return res.status(404).json({ error: "User not found" });
+
+      const dbUser = result.rows[0];
+      const user = {
+        id: dbUser.id,
+        email: dbUser.email,
+        fullName: dbUser.full_name,
+        role: dbUser.role,
+        reputationPoints: dbUser.reputation_points,
+        joinedAt: dbUser.joined_at
+      };
+      res.json(user);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // ------------------------------------------
+  // AI ROUTES
+  // ------------------------------------------
 
   // API Route: AI analysis of civic issues
   app.post("/api/analyze-issue", async (req, res) => {
@@ -38,7 +290,6 @@ async function startServer() {
       return res.status(400).json({ error: "Title and description are required for analysis." });
     }
 
-    // Try calling Gemini if available
     if (ai) {
       try {
         const response = await ai.models.generateContent({
@@ -94,7 +345,6 @@ Provide suggestions for category, severity, confidence, responsible department, 
       }
     }
 
-    // Heuristics fallback system
     let category = "Street Maintenance";
     let severity = 5;
     let confidence = 85;
@@ -131,7 +381,6 @@ Provide suggestions for category, severity, confidence, responsible department, 
       reasoning = "High risk public safety hazard flagged for urgent dispatch.";
     }
 
-    // Dynamic confidence score
     confidence = Math.min(100, Math.max(70, description.length > 50 ? 95 : 80));
 
     res.json({
@@ -144,7 +393,6 @@ Provide suggestions for category, severity, confidence, responsible department, 
     });
   });
 
-  // API Route: AI verification and deep scan of issues
   app.post("/api/verify-issue", async (req, res) => {
     const { title, description, category, locationName } = req.body;
 
@@ -152,7 +400,6 @@ Provide suggestions for category, severity, confidence, responsible department, 
       return res.status(400).json({ error: "Title and description are required for verification." });
     }
 
-    // Try calling Gemini if available
     if (ai) {
       try {
         const response = await ai.models.generateContent({
@@ -229,7 +476,6 @@ Return structured JSON matching the requested schema. Make the reasonings realis
       }
     }
 
-    // Heuristics fallback system for verification
     const textHash = (title.length + description.length) % 10;
     const isSlightlySuspicious = description.toLowerCase().includes("test") || description.length < 25;
     
@@ -280,8 +526,8 @@ Return structured JSON matching the requested schema. Make the reasonings realis
     });
   }
 
-  app.listen(PORT, "0.0.0.0", () => {
-    console.log(`[Civic Tech Server] Running on http://0.0.0.0:${PORT}`);
+  app.listen(PORT, () => {
+    console.log(`[Civic Tech Server] Running on http://localhost:${PORT}`);
   });
 }
 
