@@ -9,14 +9,14 @@ import { User } from '../types';
 
 const getAvatarStyle = (avatarId: string) => {
   const styles: Record<string, string> = {
-    av1: 'bg-gradient-to-tr from-blue-500 to-indigo-600 text-white',
-    av2: 'bg-gradient-to-tr from-emerald-500 to-teal-600 text-white',
-    av3: 'bg-gradient-to-tr from-amber-500 to-orange-600 text-white',
-    av4: 'bg-gradient-to-tr from-rose-500 to-pink-600 text-white',
-    av5: 'bg-gradient-to-tr from-purple-500 to-violet-600 text-white',
-    av6: 'bg-gradient-to-tr from-cyan-500 to-blue-600 text-white',
+    av1: 'bg-gradient-to-tr from-blue-500 to-indigo-600 text-slate-900 dark:text-white',
+    av2: 'bg-gradient-to-tr from-green-500 to-teal-600 text-slate-900 dark:text-white',
+    av3: 'bg-gradient-to-tr from-amber-500 to-orange-600 text-slate-900 dark:text-white',
+    av4: 'bg-gradient-to-tr from-red-500 to-pink-600 text-slate-900 dark:text-white',
+    av5: 'bg-gradient-to-tr from-purple-500 to-violet-600 text-slate-900 dark:text-white',
+    av6: 'bg-gradient-to-tr from-cyan-500 to-blue-600 text-slate-900 dark:text-white',
   };
-  return styles[avatarId] || 'bg-[#8EB69B] text-white';
+  return styles[avatarId] || 'bg-[#7C3AED] text-slate-900 dark:text-white';
 };
 
 interface NavbarProps {
@@ -125,11 +125,10 @@ export default function Navbar({
   };
 
   return (
-    <header
-      id="main-nav"
+    <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled || currentView !== 'landing'
-          ? 'bg-[#DAF1DE]/30/90 dark:bg-[#051F20]/85 backdrop-blur-md shadow-lg border-b border-slate-200/50 dark:border-[#163832]/80 py-3'
+        scrolled 
+          ? 'glass-nav-aurora py-3' 
           : 'bg-transparent py-5'
       }`}
     >
@@ -137,12 +136,12 @@ export default function Navbar({
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center gap-2 cursor-pointer" onClick={onNavigateToHome}>
-            <div className="relative w-8 h-8 rounded-lg flex items-center justify-center shadow-md shadow-[#051F20]/30 overflow-hidden bg-white">
-              <img src="/logo.png" alt="CiviFix Logo" className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-[#163832] rounded-lg blur-md opacity-20 -z-10"></div>
-            </div>
-            <span className="font-display font-bold text-xl tracking-tight text-slate-950 dark:text-white">
-              Civi<span className="text-[#8EB69B]">Fix</span>
+              <div className="relative w-8 h-8 rounded-lg flex items-center justify-center shadow-md shadow-[#7C3AED]/30 overflow-hidden bg-white">
+                <img src="/logo.png" alt="CiviFix Logo" className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-[#7C3AED] rounded-lg blur-md opacity-20 -z-10"></div>
+              </div>
+            <span className="font-display font-bold text-xl tracking-tight text-slate-950 dark:text-slate-900 dark:text-white">
+              Civi<span className="text-[#7C3AED]">Fix</span>
             </span>
           </div>
 
@@ -154,16 +153,17 @@ export default function Navbar({
                 onClick={() => handleNavClick(link.id)}
                 className={`relative px-4 py-2 rounded-lg font-sans text-sm font-medium transition-colors cursor-pointer ${
                   currentView === 'landing' && activeSection === link.id
-                    ? 'text-[#8EB69B] dark:text-[#8EB69B]'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white'
+                    ? 'text-[#7C3AED] dark:text-[#7C3AED]'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-slate-900 dark:text-white'
                 }`}
               >
                 {link.name}
                 {currentView === 'landing' && activeSection === link.id && (
                   <motion.div
-                    layoutId="activeNavIndicator"
-                    className="absolute bottom-0 left-4 right-4 h-0.5 bg-[#163832] rounded-full"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    layoutId="navbar-indicator"
+                    className="absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r from-[#7C3AED] to-[#22D3EE] rounded-full shadow-[0_0_8px_rgba(34,211,238,0.6)]"
+                    initial={false}
+                    transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                   />
                 )}
               </button>
@@ -176,7 +176,7 @@ export default function Navbar({
             <button
               onClick={onToggleTheme}
               aria-label="Toggle Theme"
-              className="p-2.5 rounded-xl border border-slate-200 dark:border-[#163832] text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors cursor-pointer"
+              className="p-2.5 rounded-xl border border-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors cursor-pointer"
             >
               {isDarkMode ? <Sun className="w-5 h-5 text-amber-400" /> : <Moon className="w-5 h-5 text-indigo-600" />}
             </button>
@@ -187,7 +187,7 @@ export default function Navbar({
               <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={() => setShowDropdown(!showDropdown)}
-                  className="flex items-center gap-2 p-1 rounded-xl border border-slate-200 dark:border-[#163832] hover:bg-slate-100 dark:hover:bg-slate-900 transition-all cursor-pointer bg-[#DAF1DE]/20 dark:bg-[#0B2B26]"
+                  className="flex items-center gap-2 p-1 rounded-xl border border-white/10 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all cursor-pointer bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90"
                 >
                   <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm ${getAvatarStyle(currentUser.avatar)}`}>
                     {currentUser.fullName.charAt(0).toUpperCase()}
@@ -204,31 +204,31 @@ export default function Navbar({
                       initial={{ opacity: 0, y: 10, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                      className="absolute right-0 mt-2 w-64 bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] rounded-2xl shadow-xl p-4 space-y-3 z-50 text-left"
+                      className="absolute right-0 mt-2 w-64 bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90 border border-white/10 rounded-2xl shadow-xl p-4 space-y-3 z-50 text-left"
                     >
-                      <div className="flex items-center gap-3 pb-3 border-b border-slate-100 dark:border-slate-850">
+                      <div className="flex items-center gap-3 pb-3 border-b border-slate-100 dark:border-white/5">
                         <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-black text-lg ${getAvatarStyle(currentUser.avatar)}`}>
                           {currentUser.fullName.charAt(0).toUpperCase()}
                         </div>
                         <div className="space-y-0.5 truncate">
-                          <h4 className="text-xs font-extrabold text-slate-900 dark:text-white truncate">{currentUser.fullName}</h4>
+                          <h4 className="text-xs font-extrabold text-slate-900 dark:text-slate-900 dark:text-white truncate">{currentUser.fullName}</h4>
                           <p className="text-[10px] text-slate-400 font-mono truncate">{currentUser.email}</p>
                         </div>
                       </div>
 
                       <div className="space-y-2 text-xs">
-                        <div className="flex justify-between items-center bg-[#DAF1DE]/30 dark:bg-[#051F20] p-2 rounded-xl">
+                        <div className="flex justify-between items-center bg-slate-50 dark:bg-transparent p-2 rounded-xl">
                           <span className="text-slate-400 font-mono text-[9px]">ROLE:</span>
                           <span className={`px-2 py-0.5 font-bold font-mono text-[9px] rounded-full uppercase ${
                             currentUser.role === 'moderator' 
-                              ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/25' 
-                              : 'bg-[#8EB69B]/10 text-[#8EB69B] border border-[#235347]/25'
+                              ? 'bg-green-500/10 text-green-500 border border-green-500/25' 
+                              : 'bg-[#7C3AED]/10 text-[#7C3AED] border border-white/10/25'
                           }`}>
                             {currentUser.role}
                           </span>
                         </div>
 
-                        <div className="flex justify-between items-center bg-[#DAF1DE]/30 dark:bg-[#051F20] p-2 rounded-xl">
+                        <div className="flex justify-between items-center bg-slate-50 dark:bg-transparent p-2 rounded-xl">
                           <span className="text-slate-400 font-mono text-[9px] flex items-center gap-1">
                             <Award className="w-3.5 h-3.5 text-amber-500" /> REPUTATION:
                           </span>
@@ -241,7 +241,7 @@ export default function Navbar({
                           setShowDropdown(false);
                           onNavigateToGamification();
                         }}
-                        className="w-full bg-[#8EB69B]/10 hover:bg-[#8EB69B]/20 text-[#8EB69B] dark:text-blue-400 py-2 rounded-xl font-bold text-xs transition-colors cursor-pointer flex items-center justify-center gap-1.5"
+                        className="w-full bg-[#7C3AED]/10 hover:bg-[#7C3AED]/20 text-[#7C3AED] dark:text-blue-400 py-2 rounded-xl font-bold text-xs transition-colors cursor-pointer flex items-center justify-center gap-1.5"
                       >
                         <Award className="w-3.5 h-3.5 text-amber-550" />
                         My Rewards & Badges
@@ -265,16 +265,16 @@ export default function Navbar({
               <div className="flex items-center gap-2 shrink-0">
                 <button
                   onClick={() => onNavigateToAuth('signin')}
-                  className="flex items-center gap-1 px-3.5 py-2 text-slate-600 dark:text-slate-300 hover:text-[#8EB69B] dark:hover:text-blue-400 text-xs font-bold font-sans rounded-xl border border-slate-200 dark:border-[#163832] hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors cursor-pointer"
+                  className="flex items-center gap-1 px-3.5 py-2 text-slate-600 dark:text-slate-300 hover:text-[#7C3AED] dark:hover:text-blue-400 text-xs font-bold font-sans rounded-xl border border-white/10 hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors cursor-pointer"
                 >
                   <LogIn className="w-3.5 h-3.5" />
                   Sign In
                 </button>
                 <button
                   onClick={() => onNavigateToAuth('signup')}
-                  className="flex items-center gap-1 px-3.5 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800/80 dark:hover:bg-slate-800 text-slate-900 dark:text-white text-xs font-bold font-sans rounded-xl transition-colors cursor-pointer"
+                  className="flex items-center gap-1 px-3.5 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800/80 dark:hover:bg-slate-800 text-slate-900 dark:text-slate-900 dark:text-white text-xs font-bold font-sans rounded-xl transition-colors cursor-pointer"
                 >
-                  <UserPlus className="w-3.5 h-3.5 text-[#8EB69B]" />
+                  <UserPlus className="w-3.5 h-3.5 text-[#7C3AED]" />
                   Sign Up
                 </button>
               </div>
@@ -287,7 +287,7 @@ export default function Navbar({
             <button
               onClick={onToggleTheme}
               aria-label="Toggle Theme"
-              className="p-2 rounded-lg border border-slate-200 dark:border-[#163832] text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors"
+              className="p-2 rounded-lg border border-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors"
             >
               {isDarkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-600" />}
             </button>
@@ -304,15 +304,15 @@ export default function Navbar({
       </div>
 
       {/* Feature Bar (Row 2) - Hidden on mobile */}
-      <div className="hidden md:block w-full bg-[#163832] dark:bg-[#0B2B26] border-t border-slate-200/50 dark:border-[#163832]/50 shadow-sm">
+      <div className="hidden md:block w-full bg-[#163832] dark:bg-[#16161D]/90 border-t border-slate-200/50 dark:border-white/10/50 shadow-sm">
         <div className="flex items-center justify-center gap-2 flex-wrap px-4 py-2 max-w-7xl mx-auto">
           {/* Authority Console */}
           <button
             onClick={onNavigateToAuthority}
             className={`flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-lg border transition-all cursor-pointer ${
               currentView === 'authority'
-                ? 'bg-[#163832] border-[#8EB69B] text-[#DAF1DE]'
-                : 'bg-transparent border-[#235347] text-[#8EB69B] hover:bg-[#163832]'
+                ? 'bg-[#163832] border-[#7C3AED] text-[#DAF1DE]'
+                : 'bg-transparent border-white/10 text-[#7C3AED] hover:bg-[#163832]'
             }`}
           >
             <ShieldAlert className="w-3.5 h-3.5" />
@@ -324,8 +324,8 @@ export default function Navbar({
             onClick={onNavigateToVerification}
             className={`flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-lg border transition-all cursor-pointer ${
               currentView === 'verification'
-                ? 'bg-[#163832] border-[#8EB69B] text-[#DAF1DE]'
-                : 'bg-transparent border-[#235347] text-[#8EB69B] hover:bg-[#163832]'
+                ? 'bg-[#163832] border-[#7C3AED] text-[#DAF1DE]'
+                : 'bg-transparent border-white/10 text-[#7C3AED] hover:bg-[#163832]'
             }`}
           >
             <ShieldCheck className="w-3.5 h-3.5" />
@@ -337,8 +337,8 @@ export default function Navbar({
             onClick={onNavigateToTracker}
             className={`flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-lg border transition-all cursor-pointer ${
               currentView === 'tracker'
-                ? 'bg-[#163832] border-[#8EB69B] text-[#DAF1DE]'
-                : 'bg-transparent border-[#235347] text-[#8EB69B] hover:bg-[#163832]'
+                ? 'bg-[#163832] border-[#7C3AED] text-[#DAF1DE]'
+                : 'bg-transparent border-white/10 text-[#7C3AED] hover:bg-[#163832]'
             }`}
           >
             <BarChart3 className="w-3.5 h-3.5" />
@@ -350,8 +350,8 @@ export default function Navbar({
             onClick={onNavigateToAnalytics}
             className={`flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-lg border transition-all cursor-pointer ${
               currentView === 'analytics'
-                ? 'bg-[#163832] border-[#8EB69B] text-[#DAF1DE]'
-                : 'bg-transparent border-[#235347] text-[#8EB69B] hover:bg-[#163832]'
+                ? 'bg-[#163832] border-[#7C3AED] text-[#DAF1DE]'
+                : 'bg-transparent border-white/10 text-[#7C3AED] hover:bg-[#163832]'
             }`}
           >
             <BrainCircuit className="w-3.5 h-3.5" />
@@ -363,8 +363,8 @@ export default function Navbar({
             onClick={onNavigateToGamification}
             className={`flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-lg border transition-all cursor-pointer ${
               currentView === 'gamification'
-                ? 'bg-[#163832] border-[#8EB69B] text-[#DAF1DE]'
-                : 'bg-transparent border-[#235347] text-[#8EB69B] hover:bg-[#163832]'
+                ? 'bg-[#163832] border-[#7C3AED] text-[#DAF1DE]'
+                : 'bg-transparent border-white/10 text-[#7C3AED] hover:bg-[#163832]'
             }`}
           >
             <Award className="w-3.5 h-3.5" />
@@ -374,7 +374,7 @@ export default function Navbar({
           {/* Report Issue CTA */}
           <button
             onClick={onOpenReportModal}
-            className="flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-lg border transition-all cursor-pointer bg-[#163832] hover:bg-[#235347] text-[#DAF1DE] border-[#8EB69B]"
+            className="flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-lg border transition-all cursor-pointer bg-[#163832] hover:bg-[#22D3EE] text-[#DAF1DE] border-[#7C3AED]"
           >
             <ArrowRight className="w-3.5 h-3.5" />
             Report Issue
@@ -390,7 +390,7 @@ export default function Navbar({
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25 }}
-            className="md:hidden border-b border-slate-200 dark:border-[#163832] bg-[#DAF1DE]/20 dark:bg-[#051F20] overflow-hidden"
+            className="md:hidden border-b border-white/10 bg-slate-50 dark:bg-transparent overflow-hidden"
           >
             <div className="px-4 pt-3 pb-6 space-y-2">
               {navLinks.map((link) => (
@@ -399,7 +399,7 @@ export default function Navbar({
                   onClick={() => handleNavClick(link.id)}
                   className={`block w-full text-left px-4 py-3 rounded-xl font-sans text-base font-medium transition-colors cursor-pointer ${
                     currentView === 'landing' && activeSection === link.id
-                      ? 'bg-blue-50 dark:bg-[#163832]/15 text-[#8EB69B] dark:text-[#8EB69B] font-semibold'
+                      ? 'bg-blue-50 dark:bg-[#163832]/15 text-[#7C3AED] dark:text-[#7C3AED] font-semibold'
                       : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900'
                   }`}
                 >
@@ -408,26 +408,26 @@ export default function Navbar({
               ))}
 
               
-              <div className="pt-4 border-t border-slate-200 dark:border-[#163832] space-y-2">
+              <div className="pt-4 border-t border-white/10 space-y-2">
                 {/* Mobile session indicator / auth triggers */}
                 {currentUser ? (
-                  <div className="bg-[#DAF1DE]/30 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] rounded-xl p-3.5 space-y-3">
+                  <div className="bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90 border border-white/10 rounded-xl p-3.5 space-y-3">
                     <div className="flex items-center gap-3">
                       <div className={`w-10 h-10 rounded-lg flex items-center justify-center font-bold text-sm ${getAvatarStyle(currentUser.avatar)}`}>
                         {currentUser.fullName.charAt(0).toUpperCase()}
                       </div>
                       <div className="space-y-0.5 min-w-0">
-                        <h4 className="text-sm font-extrabold text-slate-900 dark:text-white truncate">{currentUser.fullName}</h4>
+                        <h4 className="text-sm font-extrabold text-slate-900 dark:text-slate-900 dark:text-white truncate">{currentUser.fullName}</h4>
                         <p className="text-[10px] text-slate-400 font-mono truncate">{currentUser.email}</p>
                       </div>
                     </div>
 
                     <div className="grid grid-cols-2 gap-2 text-center text-xs">
-                      <div className="bg-[#DAF1DE]/20 dark:bg-[#051F20] p-2 rounded-lg border border-slate-100 dark:border-slate-850">
+                      <div className="bg-slate-50 dark:bg-transparent p-2 rounded-lg border border-slate-100 dark:border-white/5">
                         <span className="block text-[8px] font-mono text-slate-400 uppercase">Role</span>
-                        <span className="font-bold text-[#8EB69B] text-[10px] uppercase font-mono">{currentUser.role}</span>
+                        <span className="font-bold text-[#7C3AED] text-[10px] uppercase font-mono">{currentUser.role}</span>
                       </div>
-                      <div className="bg-[#DAF1DE]/20 dark:bg-[#051F20] p-2 rounded-lg border border-slate-100 dark:border-slate-850">
+                      <div className="bg-slate-50 dark:bg-transparent p-2 rounded-lg border border-slate-100 dark:border-white/5">
                         <span className="block text-[8px] font-mono text-slate-400 uppercase">Reputation</span>
                         <span className="font-bold text-amber-500 text-[10px]">{currentUser.reputationPoints} PTS</span>
                       </div>
@@ -451,7 +451,7 @@ export default function Navbar({
                         setIsOpen(false);
                         onNavigateToAuth('signin');
                       }}
-                      className="flex items-center justify-center gap-1.5 px-4 py-2.5 border border-slate-200 dark:border-[#163832] text-slate-600 dark:text-slate-300 hover:text-[#8EB69B] dark:hover:text-blue-400 text-xs font-bold font-sans rounded-xl transition-all cursor-pointer"
+                      className="flex items-center justify-center gap-1.5 px-4 py-2.5 border border-white/10 text-slate-600 dark:text-slate-300 hover:text-[#7C3AED] dark:hover:text-blue-400 text-xs font-bold font-sans rounded-xl transition-all cursor-pointer"
                     >
                       <LogIn className="w-4 h-4" />
                       Sign In
@@ -461,9 +461,9 @@ export default function Navbar({
                         setIsOpen(false);
                         onNavigateToAuth('signup');
                       }}
-                      className="flex items-center justify-center gap-1.5 px-4 py-2.5 bg-slate-100 dark:bg-[#0B2B26] text-slate-900 dark:text-white text-xs font-bold font-sans rounded-xl border border-[#235347]/15 transition-all cursor-pointer"
+                      className="flex items-center justify-center gap-1.5 px-4 py-2.5 bg-slate-100 dark:bg-[#16161D]/90 text-slate-900 dark:text-slate-900 dark:text-white text-xs font-bold font-sans rounded-xl border border-white/10/15 transition-all cursor-pointer"
                     >
-                      <UserPlus className="w-4 h-4 text-[#8EB69B]" />
+                      <UserPlus className="w-4 h-4 text-[#7C3AED]" />
                       Sign Up
                     </button>
                   </div>
@@ -478,7 +478,7 @@ export default function Navbar({
                   className={`flex items-center justify-center gap-2 w-full px-5 py-3 font-sans text-base font-bold rounded-xl border transition-all cursor-pointer ${
                     currentView === 'authority'
                       ? 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500 shadow-md'
-                      : 'bg-[#DAF1DE]/20 dark:bg-[#0B2B26] text-slate-705 dark:text-slate-305 border-slate-205 dark:border-slate-805 hover:bg-indigo-500/5'
+                      : 'bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90 text-slate-705 dark:text-slate-305 border-slate-205 dark:border-slate-805 hover:bg-indigo-500/5'
                   }`}
                 >
                   <ShieldAlert className="w-5 h-5 text-indigo-500 animate-pulse" />
@@ -493,11 +493,11 @@ export default function Navbar({
                   }}
                   className={`flex items-center justify-center gap-2 w-full px-5 py-3 font-sans text-base font-bold rounded-xl border transition-all cursor-pointer ${
                     currentView === 'verification'
-                      ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500 shadow-md'
-                      : 'bg-[#DAF1DE]/20 dark:bg-[#0B2B26] text-emerald-600 dark:text-emerald-400 border-emerald-500/35 hover:bg-emerald-500/5'
+                      ? 'bg-green-500/10 text-emerald-600 dark:text-green-400 border-green-500 shadow-md'
+                      : 'bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90 text-emerald-600 dark:text-green-400 border-green-500/35 hover:bg-green-500/5'
                   }`}
                 >
-                  <ShieldCheck className="w-5 h-5 text-emerald-500" />
+                  <ShieldCheck className="w-5 h-5 text-green-500" />
                   AI Verification Center
                 </button>
 
@@ -509,11 +509,11 @@ export default function Navbar({
                   }}
                   className={`flex items-center justify-center gap-2 w-full px-5 py-3 font-sans text-base font-bold rounded-xl border transition-all cursor-pointer ${
                     currentView === 'tracker'
-                      ? 'bg-[#8EB69B]/10 text-[#8EB69B] dark:text-blue-400 border-[#235347] shadow-md'
-                      : 'bg-[#DAF1DE]/20 dark:bg-[#0B2B26] text-[#8EB69B] dark:text-blue-400 border-[#235347]/35 hover:bg-[#8EB69B]/5'
+                      ? 'bg-[#7C3AED]/10 text-[#7C3AED] dark:text-blue-400 border-white/10 shadow-md'
+                      : 'bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90 text-[#7C3AED] dark:text-blue-400 border-white/10/35 hover:bg-[#7C3AED]/5'
                   }`}
                 >
-                  <BarChart3 className="w-5 h-5 text-[#8EB69B]" />
+                  <BarChart3 className="w-5 h-5 text-[#7C3AED]" />
                   Issue Tracker
                 </button>
 
@@ -526,7 +526,7 @@ export default function Navbar({
                   className={`flex items-center justify-center gap-2 w-full px-5 py-3 font-sans text-base font-bold rounded-xl border transition-all cursor-pointer ${
                     currentView === 'analytics'
                       ? 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500 shadow-md'
-                      : 'bg-[#DAF1DE]/20 dark:bg-[#0B2B26] text-purple-600 dark:text-purple-400 border-purple-500/35 hover:bg-purple-500/5'
+                      : 'bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90 text-purple-600 dark:text-purple-400 border-purple-500/35 hover:bg-purple-500/5'
                   }`}
                 >
                   <BrainCircuit className="w-5 h-5 text-purple-500" />
@@ -542,7 +542,7 @@ export default function Navbar({
                   className={`flex items-center justify-center gap-2 w-full px-5 py-3 font-sans text-base font-bold rounded-xl border transition-all cursor-pointer ${
                     currentView === 'gamification'
                       ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500 shadow-md'
-                      : 'bg-[#DAF1DE]/20 dark:bg-[#0B2B26] text-amber-600 dark:text-amber-400 border-amber-500/35 hover:bg-amber-500/5'
+                      : 'bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90 text-amber-600 dark:text-amber-400 border-amber-500/35 hover:bg-amber-500/5'
                   }`}
                 >
                   <Award className="w-5 h-5 text-amber-500" />
@@ -555,7 +555,7 @@ export default function Navbar({
                     setIsOpen(false);
                     onOpenReportModal();
                   }}
-                  className="flex items-center justify-center gap-2 w-full px-5 py-3 bg-[#163832] hover:bg-[#0B2B26] text-white font-sans text-base font-medium rounded-xl shadow-lg cursor-pointer"
+                  className="flex items-center justify-center gap-2 w-full px-5 py-3 bg-[#163832] hover:bg-[#0B2B26] text-slate-900 dark:text-white font-sans text-base font-medium rounded-xl shadow-lg cursor-pointer"
                 >
                   Report Issue
                   <ArrowRight className="w-4 h-4" />
