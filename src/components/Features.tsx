@@ -23,7 +23,7 @@ const FEATURE_LIST = [
     title: 'Automated Smart Dispatch',
     description: 'Bypasses legacy municipal backlogs. Connects hazardous reports directly to active city road crews and water maintenance technicians.',
     icon: Zap,
-    color: 'text-[#8EB69B]',
+    color: 'text-[#7C3AED]',
     bgColor: 'bg-[#163832]/10',
   },
   {
@@ -31,7 +31,7 @@ const FEATURE_LIST = [
     title: 'Community Mobilization',
     description: 'Broadcasts urgent location alerts to nearby volunteer circles, allowing citizens to self-organize for small debris clearance.',
     icon: Users,
-    color: 'text-[#8EB69B]',
+    color: 'text-[#7C3AED]',
     bgColor: 'bg-[#163832]/10',
   },
   {
@@ -56,13 +56,13 @@ export default function Features() {
   return (
     <section 
       id="features" 
-      className="relative py-24 bg-[#DAF1DE]/20 dark:bg-[#051F20] border-b border-[#E2E8F0] dark:border-[#1E293B] transition-colors duration-300"
+      className="relative py-24 bg-slate-50 dark:bg-transparent border-b border-[#E2E8F0] dark:border-[#1E293B] transition-colors duration-300"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         
         {/* Title Block */}
         <div className="text-center space-y-4">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#163832]/10 border border-[#235347]/20 rounded-full text-xs font-semibold text-[#8EB69B] font-mono uppercase">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#163832]/10 border border-white/10/20 rounded-full text-xs font-semibold text-[#7C3AED] font-mono uppercase">
             <Cpu className="w-3.5 h-3.5 text-[#8B5CF6]" />
             Cutting-Edge Civic Tech
           </div>
@@ -86,7 +86,7 @@ export default function Features() {
                 viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.4, delay: idx * 0.08 }}
                 whileHover={{ y: -5, transition: { duration: 0.2 } }}
-                className="p-6 bg-[#F8FAFC] dark:bg-[#0F172A] border border-[#E2E8F0] dark:border-[#1E293B] rounded-2xl flex flex-col justify-between hover:shadow-xl dark:hover:shadow-[#051F20]/30 hover:border-[#235347]/50 dark:hover:border-[#235347]/50 transition-all duration-300"
+                className="p-6 bg-[#F8FAFC] dark:bg-[#16161D] border border-[#E2E8F0] dark:border-[#1E293B] rounded-2xl flex flex-col justify-between hover:shadow-xl dark:hover:shadow-[#051F20]/30 hover:border-white/10/50 dark:hover:border-white/10/50 transition-all duration-300"
               >
                 <div className="space-y-4">
                   <div className={`w-12 h-12 rounded-xl ${feature.bgColor} ${feature.color} flex items-center justify-center`}>

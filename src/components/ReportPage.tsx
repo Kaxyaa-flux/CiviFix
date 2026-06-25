@@ -213,7 +213,7 @@ export default function ReportPage({ onBack, onSubmit }: ReportPageProps) {
                 window.scrollTo({ top: 0, behavior: 'instant' });
                 onBack();
               }}
-            className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors group cursor-pointer"
+            className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-slate-900 dark:text-white transition-colors group cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
             Back to Civic Dashboard
@@ -227,12 +227,12 @@ export default function ReportPage({ onBack, onSubmit }: ReportPageProps) {
 
         {/* Title Block */}
         <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#163832]/10 border border-[#235347]/20 text-[#8EB69B] text-xs font-semibold w-fit">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#163832]/10 border border-white/10/20 text-[#7C3AED] text-xs font-semibold w-fit">
             <Sparkles className="w-3.5 h-3.5" />
             AI-DRIVEN MUNICIPAL ROUTING
           </div>
           <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight">
-            Report Civic <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8EB69B] to-[#10B981]">Incidents</span>
+            Report Civic <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7C3AED] to-[#10B981]">Incidents</span>
           </h1>
           <p className="text-slate-400 max-w-2xl text-sm sm:text-base">
             Upload environmental files, tag GPS locations, and trigger our instant municipal neural dispatcher. Peer-validated in real-time.
@@ -249,7 +249,7 @@ export default function ReportPage({ onBack, onSubmit }: ReportPageProps) {
               {/* Row 1: Issue Title */}
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-slate-300 flex items-center justify-between">
-                  <span>Issue Title <span className="text-rose-500">*</span></span>
+                  <span>Issue Title <span className="text-red-500">*</span></span>
                   <span className="text-xs text-slate-500 font-mono">Max 100 chars</span>
                 </label>
                 <div className="relative">
@@ -259,7 +259,7 @@ export default function ReportPage({ onBack, onSubmit }: ReportPageProps) {
                     value={title}
                     onChange={(e) => setTitle(e.target.value.substring(0, 100))}
                     placeholder="E.g., High pressure water leakage onto pedestrian walk"
-                    className="w-full bg-slate-950/80 border border-slate-800 focus:border-[#235347]/80 focus:ring-1 focus:ring-[#8EB69B]/50 rounded-xl px-4 py-3 text-slate-100 placeholder-slate-500 text-sm transition-all outline-none"
+                    className="w-full bg-slate-950/80 border border-slate-800 focus:border-white/10/80 focus:ring-1 focus:ring-[#8EB69B]/50 rounded-xl px-4 py-3 text-slate-100 placeholder-slate-500 text-sm transition-all outline-none"
                   />
                 </div>
               </div>
@@ -267,7 +267,7 @@ export default function ReportPage({ onBack, onSubmit }: ReportPageProps) {
               {/* Row 2: Description */}
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-slate-300">
-                  Detailed Description <span className="text-rose-500">*</span>
+                  Detailed Description <span className="text-red-500">*</span>
                 </label>
                 <textarea 
                   required
@@ -275,14 +275,14 @@ export default function ReportPage({ onBack, onSubmit }: ReportPageProps) {
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="Describe the depth, exact visible hazards, and surrounding context. The municipal dispatcher processes this text for automatic agency classification."
-                  className="w-full bg-slate-950/80 border border-slate-800 focus:border-[#235347]/80 focus:ring-1 focus:ring-[#8EB69B]/50 rounded-xl px-4 py-3 text-slate-100 placeholder-slate-500 text-sm transition-all outline-none resize-none leading-relaxed"
+                  className="w-full bg-slate-950/80 border border-slate-800 focus:border-white/10/80 focus:ring-1 focus:ring-[#8EB69B]/50 rounded-xl px-4 py-3 text-slate-100 placeholder-slate-500 text-sm transition-all outline-none resize-none leading-relaxed"
                 />
               </div>
 
               {/* AI Auto-Analysis Quick Assist Button */}
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-2xl bg-[#163832]/5 border border-[#235347]/20">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-2xl bg-[#163832]/5 border border-white/10/20">
                 <div className="flex items-start gap-3">
-                  <div className="p-2 rounded-lg bg-[#163832]/10 text-[#8EB69B]">
+                  <div className="p-2 rounded-lg bg-[#163832]/10 text-[#7C3AED]">
                     <Sparkles className="w-5 h-5 animate-pulse" />
                   </div>
                   <div>
@@ -294,7 +294,7 @@ export default function ReportPage({ onBack, onSubmit }: ReportPageProps) {
                   type="button"
                   disabled={isAnalyzing || !title || !description}
                   onClick={handleAiAnalysis}
-                  className="w-full sm:w-auto px-4 py-2 bg-gradient-to-r from-[#8EB69B] to-[#10B981] hover:from-blue-600 hover:to-emerald-600 disabled:from-slate-800 disabled:to-slate-800 text-white font-semibold text-xs rounded-xl flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer disabled:cursor-not-allowed"
+                  className="w-full sm:w-auto px-4 py-2 bg-gradient-to-r from-[#7C3AED] to-[#10B981] hover:from-blue-600 hover:to-emerald-600 disabled:from-slate-800 disabled:to-slate-800 text-slate-900 dark:text-white font-semibold text-xs rounded-xl flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer disabled:cursor-not-allowed"
                 >
                   {isAnalyzing ? (
                     <>
@@ -311,7 +311,7 @@ export default function ReportPage({ onBack, onSubmit }: ReportPageProps) {
               </div>
 
               {analysisError && (
-                <div className="flex gap-2 p-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs">
+                <div className="flex gap-2 p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-rose-400 text-xs">
                   <AlertTriangle className="w-4 h-4 shrink-0" />
                   <span>{analysisError}</span>
                 </div>
@@ -325,7 +325,7 @@ export default function ReportPage({ onBack, onSubmit }: ReportPageProps) {
                   <select 
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    className="w-full bg-slate-950/80 border border-slate-800 focus:border-[#235347]/80 rounded-xl px-3 py-2.5 text-slate-100 text-sm transition-all outline-none"
+                    className="w-full bg-slate-950/80 border border-slate-800 focus:border-white/10/80 rounded-xl px-3 py-2.5 text-slate-100 text-sm transition-all outline-none"
                   >
                     <option value="Street Maintenance">Street Maintenance</option>
                     <option value="Water & Utilities">Water & Utilities</option>
@@ -343,13 +343,13 @@ export default function ReportPage({ onBack, onSubmit }: ReportPageProps) {
                       const colors = {
                         low: 'text-slate-400 hover:bg-slate-900',
                         medium: 'text-amber-400 hover:bg-amber-500/10',
-                        high: 'text-[#8EB69B] hover:bg-[#8EB69B]/10',
-                        critical: 'text-[#10B981] hover:bg-emerald-500/10'
+                        high: 'text-[#7C3AED] hover:bg-[#7C3AED]/10',
+                        critical: 'text-[#10B981] hover:bg-green-500/10'
                       };
                       const activeColors = {
-                        low: 'bg-slate-850 text-white font-semibold',
+                        low: 'bg-slate-850 text-slate-900 dark:text-white font-semibold',
                         medium: 'bg-amber-500/10 text-amber-400 border border-amber-500/20 font-semibold',
-                        high: 'bg-[#163832]/20 text-[#8EB69B] border border-[#235347]/30 font-semibold',
+                        high: 'bg-[#163832]/20 text-[#7C3AED] border border-white/10/30 font-semibold',
                         critical: 'bg-[#10B981]/20 text-[#10B981] border border-[#10B981]/30 font-semibold'
                       };
 
@@ -381,7 +381,7 @@ export default function ReportPage({ onBack, onSubmit }: ReportPageProps) {
                   onDrop={handleDrop}
                   className={`border-2 border-dashed rounded-2xl p-6 text-center cursor-pointer transition-all ${
                     isDragging 
-                      ? 'border-[#235347] bg-[#163832]/10' 
+                      ? 'border-white/10 bg-[#163832]/10' 
                       : 'border-slate-800 bg-slate-950/40 hover:bg-slate-950/60'
                   }`}
                   onClick={triggerImageUpload}
@@ -405,10 +405,10 @@ export default function ReportPage({ onBack, onSubmit }: ReportPageProps) {
                   
                   <div className="flex flex-col items-center gap-3">
                     <div className="p-3 rounded-full bg-slate-900 border border-slate-800 text-slate-400 group-hover:scale-110 transition-transform">
-                      <UploadCloud className="w-8 h-8 text-[#8EB69B]" />
+                      <UploadCloud className="w-8 h-8 text-[#7C3AED]" />
                     </div>
                     <div>
-                      <p className="text-sm font-semibold text-slate-200">Drag & Drop files here, or <span className="text-[#8EB69B] underline">browse files</span></p>
+                      <p className="text-sm font-semibold text-slate-200">Drag & Drop files here, or <span className="text-[#7C3AED] underline">browse files</span></p>
                       <p className="text-[11px] text-slate-500 mt-1">Supports high-res photographs, incident evidence, and MP4 video recordings.</p>
                     </div>
                   </div>
@@ -416,11 +416,11 @@ export default function ReportPage({ onBack, onSubmit }: ReportPageProps) {
 
                 {/* File input helpers */}
                 <div className="flex justify-center gap-4 text-xs font-mono text-slate-400 pt-1">
-                  <button type="button" onClick={triggerImageUpload} className="hover:text-white flex items-center gap-1 cursor-pointer">
-                    <ImageIcon className="w-3.5 h-3.5 text-[#8EB69B]" /> Add Images
+                  <button type="button" onClick={triggerImageUpload} className="hover:text-slate-900 dark:text-white flex items-center gap-1 cursor-pointer">
+                    <ImageIcon className="w-3.5 h-3.5 text-[#7C3AED]" /> Add Images
                   </button>
                   <span className="text-slate-700">|</span>
-                  <button type="button" onClick={triggerVideoUpload} className="hover:text-white flex items-center gap-1 cursor-pointer">
+                  <button type="button" onClick={triggerVideoUpload} className="hover:text-slate-900 dark:text-white flex items-center gap-1 cursor-pointer">
                     <VideoIcon className="w-3.5 h-3.5 text-[#10B981]" /> Add Videos
                   </button>
                 </div>
@@ -442,7 +442,7 @@ export default function ReportPage({ onBack, onSubmit }: ReportPageProps) {
                             <button 
                               type="button" 
                               onClick={() => removeImage(img.id)}
-                              className="p-1.5 rounded-full bg-rose-500/80 hover:bg-rose-600 text-white transition-colors cursor-pointer"
+                              className="p-1.5 rounded-full bg-red-500/80 hover:bg-rose-600 text-slate-900 dark:text-white transition-colors cursor-pointer"
                             >
                               <Trash2 className="w-4 h-4" />
                             </button>
@@ -466,7 +466,7 @@ export default function ReportPage({ onBack, onSubmit }: ReportPageProps) {
                           <button 
                             type="button"
                             onClick={() => removeVideo(vid.id)}
-                            className="absolute top-1.5 right-1.5 p-1 rounded-full bg-rose-500/80 text-white opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                            className="absolute top-1.5 right-1.5 p-1 rounded-full bg-red-500/80 text-slate-900 dark:text-white opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
                           </button>
@@ -484,14 +484,14 @@ export default function ReportPage({ onBack, onSubmit }: ReportPageProps) {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <label className="text-sm font-semibold text-slate-300 flex items-center gap-1.5">
-                    <Calendar className="w-4 h-4 text-[#8EB69B]" />
+                    <Calendar className="w-4 h-4 text-[#7C3AED]" />
                     Date of Occurrence
                   </label>
                   <input 
                     type="date"
                     value={reportDate}
                     onChange={(e) => setReportDate(e.target.value)}
-                    className="w-full bg-slate-950/80 border border-slate-800 focus:border-[#235347]/80 rounded-xl px-3 py-2 text-slate-100 text-sm outline-none font-mono"
+                    className="w-full bg-slate-950/80 border border-slate-800 focus:border-white/10/80 rounded-xl px-3 py-2 text-slate-100 text-sm outline-none font-mono"
                   />
                 </div>
                 
@@ -504,7 +504,7 @@ export default function ReportPage({ onBack, onSubmit }: ReportPageProps) {
                     type="time"
                     value={reportTime}
                     onChange={(e) => setReportTime(e.target.value)}
-                    className="w-full bg-slate-950/80 border border-slate-800 focus:border-[#235347]/80 rounded-xl px-3 py-2 text-slate-100 text-sm outline-none font-mono"
+                    className="w-full bg-slate-950/80 border border-slate-800 focus:border-white/10/80 rounded-xl px-3 py-2 text-slate-100 text-sm outline-none font-mono"
                   />
                 </div>
               </div>
@@ -513,7 +513,7 @@ export default function ReportPage({ onBack, onSubmit }: ReportPageProps) {
               <button
                 type="submit"
                 disabled={!title || !description || !address}
-                className="w-full py-4 rounded-xl font-bold font-sans text-sm bg-gradient-to-r from-[#8EB69B] to-[#10B981] hover:from-blue-600 hover:to-emerald-600 disabled:from-slate-800 disabled:to-slate-800 disabled:opacity-50 text-white transition-all transform active:scale-[0.98] shadow-lg shadow-[#051F20]/30 flex items-center justify-center gap-2 cursor-pointer disabled:cursor-not-allowed"
+                className="w-full py-4 rounded-xl font-bold font-sans text-sm bg-gradient-to-r from-[#7C3AED] to-[#10B981] hover:from-blue-600 hover:to-emerald-600 disabled:from-slate-800 disabled:to-slate-800 disabled:opacity-50 text-slate-900 dark:text-white transition-all transform active:scale-[0.98] shadow-lg shadow-[#051F20]/30 flex items-center justify-center gap-2 cursor-pointer disabled:cursor-not-allowed"
               >
                 <Check className="w-5 h-5" />
                 Submit Official Incident Report
@@ -529,7 +529,7 @@ export default function ReportPage({ onBack, onSubmit }: ReportPageProps) {
             {/* 1. Location Preview Map Container */}
             <div className="p-6 rounded-3xl bg-slate-900/40 border border-slate-800 backdrop-blur-md shadow-xl space-y-4">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-xs font-bold text-[#8EB69B] font-mono uppercase tracking-wider">
+                <div className="flex items-center gap-2 text-xs font-bold text-[#7C3AED] font-mono uppercase tracking-wider">
                   <Compass className="w-4 h-4 animate-spin-slow" />
                   Interactive Location Preview Map
                 </div>
@@ -569,7 +569,7 @@ export default function ReportPage({ onBack, onSubmit }: ReportPageProps) {
                       key={sec.name}
                       type="button"
                       onClick={() => selectSector(sec, i)}
-                      className="absolute p-1 text-[9px] font-semibold text-slate-400 hover:text-white bg-slate-900/90 hover:bg-[#163832] border border-slate-800 rounded-md transition-all cursor-pointer transform -translate-x-1/2 -translate-y-1/2 z-10"
+                      className="absolute p-1 text-[9px] font-semibold text-slate-400 hover:text-slate-900 dark:text-white bg-slate-900/90 hover:bg-[#163832] border border-slate-800 rounded-md transition-all cursor-pointer transform -translate-x-1/2 -translate-y-1/2 z-10"
                       style={{ left: `${x}%`, top: `${y}%` }}
                     >
                       {sec.name.replace(" Sector ", " ")}
@@ -587,7 +587,7 @@ export default function ReportPage({ onBack, onSubmit }: ReportPageProps) {
                   <div className="relative flex items-center justify-center">
                     <div className="absolute w-8 h-8 rounded-full bg-[#163832]/30 animate-ping"></div>
                     <div className="absolute w-4 h-4 rounded-full bg-[#10B981]/50 animate-pulse"></div>
-                    <MapPin className="w-6 h-6 text-rose-500 relative z-10" />
+                    <MapPin className="w-6 h-6 text-red-500 relative z-10" />
                   </div>
                 </motion.div>
 
@@ -613,7 +613,7 @@ export default function ReportPage({ onBack, onSubmit }: ReportPageProps) {
                       value={address}
                       onChange={(e) => setAddress(e.target.value)}
                       placeholder="Street name, landmark, municipal quadrant..."
-                      className="w-full bg-slate-950/80 border border-slate-800 focus:border-[#235347]/80 focus:ring-1 focus:ring-[#8EB69B]/50 rounded-xl px-3 py-2 text-xs text-slate-100 transition-all outline-none"
+                      className="w-full bg-slate-950/80 border border-slate-800 focus:border-white/10/80 focus:ring-1 focus:ring-[#8EB69B]/50 rounded-xl px-3 py-2 text-xs text-slate-100 transition-all outline-none"
                     />
                   </div>
                 </div>
@@ -643,7 +643,7 @@ export default function ReportPage({ onBack, onSubmit }: ReportPageProps) {
                       <p className="text-[10px] text-slate-500 font-mono">SUGGESTED CATEGORY</p>
                       <p className="text-xs font-bold text-slate-200 mt-0.5">{aiReport.category}</p>
                     </div>
-                    <span className="px-2.5 py-1 bg-[#163832]/10 text-[#8EB69B] text-[10px] font-extrabold rounded-lg border border-[#235347]/20">
+                    <span className="px-2.5 py-1 bg-[#163832]/10 text-[#7C3AED] text-[10px] font-extrabold rounded-lg border border-white/10/20">
                       AUTO-ROUTED
                     </span>
                   </div>
@@ -662,7 +662,7 @@ export default function ReportPage({ onBack, onSubmit }: ReportPageProps) {
                       {/* Interactive Visual Bar */}
                       <div className="w-full bg-slate-900 h-1.5 rounded-full mt-2.5 overflow-hidden">
                         <div 
-                          className="bg-gradient-to-r from-[#10B981] to-[#8EB69B] h-full rounded-full"
+                          className="bg-gradient-to-r from-[#10B981] to-[#EC4899] h-full rounded-full"
                           style={{ width: `${aiReport.severity * 10}%` }}
                         ></div>
                       </div>
@@ -672,14 +672,14 @@ export default function ReportPage({ onBack, onSubmit }: ReportPageProps) {
                     <div className="p-3 bg-slate-950/60 rounded-xl border border-slate-800 flex flex-col justify-between">
                       <span className="text-[10px] text-slate-500 font-mono">CONFIDENCE INDEX</span>
                       <div className="flex items-baseline gap-0.5 mt-1.5">
-                        <span className="text-3xl font-extrabold text-[#8EB69B]">{aiReport.confidence}</span>
+                        <span className="text-3xl font-extrabold text-[#7C3AED]">{aiReport.confidence}</span>
                         <span className="text-xs text-slate-500">%</span>
                       </div>
                       
                       {/* Interactive Visual Bar */}
                       <div className="w-full bg-slate-900 h-1.5 rounded-full mt-2.5 overflow-hidden">
                         <div 
-                          className="bg-gradient-to-r from-[#8EB69B] to-[#10B981] h-full rounded-full"
+                          className="bg-gradient-to-r from-[#7C3AED] to-[#10B981] h-full rounded-full"
                           style={{ width: `${aiReport.confidence}%` }}
                         ></div>
                       </div>
@@ -689,8 +689,8 @@ export default function ReportPage({ onBack, onSubmit }: ReportPageProps) {
 
                   {/* Responsible Department & Reasoning */}
                   <div className="space-y-2">
-                    <div className="p-3.5 bg-[#163832]/5 rounded-xl border border-[#235347]/25 space-y-1">
-                      <div className="flex items-center gap-1.5 text-[10px] text-[#8EB69B] font-bold uppercase font-mono">
+                    <div className="p-3.5 bg-[#163832]/5 rounded-xl border border-white/10/25 space-y-1">
+                      <div className="flex items-center gap-1.5 text-[10px] text-[#7C3AED] font-bold uppercase font-mono">
                         <ShieldCheck className="w-3.5 h-3.5 text-[#10B981]" />
                         AGENCY DISPATCH ASSIGNED
                       </div>

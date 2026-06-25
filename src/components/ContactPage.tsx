@@ -193,23 +193,23 @@ export default function ContactPage({ onBack }: ContactPageProps) {
   };
 
   return (
-    <div className="pt-32 pb-20 bg-[#DAF1DE]/30 dark:bg-[#051F20] transition-colors duration-300 min-h-screen">
+    <div className="pt-32 pb-20 bg-slate-50 dark:bg-transparent transition-colors duration-300 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         
         {/* Navigation & Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-[#163832]">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-white/10">
           <div className="space-y-1.5">
             <button
               onClick={() => {
                 window.scrollTo({ top: 0, behavior: 'instant' });
                 onBack();
               }}
-              className="group inline-flex items-center gap-2 px-3 py-1.5 bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-250 dark:border-[#163832] rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#8EB69B] dark:hover:text-blue-400 hover:border-[#235347]/30 hover:shadow-sm transition-all duration-200 cursor-pointer mb-2"
+              className="group inline-flex items-center gap-2 px-3 py-1.5 bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90 border border-slate-250 dark:border-white/10 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#7C3AED] dark:hover:text-blue-400 hover:border-white/10/30 hover:shadow-sm transition-all duration-200 cursor-pointer mb-2"
             >
               <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
               Back to Home
             </button>
-            <h1 className="font-display font-extrabold text-4xl text-slate-950 dark:text-white tracking-tight">
+            <h1 className="font-display font-extrabold text-4xl text-slate-950 dark:text-slate-900 dark:text-white tracking-tight">
               Get in Touch
             </h1>
             <p className="text-sm text-slate-500 dark:text-slate-400 max-w-xl font-sans">
@@ -222,7 +222,7 @@ export default function ContactPage({ onBack }: ContactPageProps) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           
           {/* COLUMN 1: FORM SECTION (7 cols on desktop) */}
-          <div className="lg:col-span-7 bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] rounded-3xl p-6 sm:p-10 shadow-xl dark:shadow-[#051F20]/30">
+          <div className="lg:col-span-7 bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90 border border-white/10 rounded-3xl p-6 sm:p-10 shadow-xl dark:shadow-[#051F20]/30">
             <AnimatePresence mode="wait">
               {!isSubmitted ? (
                 <motion.div
@@ -233,10 +233,10 @@ export default function ContactPage({ onBack }: ContactPageProps) {
                   transition={{ duration: 0.3 }}
                 >
                   <div className="mb-8 space-y-2">
-                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 bg-[#8EB69B]/10 text-[#8EB69B] dark:text-blue-400 font-mono text-[10px] font-black uppercase rounded-md tracking-wider">
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 bg-[#7C3AED]/10 text-[#7C3AED] dark:text-blue-400 font-mono text-[10px] font-black uppercase rounded-md tracking-wider">
                       <Sparkles className="w-3 h-3" /> Secure Sync Portal
                     </span>
-                    <h2 className="text-2xl font-bold font-display text-slate-900 dark:text-white">
+                    <h2 className="text-2xl font-bold font-display text-slate-900 dark:text-slate-900 dark:text-white">
                       Send a Secure Message
                     </h2>
                     <p className="text-xs text-slate-500 dark:text-slate-400 font-sans">
@@ -258,14 +258,14 @@ export default function ContactPage({ onBack }: ContactPageProps) {
                           value={formState.name}
                           onChange={handleInputChange}
                           placeholder="Jane Doe"
-                          className={`w-full px-4 py-2.5 bg-[#DAF1DE]/30 dark:bg-[#051F20] border text-slate-900 dark:text-white rounded-xl text-sm font-sans focus:outline-none focus:ring-2 focus:ring-blue-500/25 transition-all ${
+                          className={`w-full px-4 py-2.5 bg-slate-50 dark:bg-transparent border text-slate-900 dark:text-slate-900 dark:text-white rounded-xl text-sm font-sans focus:outline-none focus:ring-2 focus:ring-blue-500/25 transition-all ${
                             errors.name 
-                              ? 'border-rose-500/60 dark:border-rose-500/40 focus:border-rose-500' 
-                              : 'border-slate-200 dark:border-[#163832] focus:border-[#235347]'
+                              ? 'border-red-500/60 dark:border-red-500/40 focus:border-red-500' 
+                              : 'border-white/10 focus:border-white/10'
                           }`}
                         />
                         {errors.name && (
-                          <span className="flex items-center gap-1 text-[11px] text-rose-500 font-medium">
+                          <span className="flex items-center gap-1 text-[11px] text-red-500 font-medium">
                             <AlertCircle className="w-3.5 h-3.5 shrink-0" /> {errors.name}
                           </span>
                         )}
@@ -283,14 +283,14 @@ export default function ContactPage({ onBack }: ContactPageProps) {
                           value={formState.email}
                           onChange={handleInputChange}
                           placeholder="jane.doe@example.com"
-                          className={`w-full px-4 py-2.5 bg-[#DAF1DE]/30 dark:bg-[#051F20] border text-slate-900 dark:text-white rounded-xl text-sm font-sans focus:outline-none focus:ring-2 focus:ring-blue-500/25 transition-all ${
+                          className={`w-full px-4 py-2.5 bg-slate-50 dark:bg-transparent border text-slate-900 dark:text-slate-900 dark:text-white rounded-xl text-sm font-sans focus:outline-none focus:ring-2 focus:ring-blue-500/25 transition-all ${
                             errors.email 
-                              ? 'border-rose-500/60 dark:border-rose-500/40 focus:border-rose-500' 
-                              : 'border-slate-200 dark:border-[#163832] focus:border-[#235347]'
+                              ? 'border-red-500/60 dark:border-red-500/40 focus:border-red-500' 
+                              : 'border-white/10 focus:border-white/10'
                           }`}
                         />
                         {errors.email && (
-                          <span className="flex items-center gap-1 text-[11px] text-rose-500 font-medium">
+                          <span className="flex items-center gap-1 text-[11px] text-red-500 font-medium">
                             <AlertCircle className="w-3.5 h-3.5 shrink-0" /> {errors.email}
                           </span>
                         )}
@@ -310,14 +310,14 @@ export default function ContactPage({ onBack }: ContactPageProps) {
                           value={formState.phone}
                           onChange={handleInputChange}
                           placeholder="+1 (555) 0192"
-                          className={`w-full px-4 py-2.5 bg-[#DAF1DE]/30 dark:bg-[#051F20] border text-slate-900 dark:text-white rounded-xl text-sm font-sans focus:outline-none focus:ring-2 focus:ring-blue-500/25 transition-all ${
+                          className={`w-full px-4 py-2.5 bg-slate-50 dark:bg-transparent border text-slate-900 dark:text-slate-900 dark:text-white rounded-xl text-sm font-sans focus:outline-none focus:ring-2 focus:ring-blue-500/25 transition-all ${
                             errors.phone 
-                              ? 'border-rose-500/60 dark:border-rose-500/40 focus:border-rose-500' 
-                              : 'border-slate-200 dark:border-[#163832] focus:border-[#235347]'
+                              ? 'border-red-500/60 dark:border-red-500/40 focus:border-red-500' 
+                              : 'border-white/10 focus:border-white/10'
                           }`}
                         />
                         {errors.phone && (
-                          <span className="flex items-center gap-1 text-[11px] text-rose-500 font-medium">
+                          <span className="flex items-center gap-1 text-[11px] text-red-500 font-medium">
                             <AlertCircle className="w-3.5 h-3.5 shrink-0" /> {errors.phone}
                           </span>
                         )}
@@ -333,10 +333,10 @@ export default function ContactPage({ onBack }: ContactPageProps) {
                           name="category"
                           value={formState.category}
                           onChange={handleInputChange}
-                          className={`w-full px-4 py-2.5 bg-[#DAF1DE]/30 dark:bg-[#051F20] border text-slate-900 dark:text-white rounded-xl text-sm font-sans focus:outline-none focus:ring-2 focus:ring-blue-500/25 transition-all appearance-none ${
+                          className={`w-full px-4 py-2.5 bg-slate-50 dark:bg-transparent border text-slate-900 dark:text-slate-900 dark:text-white rounded-xl text-sm font-sans focus:outline-none focus:ring-2 focus:ring-blue-500/25 transition-all appearance-none ${
                             errors.category 
-                              ? 'border-rose-500/60 dark:border-rose-500/40 focus:border-rose-500' 
-                              : 'border-slate-200 dark:border-[#163832] focus:border-[#235347]'
+                              ? 'border-red-500/60 dark:border-red-500/40 focus:border-red-500' 
+                              : 'border-white/10 focus:border-white/10'
                           }`}
                         >
                           <option value="">Choose category...</option>
@@ -345,7 +345,7 @@ export default function ContactPage({ onBack }: ContactPageProps) {
                           ))}
                         </select>
                         {errors.category && (
-                          <span className="flex items-center gap-1 text-[11px] text-rose-500 font-medium">
+                          <span className="flex items-center gap-1 text-[11px] text-red-500 font-medium">
                             <AlertCircle className="w-3.5 h-3.5 shrink-0" /> {errors.category}
                           </span>
                         )}
@@ -364,14 +364,14 @@ export default function ContactPage({ onBack }: ContactPageProps) {
                         onChange={handleInputChange}
                         rows={5}
                         placeholder="Please elaborate on your civic request, partnership proposal, or questions..."
-                        className={`w-full px-4 py-3 bg-[#DAF1DE]/30 dark:bg-[#051F20] border text-slate-900 dark:text-white rounded-xl text-sm font-sans focus:outline-none focus:ring-2 focus:ring-blue-500/25 transition-all resize-none ${
+                        className={`w-full px-4 py-3 bg-slate-50 dark:bg-transparent border text-slate-900 dark:text-slate-900 dark:text-white rounded-xl text-sm font-sans focus:outline-none focus:ring-2 focus:ring-blue-500/25 transition-all resize-none ${
                           errors.message 
-                            ? 'border-rose-500/60 dark:border-rose-500/40 focus:border-rose-500' 
-                            : 'border-slate-200 dark:border-[#163832] focus:border-[#235347]'
+                            ? 'border-red-500/60 dark:border-red-500/40 focus:border-red-500' 
+                            : 'border-white/10 focus:border-white/10'
                         }`}
                       />
                       {errors.message && (
-                        <span className="flex items-center gap-1 text-[11px] text-rose-500 font-medium">
+                        <span className="flex items-center gap-1 text-[11px] text-red-500 font-medium">
                           <AlertCircle className="w-3.5 h-3.5 shrink-0" /> {errors.message}
                         </span>
                       )}
@@ -381,7 +381,7 @@ export default function ContactPage({ onBack }: ContactPageProps) {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full flex items-center justify-center gap-2 py-3.5 bg-[#163832] hover:bg-[#8EB69B] disabled:bg-[#8EB69B]/70 text-white rounded-xl text-sm font-bold font-sans tracking-wide transition-all duration-200 shadow-lg shadow-[#051F20]/30 hover:shadow-[#051F20]/30 cursor-pointer transform hover:-translate-y-0.5 active:translate-y-0"
+                      className="w-full flex items-center justify-center gap-2 py-3.5 bg-[#163832] hover:bg-[#7C3AED] disabled:bg-[#7C3AED]/70 text-slate-900 dark:text-white rounded-xl text-sm font-bold font-sans tracking-wide transition-all duration-200 shadow-lg shadow-[#051F20]/30 hover:shadow-[#051F20]/30 cursor-pointer transform hover:-translate-y-0.5 active:translate-y-0"
                     >
                       {isSubmitting ? (
                         <>
@@ -405,11 +405,11 @@ export default function ContactPage({ onBack }: ContactPageProps) {
                   transition={{ duration: 0.4, type: 'spring' }}
                   className="text-center py-12 space-y-6"
                 >
-                  <div className="w-16 h-16 bg-emerald-500/10 text-emerald-500 rounded-2xl flex items-center justify-center mx-auto">
+                  <div className="w-16 h-16 bg-green-500/10 text-green-500 rounded-2xl flex items-center justify-center mx-auto">
                     <CheckCircle className="w-10 h-10 animate-bounce" />
                   </div>
                   <div className="space-y-2">
-                    <h2 className="text-2xl font-bold font-display text-slate-900 dark:text-white">
+                    <h2 className="text-2xl font-bold font-display text-slate-900 dark:text-slate-900 dark:text-white">
                       Message Geodispatched!
                     </h2>
                     <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-sans max-w-sm mx-auto">
@@ -431,19 +431,19 @@ export default function ContactPage({ onBack }: ContactPageProps) {
           <div className="lg:col-span-5 space-y-8">
             
             {/* Box 1: Office Information */}
-            <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] rounded-3xl p-6 sm:p-8 space-y-6">
+            <div className="bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90 border border-white/10 rounded-3xl p-6 sm:p-8 space-y-6">
               <div className="flex items-center gap-2">
-                <Building2 className="w-5 h-5 text-[#8EB69B]" />
-                <h3 className="font-display font-bold text-lg text-slate-950 dark:text-white">
+                <Building2 className="w-5 h-5 text-[#7C3AED]" />
+                <h3 className="font-display font-bold text-lg text-slate-950 dark:text-slate-900 dark:text-white">
                   Regional Offices
                 </h3>
               </div>
               
               <div className="space-y-6 divider-y divide-slate-100 dark:divide-slate-800">
                 {officeInfo.map((office, idx) => (
-                  <div key={idx} className={`${idx > 0 ? 'pt-6 border-t border-slate-100 dark:border-[#163832]/60' : ''} space-y-3.5`}>
-                    <p className="text-xs font-extrabold text-slate-900 dark:text-white flex items-center gap-1.5 uppercase font-mono">
-                      <span className="w-2 h-2 rounded-full bg-[#8EB69B]"></span>
+                  <div key={idx} className={`${idx > 0 ? 'pt-6 border-t border-slate-100 dark:border-white/10/60' : ''} space-y-3.5`}>
+                    <p className="text-xs font-extrabold text-slate-900 dark:text-slate-900 dark:text-white flex items-center gap-1.5 uppercase font-mono">
+                      <span className="w-2 h-2 rounded-full bg-[#7C3AED]"></span>
                       {office.city}
                     </p>
                     <div className="space-y-2 text-xs font-sans text-slate-600 dark:text-slate-400">
@@ -470,10 +470,10 @@ export default function ContactPage({ onBack }: ContactPageProps) {
             </div>
 
             {/* Box 2: Help Center Portal */}
-            <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] rounded-3xl p-6 sm:p-8 space-y-6">
+            <div className="bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90 border border-white/10 rounded-3xl p-6 sm:p-8 space-y-6">
               <div className="flex items-center gap-2">
-                <LifeBuoy className="w-5 h-5 text-emerald-500" />
-                <h3 className="font-display font-bold text-lg text-slate-950 dark:text-white">
+                <LifeBuoy className="w-5 h-5 text-green-500" />
+                <h3 className="font-display font-bold text-lg text-slate-950 dark:text-slate-900 dark:text-white">
                   Help Center Guides
                 </h3>
               </div>
@@ -484,17 +484,17 @@ export default function ContactPage({ onBack }: ContactPageProps) {
                   return (
                     <div 
                       key={idx} 
-                      className="p-4 bg-[#DAF1DE]/30 dark:bg-[#051F20] rounded-2xl border border-slate-150 dark:border-slate-850 hover:border-emerald-500/20 transition-all flex items-start gap-3.5"
+                      className="p-4 bg-slate-50 dark:bg-transparent rounded-2xl border border-slate-150 dark:border-white/5 hover:border-green-500/20 transition-all flex items-start gap-3.5"
                     >
-                      <div className="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-500 flex items-center justify-center shrink-0">
+                      <div className="w-8 h-8 rounded-lg bg-green-500/10 text-green-500 flex items-center justify-center shrink-0">
                         <Icon className="w-4.5 h-4.5" />
                       </div>
                       <div className="space-y-1">
-                        <p className="text-xs font-extrabold text-slate-900 dark:text-white leading-tight">{card.title}</p>
+                        <p className="text-xs font-extrabold text-slate-900 dark:text-slate-900 dark:text-white leading-tight">{card.title}</p>
                         <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-normal font-sans">{card.description}</p>
                         <a 
                           href={card.link}
-                          className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 dark:text-emerald-400 pt-1 hover:underline"
+                          className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 dark:text-green-400 pt-1 hover:underline"
                         >
                           <span>{card.actionText}</span>
                           <ExternalLink className="w-2.5 h-2.5" />
@@ -507,9 +507,9 @@ export default function ContactPage({ onBack }: ContactPageProps) {
             </div>
 
             {/* Box 3: Social Media Links */}
-            <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] rounded-3xl p-6 sm:p-8 space-y-5">
+            <div className="bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90 border border-white/10 rounded-3xl p-6 sm:p-8 space-y-5">
               <div>
-                <h3 className="font-display font-bold text-base text-slate-950 dark:text-white">
+                <h3 className="font-display font-bold text-base text-slate-950 dark:text-slate-900 dark:text-white">
                   Join our Civic Dialogue
                 </h3>
                 <p className="text-[11px] text-slate-400 font-sans">
@@ -520,21 +520,21 @@ export default function ContactPage({ onBack }: ContactPageProps) {
               <div className="grid grid-cols-3 gap-3">
                 <a 
                   href="#" 
-                  className="p-3 bg-[#DAF1DE]/30 dark:bg-[#051F20] hover:bg-[#8EB69B]/5 hover:border-[#235347]/25 border border-slate-150 dark:border-slate-850 rounded-xl flex flex-col items-center gap-1.5 transition-all text-slate-600 dark:text-slate-400 hover:text-[#8EB69B]"
+                  className="p-3 bg-slate-50 dark:bg-transparent hover:bg-[#7C3AED]/5 hover:border-white/10/25 border border-slate-150 dark:border-white/5 rounded-xl flex flex-col items-center gap-1.5 transition-all text-slate-600 dark:text-slate-400 hover:text-[#7C3AED]"
                 >
                   <Twitter className="w-5 h-5" />
                   <span className="text-[10px] font-bold font-mono uppercase">Twitter</span>
                 </a>
                 <a 
                   href="#" 
-                  className="p-3 bg-[#DAF1DE]/30 dark:bg-[#051F20] hover:bg-[#8EB69B]/5 hover:border-[#235347]/25 border border-slate-150 dark:border-slate-850 rounded-xl flex flex-col items-center gap-1.5 transition-all text-slate-600 dark:text-slate-400 hover:text-[#8EB69B]"
+                  className="p-3 bg-slate-50 dark:bg-transparent hover:bg-[#7C3AED]/5 hover:border-white/10/25 border border-slate-150 dark:border-white/5 rounded-xl flex flex-col items-center gap-1.5 transition-all text-slate-600 dark:text-slate-400 hover:text-[#7C3AED]"
                 >
                   <Linkedin className="w-5 h-5" />
                   <span className="text-[10px] font-bold font-mono uppercase">LinkedIn</span>
                 </a>
                 <a 
                   href="#" 
-                  className="p-3 bg-[#DAF1DE]/30 dark:bg-[#051F20] hover:bg-slate-900/5 hover:border-slate-500/25 border border-slate-150 dark:border-slate-850 rounded-xl flex flex-col items-center gap-1.5 transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                  className="p-3 bg-slate-50 dark:bg-transparent hover:bg-slate-900/5 hover:border-slate-500/25 border border-slate-150 dark:border-white/5 rounded-xl flex flex-col items-center gap-1.5 transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-900 dark:text-white"
                 >
                   <Github className="w-5 h-5" />
                   <span className="text-[10px] font-bold font-mono uppercase">GitHub</span>
@@ -546,13 +546,13 @@ export default function ContactPage({ onBack }: ContactPageProps) {
         </div>
 
         {/* SECTION: FAQ ACCORDION */}
-        <div className="space-y-8 max-w-4xl mx-auto pt-8 border-t border-slate-200 dark:border-[#163832]">
+        <div className="space-y-8 max-w-4xl mx-auto pt-8 border-t border-white/10">
           <div className="text-center space-y-2">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-50 dark:bg-blue-950/40 border border-blue-200/50 dark:border-blue-900/30 rounded-full text-xs font-semibold text-[#8EB69B] font-mono uppercase">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-50 dark:bg-blue-950/40 border border-blue-200/50 dark:border-blue-900/30 rounded-full text-xs font-semibold text-[#7C3AED] font-mono uppercase">
               <HelpCircle className="w-3.5 h-3.5" />
               Frequently Answered
             </div>
-            <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-slate-950 dark:text-white tracking-tight">
+            <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-slate-950 dark:text-slate-900 dark:text-white tracking-tight">
               Community FAQ
             </h2>
             <p className="text-xs text-slate-500 dark:text-slate-400 font-sans max-w-lg mx-auto">
@@ -566,15 +566,15 @@ export default function ContactPage({ onBack }: ContactPageProps) {
               return (
                 <div 
                   key={index}
-                  className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] rounded-2xl overflow-hidden transition-all duration-250 hover:border-slate-300 dark:hover:border-slate-700"
+                  className="bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90 border border-white/10 rounded-2xl overflow-hidden transition-all duration-250 hover:border-slate-300 dark:hover:border-slate-700"
                 >
                   <button
                     onClick={() => setOpenFaq(isOpened ? null : index)}
-                    className="w-full px-6 py-4 flex items-center justify-between gap-4 text-left font-sans font-extrabold text-slate-900 dark:text-white text-sm sm:text-base cursor-pointer focus:outline-none"
+                    className="w-full px-6 py-4 flex items-center justify-between gap-4 text-left font-sans font-extrabold text-slate-900 dark:text-slate-900 dark:text-white text-sm sm:text-base cursor-pointer focus:outline-none"
                   >
                     <span>{faq.question}</span>
                     {isOpened ? (
-                      <ChevronUp className="w-5 h-5 text-[#8EB69B] shrink-0" />
+                      <ChevronUp className="w-5 h-5 text-[#7C3AED] shrink-0" />
                     ) : (
                       <ChevronDown className="w-5 h-5 text-slate-400 shrink-0" />
                     )}
@@ -588,7 +588,7 @@ export default function ContactPage({ onBack }: ContactPageProps) {
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.25 }}
                       >
-                        <div className="px-6 pb-5 pt-1 text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-sans border-t border-slate-100 dark:border-slate-850">
+                        <div className="px-6 pb-5 pt-1 text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-sans border-t border-slate-100 dark:border-white/5">
                           {faq.answer}
                         </div>
                       </motion.div>

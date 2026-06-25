@@ -32,7 +32,7 @@ export default function Testimonials() {
   return (
     <section 
       id="testimonials" 
-      className="relative py-24 bg-[#DAF1DE]/30 dark:bg-[#051F20] border-b border-slate-200 dark:border-slate-900 transition-colors duration-300"
+      className="relative py-24 bg-slate-50 dark:bg-transparent border-b border-slate-200 dark:border-slate-900 transition-colors duration-300"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         
@@ -42,7 +42,7 @@ export default function Testimonials() {
             <MessageSquare className="w-3.5 h-3.5" />
             Vetted Community Voice
           </div>
-          <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-slate-950 dark:text-white tracking-tight">
+          <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-slate-950 dark:text-slate-900 dark:text-white tracking-tight">
             Loved by Citizens & Governments
           </h2>
           <p className="max-w-2xl mx-auto text-slate-600 dark:text-slate-400 font-sans text-sm sm:text-base">
@@ -59,10 +59,10 @@ export default function Testimonials() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.4, delay: idx * 0.1 }}
-              className="p-8 bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200/60 dark:border-[#163832]/60 rounded-3xl relative flex flex-col justify-between shadow-xs hover:shadow-lg transition-all duration-300"
+              className="p-8 bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90 border border-slate-200/60 dark:border-white/10/60 rounded-3xl relative flex flex-col justify-between shadow-xs hover:shadow-lg transition-all duration-300"
             >
               {/* Quote Decorator icon */}
-              <Quote className="absolute top-6 right-6 w-12 h-12 text-[#8EB69B]/10 dark:text-blue-400/5 select-none" />
+              <Quote className="absolute top-6 right-6 w-12 h-12 text-[#7C3AED]/10 dark:text-blue-400/5 select-none" />
 
               <div className="space-y-4">
                 {/* Rating */}
@@ -79,12 +79,12 @@ export default function Testimonials() {
               </div>
 
               {/* Author Info */}
-              <div className="mt-6 pt-6 border-t border-slate-100 dark:border-[#163832]/60 flex items-center gap-3">
-                <span className="text-3xl bg-slate-100 dark:bg-[#051F20] p-2.5 rounded-2xl">
+              <div className="mt-6 pt-6 border-t border-slate-100 dark:border-white/10/60 flex items-center gap-3">
+                <span className="text-3xl bg-slate-100 dark:bg-[#0A0A0F] p-2.5 rounded-2xl">
                   {testimonial.avatar}
                 </span>
                 <div>
-                  <h4 className="font-display font-bold text-sm text-slate-950 dark:text-white leading-none">
+                  <h4 className="font-display font-bold text-sm text-slate-950 dark:text-slate-900 dark:text-white leading-none">
                     {testimonial.name}
                   </h4>
                   <span className="text-[11px] text-slate-400 dark:text-slate-500 font-medium block mt-1.5 font-sans">

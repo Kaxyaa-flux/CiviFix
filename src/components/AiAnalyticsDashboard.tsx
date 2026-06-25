@@ -373,18 +373,18 @@ export default function AiAnalyticsDashboard({ onBack }: AiAnalyticsDashboardPro
         icon: <Layers className="w-3.5 h-3.5" />
       },
       water: {
-        text: 'text-[#8EB69B] dark:text-blue-400',
-        bg: 'bg-[#8EB69B]/10 border-[#235347]/20',
+        text: 'text-[#7C3AED] dark:text-blue-400',
+        bg: 'bg-[#7C3AED]/10 border-white/10/20',
         icon: <Droplets className="w-3.5 h-3.5" />
       },
       electricity: {
         text: 'text-rose-600 dark:text-rose-400',
-        bg: 'bg-rose-500/10 border-rose-500/20',
+        bg: 'bg-red-500/10 border-red-500/20',
         icon: <Zap className="w-3.5 h-3.5" />
       },
       waste: {
-        text: 'text-emerald-600 dark:text-emerald-400',
-        bg: 'bg-emerald-500/10 border-emerald-500/20',
+        text: 'text-emerald-600 dark:text-green-400',
+        bg: 'bg-green-500/10 border-green-500/20',
         icon: <Trash2 className="w-3.5 h-3.5" />
       }
     };
@@ -392,23 +392,23 @@ export default function AiAnalyticsDashboard({ onBack }: AiAnalyticsDashboardPro
   };
 
   return (
-    <div className="min-h-screen bg-[#DAF1DE]/30 dark:bg-[#051F20] text-slate-900 dark:text-slate-50 pt-32 pb-16 transition-colors duration-300">
+    <div className="min-h-screen bg-slate-50 dark:bg-transparent text-slate-900 dark:text-slate-50 pt-32 pb-16 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         
         {/* Header section with telemetry indicators */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-slate-200 dark:border-[#163832]">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-white/10">
           <div className="space-y-1.5">
             <button 
               onClick={() => {
                 window.scrollTo({ top: 0, behavior: 'instant' });
                 onBack();
               }}
-              className="inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-[#8EB69B] transition-colors font-mono cursor-pointer"
+              className="inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-[#7C3AED] transition-colors font-mono cursor-pointer"
             >
               ← RETURN TO LANDING
             </button>
-            <h1 className="text-3.5xl sm:text-4xl font-extrabold tracking-tight text-slate-950 dark:text-white flex flex-wrap items-center gap-3">
-              <BrainCircuit className="w-9 h-9 text-[#8EB69B] animate-pulse" />
+            <h1 className="text-3.5xl sm:text-4xl font-extrabold tracking-tight text-slate-950 dark:text-slate-900 dark:text-white flex flex-wrap items-center gap-3">
+              <BrainCircuit className="w-9 h-9 text-[#7C3AED] animate-pulse" />
               Futuristic <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600">AI Analytics Dashboard</span>
             </h1>
             <p className="text-slate-500 dark:text-slate-400 text-sm max-w-2xl">
@@ -420,7 +420,7 @@ export default function AiAnalyticsDashboard({ onBack }: AiAnalyticsDashboardPro
             <button
               onClick={handleRunPredictiveSweep}
               disabled={isSimulating}
-              className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-5 py-3 rounded-2xl text-xs font-mono font-black flex items-center justify-center gap-2 cursor-pointer shadow-md disabled:opacity-50 transition-all duration-300 transform active:scale-98"
+              className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-slate-900 dark:text-white px-5 py-3 rounded-2xl text-xs font-mono font-black flex items-center justify-center gap-2 cursor-pointer shadow-md disabled:opacity-50 transition-all duration-300 transform active:scale-98"
             >
               <RefreshCw className={`w-4 h-4 ${isSimulating ? 'animate-spin' : ''}`} />
               {isSimulating ? 'RE-COMPILING MODELS...' : 'RUN PREDICTIVE SWEEP'}
@@ -435,9 +435,9 @@ export default function AiAnalyticsDashboard({ onBack }: AiAnalyticsDashboardPro
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className="bg-[#8EB69B]/10 border border-[#235347]/20 text-blue-700 dark:text-blue-400 p-4 rounded-2xl flex items-center gap-3 text-xs font-mono"
+              className="bg-[#7C3AED]/10 border border-white/10/20 text-blue-700 dark:text-blue-400 p-4 rounded-2xl flex items-center gap-3 text-xs font-mono"
             >
-              <Activity className="w-5 h-5 text-[#8EB69B] animate-pulse" />
+              <Activity className="w-5 h-5 text-[#7C3AED] animate-pulse" />
               <span>{simMessage}</span>
             </motion.div>
           )}
@@ -446,19 +446,19 @@ export default function AiAnalyticsDashboard({ onBack }: AiAnalyticsDashboardPro
         {/* 1. Statistics Cards Display */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           
-          <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] p-5 rounded-2xl relative overflow-hidden shadow-xs">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-[#8EB69B]/5 rounded-bl-full pointer-events-none" />
+          <div className="bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90 border border-white/10 p-5 rounded-2xl relative overflow-hidden shadow-xs">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-[#7C3AED]/5 rounded-bl-full pointer-events-none" />
             <p className="text-[10px] text-slate-400 dark:text-slate-500 font-mono uppercase font-bold tracking-wider">Weighted Municipal Risk</p>
             <div className="flex items-baseline gap-2 mt-2">
-              <span className="text-3.5xl font-black text-slate-950 dark:text-white">{summaryMetrics.averageRiskScore}%</span>
-              <span className="text-xs font-mono text-emerald-500 flex items-center">
+              <span className="text-3.5xl font-black text-slate-950 dark:text-slate-900 dark:text-white">{summaryMetrics.averageRiskScore}%</span>
+              <span className="text-xs font-mono text-green-500 flex items-center">
                 <ArrowDownRight className="w-3.5 h-3.5" /> -3.5%
               </span>
             </div>
             <p className="text-[10px] text-slate-400 font-mono mt-1">Average stress coefficient across sectors</p>
           </div>
 
-          <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] p-5 rounded-2xl relative overflow-hidden shadow-xs">
+          <div className="bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90 border border-white/10 p-5 rounded-2xl relative overflow-hidden shadow-xs">
             <div className="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-bl-full pointer-events-none" />
             <p className="text-[10px] text-slate-400 dark:text-slate-500 font-mono uppercase font-bold tracking-wider">Critical Risk Anomalies</p>
             <div className="flex items-baseline gap-2 mt-2">
@@ -468,7 +468,7 @@ export default function AiAnalyticsDashboard({ onBack }: AiAnalyticsDashboardPro
             <p className="text-[10px] text-slate-400 font-mono mt-1">Thresholds exceeding 80% likelihood</p>
           </div>
 
-          <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] p-5 rounded-2xl relative overflow-hidden shadow-xs">
+          <div className="bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90 border border-white/10 p-5 rounded-2xl relative overflow-hidden shadow-xs">
             <div className="absolute top-0 right-0 w-24 h-24 bg-purple-500/5 rounded-bl-full pointer-events-none" />
             <p className="text-[10px] text-slate-400 dark:text-slate-500 font-mono uppercase font-bold tracking-wider">Model Scan Confidence</p>
             <div className="flex items-baseline gap-2 mt-2">
@@ -480,14 +480,14 @@ export default function AiAnalyticsDashboard({ onBack }: AiAnalyticsDashboardPro
             <p className="text-[10px] text-slate-400 font-mono mt-1">Weighted validation accuracy bounds</p>
           </div>
 
-          <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] p-5 rounded-2xl relative overflow-hidden shadow-xs">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-bl-full pointer-events-none" />
+          <div className="bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90 border border-white/10 p-5 rounded-2xl relative overflow-hidden shadow-xs">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-green-500/5 rounded-bl-full pointer-events-none" />
             <p className="text-[10px] text-slate-400 dark:text-slate-500 font-mono uppercase font-bold tracking-wider">Mitigations Deployed</p>
             <div className="flex items-baseline gap-2 mt-2">
-              <span className="text-3.5xl font-black text-emerald-500">
+              <span className="text-3.5xl font-black text-green-500">
                 {recommendations.filter(r => r.status === 'completed').length} / {recommendations.length}
               </span>
-              <span className="text-xs font-mono text-emerald-500 flex items-center">
+              <span className="text-xs font-mono text-green-500 flex items-center">
                 <Check className="w-3.5 h-3.5" /> Active
               </span>
             </div>
@@ -503,11 +503,11 @@ export default function AiAnalyticsDashboard({ onBack }: AiAnalyticsDashboardPro
           <div className="lg:col-span-7 space-y-6">
             
             {/* Sector Integrated AI 24h Forecast Line Chart */}
-            <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] p-5 sm:p-6 rounded-3xl shadow-xs space-y-4">
+            <div className="bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90 border border-white/10 p-5 sm:p-6 rounded-3xl shadow-xs space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div>
-                  <h2 className="text-lg font-extrabold text-slate-950 dark:text-white flex items-center gap-2">
-                    <Activity className="w-5 h-5 text-[#8EB69B]" />
+                  <h2 className="text-lg font-extrabold text-slate-950 dark:text-slate-900 dark:text-white flex items-center gap-2">
+                    <Activity className="w-5 h-5 text-[#7C3AED]" />
                     AI Sector Volatility 24-Hour Forecast
                   </h2>
                   <p className="text-xs text-slate-400 dark:text-slate-500 font-mono">
@@ -515,9 +515,9 @@ export default function AiAnalyticsDashboard({ onBack }: AiAnalyticsDashboardPro
                   </p>
                 </div>
                 <div className="flex items-center gap-1.5 text-xs text-slate-400 font-mono">
-                  <span className="w-2.5 h-2.5 rounded bg-[#8EB69B] inline-block"></span> Water
+                  <span className="w-2.5 h-2.5 rounded bg-[#7C3AED] inline-block"></span> Water
                   <span className="w-2.5 h-2.5 rounded bg-amber-500 inline-block ml-2"></span> Roads
-                  <span className="w-2.5 h-2.5 rounded bg-rose-500 inline-block ml-2"></span> Energy
+                  <span className="w-2.5 h-2.5 rounded bg-red-500 inline-block ml-2"></span> Energy
                 </div>
               </div>
 
@@ -526,8 +526,8 @@ export default function AiAnalyticsDashboard({ onBack }: AiAnalyticsDashboardPro
                   <AreaChart data={MUNICIPAL_AI_FORECAST_DATA} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
                     <defs>
                       <linearGradient id="areaWater" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.12}/>
-                        <stop offset="95%" stopColor="#3B82F6" stopOpacity={0}/>
+                        <stop offset="5%" stopColor="#22D3EE" stopOpacity={0.12}/>
+                        <stop offset="95%" stopColor="#22D3EE" stopOpacity={0}/>
                       </linearGradient>
                       <linearGradient id="areaRoads" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="5%" stopColor="#F59E0B" stopOpacity={0.1}/>
@@ -547,19 +547,19 @@ export default function AiAnalyticsDashboard({ onBack }: AiAnalyticsDashboardPro
                         fontFamily: 'monospace' 
                       }} 
                     />
-                    <ReferenceLine y={80} stroke="#EF4444" strokeDasharray="3 3" label={{ value: 'CRITICAL ZONE', fill: '#EF4444', fontSize: 9, position: 'top' }} />
-                    <Area type="monotone" name="Hydraulic Stress" dataKey="water" stroke="#3B82F6" strokeWidth={2.5} fillOpacity={1} fill="url(#areaWater)" />
+                    <ReferenceLine y={80} stroke="#FF5A5F" strokeDasharray="3 3" label={{ value: 'CRITICAL ZONE', fill: '#FF5A5F', fontSize: 9, position: 'top' }} />
+                    <Area type="monotone" name="Hydraulic Stress" dataKey="water" stroke="#22D3EE" strokeWidth={2.5} fillOpacity={1} fill="url(#areaWater)" />
                     <Area type="monotone" name="Roadbed Joint Shear" dataKey="infrastructure" stroke="#F59E0B" strokeWidth={2} fillOpacity={1} fill="url(#areaRoads)" />
-                    <Line type="monotone" name="Power Grid Load" dataKey="energy" stroke="#EF4444" strokeWidth={1.5} dot={false} strokeDasharray="4 4" />
+                    <Line type="monotone" name="Power Grid Load" dataKey="energy" stroke="#FF5A5F" strokeWidth={1.5} dot={false} strokeDasharray="4 4" />
                   </AreaChart>
                 </ResponsiveContainer>
               </div>
             </div>
 
             {/* AI Risk Heatmap Visualizer */}
-            <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] p-5 sm:p-6 rounded-3xl shadow-xs space-y-4">
+            <div className="bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90 border border-white/10 p-5 sm:p-6 rounded-3xl shadow-xs space-y-4">
               <div>
-                <h3 className="text-base font-extrabold text-slate-950 dark:text-white flex items-center gap-2">
+                <h3 className="text-base font-extrabold text-slate-950 dark:text-slate-900 dark:text-white flex items-center gap-2">
                   <Layers className="w-5 h-5 text-purple-600" />
                   AI Infrastructure Risk Matrix Grid
                 </h3>
@@ -578,7 +578,7 @@ export default function AiAnalyticsDashboard({ onBack }: AiAnalyticsDashboardPro
                   const getHeatColor = (score: number) => {
                     if (score >= 85) return 'border-red-500/40 bg-red-500/5 text-red-500 hover:bg-red-500/10';
                     if (score >= 70) return 'border-amber-500/40 bg-amber-500/5 text-amber-500 hover:bg-amber-500/10';
-                    return 'border-[#235347]/30 bg-[#8EB69B]/5 text-[#8EB69B] hover:bg-[#8EB69B]/10';
+                    return 'border-white/10/30 bg-[#7C3AED]/5 text-[#7C3AED] hover:bg-[#7C3AED]/10';
                   };
 
                   return (
@@ -597,7 +597,7 @@ export default function AiAnalyticsDashboard({ onBack }: AiAnalyticsDashboardPro
                         </div>
                       </div>
 
-                      <h4 className="text-xs font-black truncate mt-2 text-slate-900 dark:text-slate-100 group-hover:text-[#8EB69B] dark:group-hover:text-blue-400 transition-colors">
+                      <h4 className="text-xs font-black truncate mt-2 text-slate-900 dark:text-slate-100 group-hover:text-[#7C3AED] dark:group-hover:text-blue-400 transition-colors">
                         {model.name}
                       </h4>
 
@@ -607,7 +607,7 @@ export default function AiAnalyticsDashboard({ onBack }: AiAnalyticsDashboardPro
                           <p className="text-lg font-black tracking-tight">{model.riskScore}%</p>
                         </div>
                         <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded ${
-                          model.trend === 'up' ? 'text-red-500' : 'text-emerald-500'
+                          model.trend === 'up' ? 'text-red-500' : 'text-green-500'
                         }`}>
                           {model.trend === 'up' ? '▲ ASC' : model.trend === 'down' ? '▼ MIT' : '■ STB'}
                         </span>
@@ -619,9 +619,9 @@ export default function AiAnalyticsDashboard({ onBack }: AiAnalyticsDashboardPro
             </div>
 
             {/* Interactive Model Search & Detailed List */}
-            <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] rounded-3xl p-5 shadow-xs space-y-4">
+            <div className="bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90 border border-white/10 rounded-3xl p-5 shadow-xs space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <h3 className="text-sm font-extrabold text-slate-950 dark:text-white font-mono uppercase tracking-wider">
+                <h3 className="text-sm font-extrabold text-slate-950 dark:text-slate-900 dark:text-white font-mono uppercase tracking-wider">
                   Predictive Model Index ({filteredRiskModels.length})
                 </h3>
 
@@ -629,7 +629,7 @@ export default function AiAnalyticsDashboard({ onBack }: AiAnalyticsDashboardPro
                   <select
                     value={selectedCategoryFilter}
                     onChange={(e) => setSelectedCategoryFilter(e.target.value)}
-                    className="bg-[#DAF1DE]/30 dark:bg-[#051F20] border border-slate-200 dark:border-slate-850 p-2 rounded-xl focus:outline-hidden text-xs"
+                    className="bg-slate-50 dark:bg-transparent border border-slate-200 dark:border-white/5 p-2 rounded-xl focus:outline-hidden text-xs"
                   >
                     <option value="all">All Sectors</option>
                     <option value="infrastructure">Infrastructure</option>
@@ -651,13 +651,13 @@ export default function AiAnalyticsDashboard({ onBack }: AiAnalyticsDashboardPro
                       onClick={() => setSelectedModelId(m.id)}
                       className={`w-full text-left p-3.5 rounded-xl border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3 cursor-pointer ${
                         isSelected 
-                          ? 'bg-[#8EB69B]/10 border-[#235347]' 
-                          : 'bg-[#DAF1DE]/30 dark:bg-[#051F20]/40 border-slate-200 dark:border-slate-850 hover:bg-slate-100 dark:hover:bg-slate-950'
+                          ? 'bg-[#7C3AED]/10 border-white/10' 
+                          : 'bg-slate-50 dark:bg-transparent/40 border-slate-200 dark:border-white/5 hover:bg-slate-100 dark:hover:bg-slate-950'
                       }`}
                     >
                       <div className="space-y-1 flex-1">
                         <div className="flex items-center gap-2">
-                          <span className="text-[9px] font-mono font-bold bg-slate-200 dark:bg-[#0B2B26] px-1.5 py-0.5 rounded border border-slate-300 dark:border-[#163832] text-slate-500 dark:text-slate-400">
+                          <span className="text-[9px] font-mono font-bold bg-slate-200 dark:bg-[#16161D]/90 px-1.5 py-0.5 rounded border border-slate-300 dark:border-white/10 text-slate-500 dark:text-slate-400">
                             {m.id}
                           </span>
                           <span className="text-xs font-mono font-bold text-slate-400 flex items-center gap-1 uppercase">
@@ -666,23 +666,23 @@ export default function AiAnalyticsDashboard({ onBack }: AiAnalyticsDashboardPro
                           </span>
                           <span className="text-xs text-slate-400">• {m.location.split('(')[0]}</span>
                         </div>
-                        <h4 className="text-xs font-black text-slate-950 dark:text-white">{m.name}</h4>
+                        <h4 className="text-xs font-black text-slate-950 dark:text-slate-900 dark:text-white">{m.name}</h4>
                       </div>
 
                       <div className="flex items-center gap-4">
                         <div className="text-right">
                           <p className="text-[9px] font-mono text-slate-400 uppercase">PROBABILITY</p>
-                          <p className="text-xs font-extrabold text-slate-900 dark:text-white">{m.probability}%</p>
+                          <p className="text-xs font-extrabold text-slate-900 dark:text-slate-900 dark:text-white">{m.probability}%</p>
                         </div>
 
                         <div className="w-16 bg-slate-200 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
                           <div 
-                            className={`h-full rounded-full ${m.riskScore >= 80 ? 'bg-red-500' : 'bg-[#8EB69B]'}`}
+                            className={`h-full rounded-full ${m.riskScore >= 80 ? 'bg-red-500' : 'bg-[#7C3AED]'}`}
                             style={{ width: `${m.probability}%` }}
                           />
                         </div>
 
-                        <ChevronRight className={`w-4 h-4 text-slate-400 transition-transform ${isSelected ? 'rotate-90 text-[#8EB69B]' : ''}`} />
+                        <ChevronRight className={`w-4 h-4 text-slate-400 transition-transform ${isSelected ? 'rotate-90 text-[#7C3AED]' : ''}`} />
                       </div>
                     </button>
                   );
@@ -696,32 +696,32 @@ export default function AiAnalyticsDashboard({ onBack }: AiAnalyticsDashboardPro
           <div className="lg:col-span-5 space-y-6">
             
             {/* Telemetry Inspection Panel */}
-            <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] rounded-3xl p-6 shadow-xs space-y-6">
-              <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-850">
-                <span className="text-xs font-mono font-black text-[#8EB69B] uppercase flex items-center gap-1.5">
-                  <Gauge className="w-4 h-4 text-[#8EB69B]" />
+            <div className="bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90 border border-white/10 rounded-3xl p-6 shadow-xs space-y-6">
+              <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-white/5">
+                <span className="text-xs font-mono font-black text-[#7C3AED] uppercase flex items-center gap-1.5">
+                  <Gauge className="w-4 h-4 text-[#7C3AED]" />
                   Telemetry Inspect Node
                 </span>
-                <span className="text-[10px] bg-slate-100 dark:bg-[#051F20] border border-slate-200 dark:border-[#163832] px-2 py-0.5 rounded font-mono text-slate-500 dark:text-slate-400 uppercase font-black">
+                <span className="text-[10px] bg-slate-100 dark:bg-[#0A0A0F] border border-white/10 px-2 py-0.5 rounded font-mono text-slate-500 dark:text-slate-400 uppercase font-black">
                   {activeModel.id}
                 </span>
               </div>
 
               {/* Core stress dials */}
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-[#DAF1DE]/30 dark:bg-[#051F20] p-4 rounded-2xl border border-slate-250 dark:border-slate-850/60">
+                <div className="bg-slate-50 dark:bg-transparent p-4 rounded-2xl border border-slate-250 dark:border-white/5/60">
                   <span className="text-[9px] font-mono text-slate-400 dark:text-slate-500 uppercase font-black">AI Stress Level</span>
                   <div className="flex items-baseline gap-1 mt-1">
-                    <span className="text-2.5xl font-black text-slate-950 dark:text-white">{activeModel.riskScore}%</span>
+                    <span className="text-2.5xl font-black text-slate-950 dark:text-slate-900 dark:text-white">{activeModel.riskScore}%</span>
                     <span className="text-[10px] font-mono text-red-500 font-bold">CRIT</span>
                   </div>
                 </div>
 
-                <div className="bg-[#DAF1DE]/30 dark:bg-[#051F20] p-4 rounded-2xl border border-slate-250 dark:border-slate-850/60">
+                <div className="bg-slate-50 dark:bg-transparent p-4 rounded-2xl border border-slate-250 dark:border-white/5/60">
                   <span className="text-[9px] font-mono text-slate-400 dark:text-slate-500 uppercase font-black">AI Confidence</span>
                   <div className="flex items-baseline gap-1 mt-1">
-                    <span className="text-2.5xl font-black text-slate-950 dark:text-white">{activeModel.aiConfidence}%</span>
-                    <span className="text-[10px] font-mono text-emerald-500 font-bold">SCAN</span>
+                    <span className="text-2.5xl font-black text-slate-950 dark:text-slate-900 dark:text-white">{activeModel.aiConfidence}%</span>
+                    <span className="text-[10px] font-mono text-green-500 font-bold">SCAN</span>
                   </div>
                 </div>
               </div>
@@ -729,14 +729,14 @@ export default function AiAnalyticsDashboard({ onBack }: AiAnalyticsDashboardPro
               {/* Mini Projected Trend Chart */}
               <div className="space-y-2">
                 <h4 className="text-[10px] font-mono text-slate-400 uppercase font-black tracking-wider">Historical Trend vs Prediction Arc</h4>
-                <div className="h-32 bg-[#DAF1DE]/30 dark:bg-[#051F20]/40 p-2 rounded-2xl border border-slate-200 dark:border-[#163832]">
+                <div className="h-32 bg-slate-50 dark:bg-transparent/40 p-2 rounded-2xl border border-white/10">
                   <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={activeModel.historicalAnomalyChart} margin={{ top: 5, right: 5, left: -32, bottom: 0 }}>
                       <CartesianGrid strokeDasharray="2 2" vertical={false} opacity={0.1} />
                       <XAxis dataKey="day" tick={{ fontSize: 8, fontFamily: 'monospace' }} stroke="#64748B" />
                       <YAxis tick={{ fontSize: 8, fontFamily: 'monospace' }} stroke="#64748B" />
-                      <Area type="monotone" name="Anomalies" dataKey="level" stroke="#3B82F6" strokeWidth={1.5} fill="#3B82F6" fillOpacity={0.05} />
-                      <Line type="monotone" name="Projected" dataKey="predicted" stroke="#A78BFA" strokeWidth={1} dot={false} strokeDasharray="3 3" />
+                      <Area type="monotone" name="Anomalies" dataKey="level" stroke="#22D3EE" strokeWidth={1.5} fill="#22D3EE" fillOpacity={0.05} />
+                      <Line type="monotone" name="Projected" dataKey="predicted" stroke="#EC4899" strokeWidth={1} dot={false} strokeDasharray="3 3" />
                     </AreaChart>
                   </ResponsiveContainer>
                 </div>
@@ -744,27 +744,27 @@ export default function AiAnalyticsDashboard({ onBack }: AiAnalyticsDashboardPro
 
               {/* Meta stats */}
               <div className="space-y-3 pt-2 text-xs">
-                <div className="flex justify-between items-center py-2 border-b border-slate-100 dark:border-slate-850">
+                <div className="flex justify-between items-center py-2 border-b border-slate-100 dark:border-white/5">
                   <span className="text-slate-400 font-mono">Location Sector:</span>
                   <span className="font-bold text-slate-850 dark:text-slate-200 flex items-center gap-1">
-                    <MapPin className="w-3.5 h-3.5 text-rose-500" />
+                    <MapPin className="w-3.5 h-3.5 text-red-500" />
                     {activeModel.location}
                   </span>
                 </div>
 
-                <div className="flex justify-between items-center py-2 border-b border-slate-100 dark:border-slate-850">
+                <div className="flex justify-between items-center py-2 border-b border-slate-100 dark:border-white/5">
                   <span className="text-slate-400 font-mono">Imminent Impact Timeframe:</span>
                   <span className="font-mono font-bold text-slate-800 dark:text-slate-200 uppercase bg-red-500/10 text-red-600 dark:text-red-400 px-2 py-0.5 rounded border border-red-500/15">
                     {activeModel.timeframe}
                   </span>
                 </div>
 
-                <div className="flex justify-between items-center py-2 border-b border-slate-100 dark:border-slate-850">
+                <div className="flex justify-between items-center py-2 border-b border-slate-100 dark:border-white/5">
                   <span className="text-slate-400 font-mono">IoT Micro-Sensors Polled:</span>
-                  <span className="font-bold font-mono text-[#8EB69B]">{activeModel.sensorCount} active nodes</span>
+                  <span className="font-bold font-mono text-[#7C3AED]">{activeModel.sensorCount} active nodes</span>
                 </div>
 
-                <div className="space-y-1 bg-[#DAF1DE]/30 dark:bg-[#051F20] p-3.5 rounded-xl border border-slate-250 dark:border-slate-850/60 mt-3 text-xs">
+                <div className="space-y-1 bg-slate-50 dark:bg-transparent p-3.5 rounded-xl border border-slate-250 dark:border-white/5/60 mt-3 text-xs">
                   <span className="text-slate-400 font-mono text-[9px] uppercase font-bold tracking-wider flex items-center gap-1 text-purple-500">
                     <BrainCircuit className="w-3.5 h-3.5 text-purple-400 animate-pulse" /> AI Synthesis Root Cause
                   </span>
@@ -777,7 +777,7 @@ export default function AiAnalyticsDashboard({ onBack }: AiAnalyticsDashboardPro
             </div>
 
             {/* AI Premium Recommendation Engine */}
-            <div className="bg-slate-950 text-white rounded-3xl p-6 relative overflow-hidden border border-slate-800 space-y-4">
+            <div className="bg-slate-950 text-slate-900 dark:text-white rounded-3xl p-6 relative overflow-hidden border border-slate-800 space-y-4">
               <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(37,99,235,0.12),transparent_60%)] pointer-events-none" />
               <div className="absolute top-2 right-2 bg-purple-500/10 text-[9px] font-mono text-purple-400 px-2.5 py-0.5 rounded-full border border-purple-500/20 z-10 animate-pulse flex items-center gap-1">
                 <Sparkles className="w-2.5 h-2.5" />
@@ -802,16 +802,16 @@ export default function AiAnalyticsDashboard({ onBack }: AiAnalyticsDashboardPro
                   return (
                     <div 
                       key={rec.id}
-                      className="bg-[#DAF1DE]/20/5 border border-white/10 p-4 rounded-2xl relative space-y-3 hover:border-white/20 transition-all text-xs"
+                      className="bg-[#16161D]/90 backdrop-blur-md/5 border border-white/10 p-4 rounded-2xl relative space-y-3 hover:border-white/20 transition-all text-xs"
                     >
                       <div className="flex justify-between items-start">
                         <div className="space-y-0.5">
                           <span className="text-[9px] font-mono text-blue-400 font-bold uppercase">{rec.id}</span>
-                          <h4 className="text-xs font-black text-white leading-tight">{rec.title}</h4>
+                          <h4 className="text-xs font-black text-slate-900 dark:text-white leading-tight">{rec.title}</h4>
                         </div>
                         
                         <span className={`text-[9px] font-mono font-bold px-2 py-0.5 rounded ${
-                          rec.impact === 'High' ? 'bg-red-500/20 text-red-400' : 'bg-[#8EB69B]/20 text-blue-400'
+                          rec.impact === 'High' ? 'bg-red-500/20 text-red-400' : 'bg-[#7C3AED]/20 text-blue-400'
                         }`}>
                           {rec.impact} Impact
                         </span>
@@ -822,10 +822,10 @@ export default function AiAnalyticsDashboard({ onBack }: AiAnalyticsDashboardPro
                       </p>
 
                       <div className="flex items-center justify-between pt-2 border-t border-white/5 text-[10px] font-mono text-slate-400">
-                        <span>Cost: <span className="font-bold text-white">{rec.costEstimate}</span></span>
+                        <span>Cost: <span className="font-bold text-slate-900 dark:text-white">{rec.costEstimate}</span></span>
                         
                         {rec.status === 'completed' ? (
-                          <span className="text-emerald-400 font-bold flex items-center gap-1.5 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded-full uppercase">
+                          <span className="text-green-400 font-bold flex items-center gap-1.5 bg-green-500/10 border border-green-500/20 px-2.5 py-0.5 rounded-full uppercase">
                             <Check className="w-3.5 h-3.5" /> Mitigated
                           </span>
                         ) : rec.status === 'executing' ? (
@@ -835,7 +835,7 @@ export default function AiAnalyticsDashboard({ onBack }: AiAnalyticsDashboardPro
                         ) : (
                           <button
                             onClick={() => handleExecuteRecommendation(rec.id)}
-                            className="bg-[#8EB69B] hover:bg-[#0B2B26] text-white font-bold font-mono px-3 py-1.5 rounded-lg flex items-center gap-1 cursor-pointer transition-colors"
+                            className="bg-[#7C3AED] hover:bg-[#0B2B26] text-slate-900 dark:text-white font-bold font-mono px-3 py-1.5 rounded-lg flex items-center gap-1 cursor-pointer transition-colors"
                           >
                             Execute Dispatch
                             <ArrowRight className="w-3.5 h-3.5" />

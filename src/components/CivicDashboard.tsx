@@ -102,7 +102,7 @@ export default function CivicDashboard({ onVerifyIssue, onFlagIssue, onBack }: D
   return (
     <section 
       id="dashboard" 
-      className="relative py-20 bg-[#F8FAFC] dark:bg-[#051F20] border-b border-[#E2E8F0] dark:border-[#1E293B] transition-colors duration-300"
+      className="relative py-20 bg-[#F8FAFC] dark:bg-[#0A0A0F] border-b border-[#E2E8F0] dark:border-[#1E293B] transition-colors duration-300"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         
@@ -114,12 +114,12 @@ export default function CivicDashboard({ onVerifyIssue, onFlagIssue, onBack }: D
                 window.scrollTo({ top: 0, behavior: 'instant' });
                 onBack();
               }}
-              className="inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-[#8EB69B] transition-colors font-mono cursor-pointer mb-2"
+              className="inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-[#7C3AED] transition-colors font-mono cursor-pointer mb-2"
             >
               ← RETURN TO LANDING
             </button>
           )}
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-50 dark:bg-[#163832]/10 border border-[#E2E8F0] dark:border-[#1E293B] rounded-full text-xs font-semibold text-[#8EB69B] font-mono uppercase">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-50 dark:bg-[#163832]/10 border border-[#E2E8F0] dark:border-[#1E293B] rounded-full text-xs font-semibold text-[#7C3AED] font-mono uppercase">
             <Trophy className="w-3.5 h-3.5" />
             Civic Action Hub
           </div>
@@ -135,20 +135,20 @@ export default function CivicDashboard({ onVerifyIssue, onFlagIssue, onBack }: D
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Column 1: Verification Queue Mini-Game (Col-span 5) */}
-          <div className="lg:col-span-5 bg-[#DAF1DE]/20 dark:bg-[#0F172A] border border-[#E2E8F0] dark:border-[#1E293B] rounded-3xl p-6 relative overflow-hidden shadow-md">
+          <div className="lg:col-span-5 bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D] border border-[#E2E8F0] dark:border-[#1E293B] rounded-3xl p-6 relative overflow-hidden shadow-md">
             
             {/* Corner floating badge */}
             <div className="absolute top-4 right-4 flex items-center gap-2">
               <span className="text-xs text-slate-400 dark:text-slate-500 font-mono">Your Score:</span>
               <motion.span 
                 animate={showScorePulse ? { scale: [1, 1.3, 1], color: ['#10B981', '#10B981', ''] } : {}}
-                className="font-display font-bold text-sm text-[#8EB69B] bg-[#163832]/10 px-2.5 py-1 rounded-lg"
+                className="font-display font-bold text-sm text-[#7C3AED] bg-[#163832]/10 px-2.5 py-1 rounded-lg"
               >
                 {userScore} PTS
               </motion.span>
             </div>
 
-            <div className="flex items-center gap-2 text-xs font-bold text-[#8EB69B] font-mono uppercase tracking-wider mb-5">
+            <div className="flex items-center gap-2 text-xs font-bold text-[#7C3AED] font-mono uppercase tracking-wider mb-5">
               <CheckSquare className="w-4 h-4" />
               PENDING VERIFICATION QUEUE
             </div>
@@ -162,13 +162,13 @@ export default function CivicDashboard({ onVerifyIssue, onFlagIssue, onBack }: D
                 className="space-y-4"
               >
                 {/* Simulated photo evidence */}
-                <div className="relative h-44 bg-slate-100 dark:bg-[#051F20] rounded-2xl overflow-hidden flex items-center justify-center border border-[#E2E8F0] dark:border-[#1E293B]">
+                <div className="relative h-44 bg-slate-100 dark:bg-[#0A0A0F] rounded-2xl overflow-hidden flex items-center justify-center border border-[#E2E8F0] dark:border-[#1E293B]">
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 to-transparent z-10" />
                   <span className="text-slate-400 dark:text-slate-600 font-mono text-[10px] uppercase tracking-widest flex items-center gap-2 z-20">
                     📷 [Simulated Photo Evidence: {currentQueueItem.evidence}]
                   </span>
                   <div className="absolute bottom-3 left-3 z-20">
-                    <span className="bg-[#EF4444] text-white font-mono text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">
+                    <span className="bg-[#EF4444] text-slate-900 dark:text-white font-mono text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">
                       Needs Verification
                     </span>
                   </div>
@@ -180,7 +180,7 @@ export default function CivicDashboard({ onVerifyIssue, onFlagIssue, onBack }: D
                     {currentQueueItem.title}
                   </h3>
                   <p className="text-xs text-slate-500 dark:text-slate-400 font-mono flex items-center gap-1">
-                    <MapPin className="w-3.5 h-3.5 text-[#8EB69B]" />
+                    <MapPin className="w-3.5 h-3.5 text-[#7C3AED]" />
                     {currentQueueItem.locationName}
                   </p>
                   <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
@@ -197,14 +197,14 @@ export default function CivicDashboard({ onVerifyIssue, onFlagIssue, onBack }: D
                   <div className="grid grid-cols-2 gap-3 pt-2">
                     <button
                       onClick={() => handleAction(true)}
-                      className="py-3 bg-[#10B981] hover:bg-emerald-600 text-white font-sans text-xs font-bold rounded-xl flex items-center justify-center gap-2 shadow-md hover:shadow-lg cursor-pointer transition-all duration-200"
+                      className="py-3 bg-[#10B981] hover:bg-emerald-600 text-slate-900 dark:text-white font-sans text-xs font-bold rounded-xl flex items-center justify-center gap-2 shadow-md hover:shadow-lg cursor-pointer transition-all duration-200"
                     >
                       <Check className="w-4 h-4" />
                       Verify Incident
                     </button>
                     <button
                       onClick={() => handleAction(false)}
-                      className="py-3 bg-[#DAF1DE]/20 dark:bg-slate-800 hover:bg-[#DAF1DE]/30 dark:hover:bg-slate-700 border border-[#E2E8F0] dark:border-slate-700 text-[#0F172A] dark:text-[#F8FAFC] font-sans text-xs font-bold rounded-xl flex items-center justify-center gap-2 cursor-pointer transition-all duration-200"
+                      className="py-3 bg-[#16161D]/90 backdrop-blur-md dark:bg-slate-800 hover:bg-[#16161D]/90 backdrop-blur-md dark:hover:bg-slate-700 border border-[#E2E8F0] dark:border-slate-700 text-[#0F172A] dark:text-[#F8FAFC] font-sans text-xs font-bold rounded-xl flex items-center justify-center gap-2 cursor-pointer transition-all duration-200"
                     >
                       <ShieldAlert className="w-4 h-4 text-[#EF4444]" />
                       Flag Spam
@@ -216,9 +216,9 @@ export default function CivicDashboard({ onVerifyIssue, onFlagIssue, onBack }: D
           </div>
 
           {/* Column 2: Live Activity Feed (Col-span 4) */}
-          <div className="lg:col-span-4 bg-[#DAF1DE]/20 dark:bg-[#0F172A] border border-[#E2E8F0] dark:border-[#1E293B] rounded-3xl p-6 shadow-md h-full">
+          <div className="lg:col-span-4 bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D] border border-[#E2E8F0] dark:border-[#1E293B] rounded-3xl p-6 shadow-md h-full">
             <div className="flex items-center justify-between mb-5">
-              <div className="flex items-center gap-2 text-xs font-bold text-[#8EB69B] font-mono uppercase tracking-wider">
+              <div className="flex items-center gap-2 text-xs font-bold text-[#7C3AED] font-mono uppercase tracking-wider">
                 <BellRing className="w-4 h-4 text-[#EF4444]" />
                 MUNICIPAL DISPATCH LOGS
               </div>
@@ -236,7 +236,7 @@ export default function CivicDashboard({ onVerifyIssue, onFlagIssue, onBack }: D
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ duration: 0.2 }}
-                    className="p-3 border-l-2 border-[#235347] bg-[#DAF1DE]/30 dark:bg-[#051F20] rounded-r-xl space-y-1"
+                    className="p-3 border-l-2 border-white/10 bg-slate-50 dark:bg-transparent rounded-r-xl space-y-1"
                   >
                     <div className="flex items-center justify-between">
                       <h4 className="font-semibold text-xs text-[#0F172A] dark:text-[#F8FAFC]">
@@ -261,8 +261,8 @@ export default function CivicDashboard({ onVerifyIssue, onFlagIssue, onBack }: D
           </div>
 
           {/* Column 3: Leaderboard (Col-span 3) */}
-          <div className="lg:col-span-3 bg-[#DAF1DE]/20 dark:bg-[#0F172A] border border-[#E2E8F0] dark:border-[#1E293B] rounded-3xl p-6 shadow-md">
-            <div className="flex items-center gap-2 text-xs font-bold text-[#8EB69B] font-mono uppercase tracking-wider mb-5">
+          <div className="lg:col-span-3 bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D] border border-[#E2E8F0] dark:border-[#1E293B] rounded-3xl p-6 shadow-md">
+            <div className="flex items-center gap-2 text-xs font-bold text-[#7C3AED] font-mono uppercase tracking-wider mb-5">
               <Trophy className="w-4 h-4 text-amber-500" />
               TOP HERO LEADERBOARD
             </div>
@@ -271,7 +271,7 @@ export default function CivicDashboard({ onVerifyIssue, onFlagIssue, onBack }: D
               {HEROES_LEADERBOARD.map((hero) => (
                 <div 
                   key={hero.id} 
-                  className="flex items-center justify-between p-2 hover:bg-[#DAF1DE]/30 dark:hover:bg-slate-950/50 rounded-xl transition-all"
+                  className="flex items-center justify-between p-2 hover:bg-[#16161D]/90 backdrop-blur-md dark:hover:bg-slate-950/50 rounded-xl transition-all"
                 >
                   <div className="flex items-center gap-2.5">
                     <span className="font-display font-bold text-xs text-slate-400 dark:text-slate-500 w-4">
@@ -284,7 +284,7 @@ export default function CivicDashboard({ onVerifyIssue, onFlagIssue, onBack }: D
                       </h4>
                       <div className="flex gap-1 mt-0.5">
                         {hero.badges.slice(0, 1).map((b, i) => (
-                          <span key={i} className="bg-blue-50 dark:bg-[#163832]/10 text-[9px] text-[#8EB69B] px-1.5 py-0.2 rounded font-semibold">
+                          <span key={i} className="bg-blue-50 dark:bg-[#163832]/10 text-[9px] text-[#7C3AED] px-1.5 py-0.2 rounded font-semibold">
                             {b}
                           </span>
                         ))}

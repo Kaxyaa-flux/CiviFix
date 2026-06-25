@@ -331,13 +331,13 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen font-sans bg-[#DAF1DE]/30 dark:bg-[#051F20] text-slate-900 dark:text-slate-100 transition-colors duration-300 antialiased selection:bg-[#8EB69B] selection:text-white overflow-x-hidden">
+    <div className="min-h-screen font-sans bg-slate-50 dark:bg-transparent text-slate-900 dark:text-slate-100 transition-colors duration-300 antialiased selection:bg-[#7C3AED] selection:text-slate-900 dark:text-white overflow-x-hidden">
       {/* Animated Startup Loader Screen */}
       <AnimatePresence>
         {isLoading && (
           <motion.div 
             key="startup-loader"
-            className="fixed inset-0 bg-slate-950 z-50 flex flex-col items-center justify-center p-6 text-white font-sans"
+            className="fixed inset-0 bg-slate-950 z-50 flex flex-col items-center justify-center p-6 text-slate-900 dark:text-white font-sans"
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
@@ -350,17 +350,17 @@ export default function App() {
                 transition={{ delay: 0.1, duration: 0.4 }}
               >
                 <div className="p-3 bg-[#163832] rounded-2xl shadow-lg shadow-[#051F20]/30">
-                  <Shield className="w-8 h-8 text-white animate-pulse" />
+                  <Shield className="w-8 h-8 text-slate-900 dark:text-white animate-pulse" />
                 </div>
-                <span className="font-display font-extrabold text-2xl tracking-tight text-white">
-                  Civi<span className="text-[#8EB69B]">Fix</span>
+                <span className="font-display font-extrabold text-2xl tracking-tight text-slate-900 dark:text-white">
+                  Civi<span className="text-[#7C3AED]">Fix</span>
                 </span>
               </motion.div>
 
               <div className="space-y-4">
                 <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
                   <motion.div 
-                    className="h-full bg-[#8EB69B] rounded-full"
+                    className="h-full bg-[#7C3AED] rounded-full"
                     initial={{ width: "0%" }}
                     animate={{ width: "100%" }}
                     transition={{ duration: 1.4, ease: "easeInOut" }}
@@ -368,7 +368,7 @@ export default function App() {
                 </div>
                 
                 <div className="h-6 text-xs text-slate-400 font-mono flex items-center justify-center space-x-2">
-                  <Cpu className="w-3.5 h-3.5 text-[#8EB69B] animate-spin" />
+                  <Cpu className="w-3.5 h-3.5 text-[#7C3AED] animate-spin" />
                   <motion.span
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -496,10 +496,10 @@ export default function App() {
               initial={{ opacity: 0, y: 30, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, scale: 0.85, transition: { duration: 0.15 } }}
-              className="pointer-events-auto w-full bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] rounded-2xl shadow-xl p-4 flex items-start gap-3 backdrop-blur-md bg-opacity-95 dark:bg-opacity-95"
+              className="pointer-events-auto w-full bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90 border border-white/10 rounded-2xl shadow-xl p-4 flex items-start gap-3 backdrop-blur-md bg-opacity-95 dark:bg-opacity-95"
             >
               {toast.type === 'success' ? (
-                <div className="p-1.5 bg-emerald-100 dark:bg-emerald-950/50 rounded-lg text-emerald-600 dark:text-emerald-400">
+                <div className="p-1.5 bg-emerald-100 dark:bg-emerald-950/50 rounded-lg text-emerald-600 dark:text-green-400">
                   <CheckCircle className="w-5 h-5" />
                 </div>
               ) : toast.type === 'warning' ? (
@@ -511,7 +511,7 @@ export default function App() {
                   <AlertCircle className="w-5 h-5" />
                 </div>
               ) : (
-                <div className="p-1.5 bg-blue-100 dark:bg-blue-950/50 rounded-lg text-[#8EB69B] dark:text-blue-400">
+                <div className="p-1.5 bg-blue-100 dark:bg-blue-950/50 rounded-lg text-[#7C3AED] dark:text-blue-400">
                   <Info className="w-5 h-5" />
                 </div>
               )}
@@ -519,13 +519,13 @@ export default function App() {
                 <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider font-mono">
                   System {toast.type}
                 </p>
-                <p className="text-sm text-slate-850 dark:text-white mt-1 leading-relaxed font-sans font-medium">
+                <p className="text-sm text-slate-850 dark:text-slate-900 dark:text-white mt-1 leading-relaxed font-sans font-medium">
                   {toast.message}
                 </p>
               </div>
               <button 
                 onClick={() => setToasts(prev => prev.filter(t => t.id !== toast.id))}
-                className="text-slate-400 hover:text-slate-600 dark:hover:text-white p-0.5 rounded-lg transition-colors cursor-pointer"
+                className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-900 dark:text-white p-0.5 rounded-lg transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>

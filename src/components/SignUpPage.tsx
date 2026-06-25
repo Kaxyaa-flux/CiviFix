@@ -12,12 +12,12 @@ interface SignUpPageProps {
 }
 
 const PRESET_AVATARS = [
-  { id: 'av1', label: 'E', color: 'bg-gradient-to-tr from-blue-500 to-indigo-600 text-white' },
-  { id: 'av2', label: 'M', color: 'bg-gradient-to-tr from-emerald-500 to-teal-600 text-white' },
-  { id: 'av3', label: 'S', color: 'bg-gradient-to-tr from-amber-500 to-orange-600 text-white' },
-  { id: 'av4', label: 'K', color: 'bg-gradient-to-tr from-rose-500 to-pink-600 text-white' },
-  { id: 'av5', label: 'J', color: 'bg-gradient-to-tr from-purple-500 to-violet-600 text-white' },
-  { id: 'av6', label: 'A', color: 'bg-gradient-to-tr from-cyan-500 to-blue-600 text-white' },
+  { id: 'av1', label: 'E', color: 'bg-gradient-to-tr from-blue-500 to-indigo-600 text-slate-900 dark:text-white' },
+  { id: 'av2', label: 'M', color: 'bg-gradient-to-tr from-green-500 to-teal-600 text-slate-900 dark:text-white' },
+  { id: 'av3', label: 'S', color: 'bg-gradient-to-tr from-amber-500 to-orange-600 text-slate-900 dark:text-white' },
+  { id: 'av4', label: 'K', color: 'bg-gradient-to-tr from-red-500 to-pink-600 text-slate-900 dark:text-white' },
+  { id: 'av5', label: 'J', color: 'bg-gradient-to-tr from-purple-500 to-violet-600 text-slate-900 dark:text-white' },
+  { id: 'av6', label: 'A', color: 'bg-gradient-to-tr from-cyan-500 to-blue-600 text-slate-900 dark:text-white' },
 ];
 
 export default function SignUpPage({ onAuthSuccess }: SignUpPageProps) {
@@ -92,25 +92,25 @@ export default function SignUpPage({ onAuthSuccess }: SignUpPageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-[#DAF1DE]/30 dark:bg-[#051F20] text-slate-900 dark:text-slate-50 pt-36 pb-16 flex items-center justify-center transition-colors duration-300 px-4">
+    <div className="min-h-screen bg-slate-50 dark:bg-transparent text-slate-900 dark:text-slate-50 pt-36 pb-16 flex items-center justify-center transition-colors duration-300 px-4">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(37,99,235,0.08),transparent_50%)] pointer-events-none" />
       
-      <div className="w-full max-w-5xl bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] rounded-3xl overflow-hidden shadow-xl flex flex-col md:flex-row relative z-10">
+      <div className="w-full max-w-5xl bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90 border border-white/10 rounded-3xl overflow-hidden shadow-xl flex flex-col md:flex-row relative z-10">
         
         {/* LEFT PANEL */}
-        <div className="md:w-5/12 bg-slate-950 p-8 sm:p-10 text-white flex flex-col justify-between relative overflow-hidden border-r border-slate-800">
+        <div className="md:w-5/12 bg-slate-950 p-8 sm:p-10 text-slate-900 dark:text-white flex flex-col justify-between relative overflow-hidden border-r border-slate-800">
           <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(to_right,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none" />
           <div className="absolute top-[-20%] right-[-20%] w-[350px] h-[350px] rounded-full bg-[#163832]/15 blur-[60px]" />
           
           <div className="space-y-6 relative z-10">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#DAF1DE]/20/5 border border-white/10 rounded-full text-xs font-mono text-blue-400">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#16161D]/90 backdrop-blur-md/5 border border-white/10 rounded-full text-xs font-mono text-blue-400">
               <Building2 className="w-3.5 h-3.5 text-blue-400 animate-pulse" />
               SECURE IDENTITY NETWORK
             </div>
 
             <div className="space-y-3">
               <h2 className="text-3xl font-extrabold tracking-tight">
-                Civic <span className="text-[#8EB69B]">Shield</span> Access
+                Civic <span className="text-[#7C3AED]">Shield</span> Access
               </h2>
               <p className="text-slate-400 text-sm leading-relaxed">
                 Unlock official municipal dashboard capabilities, claim volunteer tasks, authorize validation sweeps, and track community impact.
@@ -119,7 +119,7 @@ export default function SignUpPage({ onAuthSuccess }: SignUpPageProps) {
 
             <div className="space-y-4 pt-4">
               <div className="flex gap-3">
-                <div className="w-5.5 h-5.5 rounded-lg bg-[#8EB69B]/10 border border-[#235347]/20 flex items-center justify-center shrink-0">
+                <div className="w-5.5 h-5.5 rounded-lg bg-[#7C3AED]/10 border border-white/10/20 flex items-center justify-center shrink-0">
                   <ShieldCheck className="w-3.5 h-3.5 text-blue-400" />
                 </div>
                 <div>
@@ -129,8 +129,8 @@ export default function SignUpPage({ onAuthSuccess }: SignUpPageProps) {
               </div>
 
               <div className="flex gap-3">
-                <div className="w-5.5 h-5.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0">
-                  <Award className="w-3.5 h-3.5 text-emerald-400" />
+                <div className="w-5.5 h-5.5 rounded-lg bg-green-500/10 border border-green-500/20 flex items-center justify-center shrink-0">
+                  <Award className="w-3.5 h-3.5 text-green-400" />
                 </div>
                 <div>
                   <h4 className="text-xs font-bold text-slate-200">Reputation Leaderboards</h4>
@@ -158,8 +158,8 @@ export default function SignUpPage({ onAuthSuccess }: SignUpPageProps) {
         {/* RIGHT PANEL */}
         <div className="flex-1 p-8 sm:p-10 flex flex-col justify-center min-h-[500px]">
           
-          <div className="flex items-center justify-between pb-6 border-b border-slate-100 dark:border-slate-850 mb-6">
-            <h3 className="text-xl font-bold text-slate-900 dark:text-white">Create Account</h3>
+          <div className="flex items-center justify-between pb-6 border-b border-slate-100 dark:border-white/5 mb-6">
+            <h3 className="text-xl font-bold text-slate-900 dark:text-slate-900 dark:text-white">Create Account</h3>
             <button 
               onClick={() => navigate('/')}
               className="text-xs font-mono text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 cursor-pointer"
@@ -186,7 +186,7 @@ export default function SignUpPage({ onAuthSuccess }: SignUpPageProps) {
                 initial={{ opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
-                className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs p-3 rounded-xl flex items-center gap-2 mb-4 font-sans"
+                className="bg-green-500/10 border border-green-500/20 text-emerald-600 dark:text-green-400 text-xs p-3 rounded-xl flex items-center gap-2 mb-4 font-sans"
               >
                 <Check className="w-4 h-4 shrink-0" />
                 <span>{successMsg}</span>
@@ -213,7 +213,7 @@ export default function SignUpPage({ onAuthSuccess }: SignUpPageProps) {
                     placeholder="Sandro K."
                     value={signUpName}
                     onChange={(e) => setSignUpName(e.target.value)}
-                    className="w-full bg-[#DAF1DE]/30 dark:bg-[#051F20] border border-slate-200 dark:border-[#163832] rounded-xl py-2.5 pl-10 pr-4 text-sm focus:outline-hidden focus:border-[#235347]"
+                    className="w-full bg-slate-50 dark:bg-transparent border border-white/10 rounded-xl py-2.5 pl-10 pr-4 text-sm focus:outline-hidden focus:border-white/10"
                   />
                 </div>
               </div>
@@ -228,7 +228,7 @@ export default function SignUpPage({ onAuthSuccess }: SignUpPageProps) {
                     placeholder="sandro@civic.org"
                     value={signUpEmail}
                     onChange={(e) => setSignUpEmail(e.target.value)}
-                    className="w-full bg-[#DAF1DE]/30 dark:bg-[#051F20] border border-slate-200 dark:border-[#163832] rounded-xl py-2.5 pl-10 pr-4 text-sm focus:outline-hidden focus:border-[#235347]"
+                    className="w-full bg-slate-50 dark:bg-transparent border border-white/10 rounded-xl py-2.5 pl-10 pr-4 text-sm focus:outline-hidden focus:border-white/10"
                   />
                 </div>
               </div>
@@ -262,13 +262,13 @@ export default function SignUpPage({ onAuthSuccess }: SignUpPageProps) {
                   onClick={() => setSignUpRole('citizen')}
                   className={`p-3 rounded-xl border text-left transition-all flex items-start gap-2.5 cursor-pointer ${
                     signUpRole === 'citizen'
-                      ? 'bg-[#8EB69B]/10 border-[#235347]'
-                      : 'bg-[#DAF1DE]/30 dark:bg-[#051F20]/40 border-slate-200 dark:border-slate-850 hover:border-slate-300 dark:hover:border-slate-750'
+                      ? 'bg-[#7C3AED]/10 border-white/10'
+                      : 'bg-slate-50 dark:bg-transparent/40 border-slate-200 dark:border-white/5 hover:border-slate-300 dark:hover:border-slate-750'
                   }`}
                 >
-                  <UserCheck className={`w-4 h-4 mt-0.5 ${signUpRole === 'citizen' ? 'text-[#8EB69B]' : 'text-slate-400'}`} />
+                  <UserCheck className={`w-4 h-4 mt-0.5 ${signUpRole === 'citizen' ? 'text-[#7C3AED]' : 'text-slate-400'}`} />
                   <div>
-                    <h4 className="text-xs font-bold text-slate-900 dark:text-white">Citizen Reporter</h4>
+                    <h4 className="text-xs font-bold text-slate-900 dark:text-slate-900 dark:text-white">Citizen Reporter</h4>
                     <p className="text-[10px] text-slate-400 mt-0.5">Submit incident reports, vote on issues.</p>
                   </div>
                 </button>
@@ -278,13 +278,13 @@ export default function SignUpPage({ onAuthSuccess }: SignUpPageProps) {
                   onClick={() => setSignUpRole('moderator')}
                   className={`p-3 rounded-xl border text-left transition-all flex items-start gap-2.5 cursor-pointer ${
                     signUpRole === 'moderator'
-                      ? 'bg-emerald-500/10 border-emerald-500'
-                      : 'bg-[#DAF1DE]/30 dark:bg-[#051F20]/40 border-slate-200 dark:border-slate-850 hover:border-slate-300 dark:hover:border-slate-750'
+                      ? 'bg-green-500/10 border-green-500'
+                      : 'bg-slate-50 dark:bg-transparent/40 border-slate-200 dark:border-white/5 hover:border-slate-300 dark:hover:border-slate-750'
                   }`}
                 >
-                  <Shield className={`w-4 h-4 mt-0.5 ${signUpRole === 'moderator' ? 'text-emerald-500' : 'text-slate-400'}`} />
+                  <Shield className={`w-4 h-4 mt-0.5 ${signUpRole === 'moderator' ? 'text-green-500' : 'text-slate-400'}`} />
                   <div>
-                    <h4 className="text-xs font-bold text-slate-900 dark:text-white">Municipal Volunteer</h4>
+                    <h4 className="text-xs font-bold text-slate-900 dark:text-slate-900 dark:text-white">Municipal Volunteer</h4>
                     <p className="text-[10px] text-slate-400 mt-0.5">Audit files, update dispatch state.</p>
                   </div>
                 </button>
@@ -301,7 +301,7 @@ export default function SignUpPage({ onAuthSuccess }: SignUpPageProps) {
                   placeholder="Minimum 5 characters"
                   value={signUpPassword}
                   onChange={(e) => setSignUpPassword(e.target.value)}
-                  className="w-full bg-[#DAF1DE]/30 dark:bg-[#051F20] border border-slate-200 dark:border-[#163832] rounded-xl py-2.5 pl-10 pr-10 text-sm focus:outline-hidden focus:border-[#235347]"
+                  className="w-full bg-slate-50 dark:bg-transparent border border-white/10 rounded-xl py-2.5 pl-10 pr-10 text-sm focus:outline-hidden focus:border-white/10"
                 />
                 <button
                   type="button"
@@ -316,7 +316,7 @@ export default function SignUpPage({ onAuthSuccess }: SignUpPageProps) {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-2.5 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50 mt-4"
+              className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-slate-900 dark:text-white py-2.5 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50 mt-4"
             >
               {isLoading ? 'Creating secure container credentials...' : 'Register Secure Profile'}
               <ArrowRight className="w-4 h-4" />
@@ -324,7 +324,7 @@ export default function SignUpPage({ onAuthSuccess }: SignUpPageProps) {
 
             <div className="text-center mt-4">
               <span className="text-xs text-slate-500 dark:text-slate-400">Already have an account? </span>
-              <Link to="/signin" className="text-xs font-bold text-[#8EB69B] hover:underline">
+              <Link to="/signin" className="text-xs font-bold text-[#7C3AED] hover:underline">
                 Sign In
               </Link>
             </div>

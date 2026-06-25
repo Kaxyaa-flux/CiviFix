@@ -341,22 +341,22 @@ export default function AuthorityDashboard({ currentUser, onBack }: AuthorityDas
   };
 
   return (
-    <div className="min-h-screen bg-[#DAF1DE]/30 dark:bg-[#051F20] text-slate-900 dark:text-slate-50 pt-32 pb-16 transition-colors duration-300">
+    <div className="min-h-screen bg-slate-50 dark:bg-transparent text-slate-900 dark:text-slate-50 pt-32 pb-16 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         
         {/* Top Header section */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-slate-200 dark:border-[#163832]">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-white/10">
           <div className="space-y-1.5">
             <button 
               onClick={() => {
                 window.scrollTo({ top: 0, behavior: 'instant' });
                 onBack();
               }}
-              className="inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-[#8EB69B] transition-colors font-mono cursor-pointer"
+              className="inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-[#7C3AED] transition-colors font-mono cursor-pointer"
             >
               ← RETURN TO CIVILIAN VIEW
             </button>
-            <h1 className="text-3.5xl sm:text-4xl font-extrabold tracking-tight text-slate-950 dark:text-white flex flex-wrap items-center gap-3">
+            <h1 className="text-3.5xl sm:text-4xl font-extrabold tracking-tight text-slate-950 dark:text-slate-900 dark:text-white flex flex-wrap items-center gap-3">
               <ShieldAlert className="w-9 h-9 text-indigo-600 animate-pulse" />
               Enterprise <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-blue-600 to-indigo-500">Authority Dispatch Console</span>
             </h1>
@@ -371,7 +371,7 @@ export default function AuthorityDashboard({ currentUser, onBack }: AuthorityDas
               <Flame className="w-3.5 h-3.5 text-red-500" />
               SLA BREACH ALERT: 1 PENDING
             </span>
-            <span className="bg-[#8EB69B]/10 text-[#8EB69B] border border-[#235347]/20 px-3 py-1.5 rounded-xl font-bold">
+            <span className="bg-[#7C3AED]/10 text-[#7C3AED] border border-white/10/20 px-3 py-1.5 rounded-xl font-bold">
               SYS STATUS: OPERATIONAL
             </span>
           </div>
@@ -392,11 +392,11 @@ export default function AuthorityDashboard({ currentUser, onBack }: AuthorityDas
 
             <div className="space-y-2 max-h-[85px] overflow-y-auto pr-1">
               {notifications.map((notif) => (
-                <div key={notif.id} className="flex items-start justify-between text-xs gap-3 font-sans py-1.5 px-2 bg-[#DAF1DE]/20/40 dark:bg-[#0B2B26]/40 rounded-lg">
+                <div key={notif.id} className="flex items-start justify-between text-xs gap-3 font-sans py-1.5 px-2 bg-[#16161D]/90 backdrop-blur-md/40 dark:bg-[#16161D]/90/40 rounded-lg">
                   <div className="flex items-center gap-2">
                     <span className={`w-2 h-2 rounded-full ${
                       notif.type === 'alert' ? 'bg-red-500 animate-ping' : 
-                      notif.type === 'success' ? 'bg-emerald-500' : 'bg-[#8EB69B]'
+                      notif.type === 'success' ? 'bg-green-500' : 'bg-[#7C3AED]'
                     }`} />
                     <span className="text-slate-700 dark:text-slate-350">{notif.text}</span>
                   </div>
@@ -407,8 +407,8 @@ export default function AuthorityDashboard({ currentUser, onBack }: AuthorityDas
           </div>
 
           {/* SLA Overview KPI indicator */}
-          <div className="md:col-span-4 bg-indigo-600 text-white p-4.5 rounded-2.5xl flex flex-col justify-between h-full min-h-[145px] relative overflow-hidden shadow-md">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-[#DAF1DE]/20/5 rounded-bl-full pointer-events-none" />
+          <div className="md:col-span-4 bg-indigo-600 text-slate-900 dark:text-white p-4.5 rounded-2.5xl flex flex-col justify-between h-full min-h-[145px] relative overflow-hidden shadow-md">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-[#16161D]/90 backdrop-blur-md/5 rounded-bl-full pointer-events-none" />
             <div className="space-y-1 z-10">
               <p className="text-[10px] font-mono uppercase tracking-wider font-black text-slate-200 flex items-center gap-1">
                 <Clock className="w-3.5 h-3.5" /> Average SLA Clock
@@ -425,20 +425,20 @@ export default function AuthorityDashboard({ currentUser, onBack }: AuthorityDas
         {/* 1. Main KPI Dashboard Panel */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           
-          <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] p-5 rounded-2.5xl relative overflow-hidden shadow-xs">
-            <div className="absolute top-0 right-0 w-20 h-20 bg-[#8EB69B]/5 rounded-bl-full pointer-events-none" />
+          <div className="bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90 border border-white/10 p-5 rounded-2.5xl relative overflow-hidden shadow-xs">
+            <div className="absolute top-0 right-0 w-20 h-20 bg-[#7C3AED]/5 rounded-bl-full pointer-events-none" />
             <p className="text-[10px] text-slate-400 dark:text-slate-500 font-mono uppercase font-black tracking-wider flex items-center gap-1">
-              <ClipboardList className="w-3.5 h-3.5 text-[#8EB69B]" />
+              <ClipboardList className="w-3.5 h-3.5 text-[#7C3AED]" />
               Total Assigned Issues
             </p>
             <div className="flex items-baseline gap-2 mt-2">
-              <span className="text-3.5xl font-black text-slate-950 dark:text-white">{kpis.total}</span>
+              <span className="text-3.5xl font-black text-slate-950 dark:text-slate-900 dark:text-white">{kpis.total}</span>
               <span className="text-xs font-mono text-slate-400">active jobs</span>
             </div>
             <p className="text-[10px] text-slate-400 font-mono mt-1">Supervised municipal queue</p>
           </div>
 
-          <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] p-5 rounded-2.5xl relative overflow-hidden shadow-xs">
+          <div className="bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90 border border-white/10 p-5 rounded-2.5xl relative overflow-hidden shadow-xs">
             <div className="absolute top-0 right-0 w-20 h-20 bg-red-500/5 rounded-bl-full pointer-events-none" />
             <p className="text-[10px] text-slate-400 dark:text-slate-500 font-mono uppercase font-black tracking-wider flex items-center gap-1">
               <BadgeAlert className="w-3.5 h-3.5 text-red-500" />
@@ -451,22 +451,22 @@ export default function AuthorityDashboard({ currentUser, onBack }: AuthorityDas
             <p className="text-[10px] text-slate-400 font-mono mt-1">Urgent dispatcher triage needed</p>
           </div>
 
-          <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] p-5 rounded-2.5xl relative overflow-hidden shadow-xs">
-            <div className="absolute top-0 right-0 w-20 h-20 bg-emerald-500/5 rounded-bl-full pointer-events-none" />
+          <div className="bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90 border border-white/10 p-5 rounded-2.5xl relative overflow-hidden shadow-xs">
+            <div className="absolute top-0 right-0 w-20 h-20 bg-green-500/5 rounded-bl-full pointer-events-none" />
             <p className="text-[10px] text-slate-400 dark:text-slate-500 font-mono uppercase font-black tracking-wider flex items-center gap-1">
-              <Users className="w-3.5 h-3.5 text-emerald-500" />
+              <Users className="w-3.5 h-3.5 text-green-500" />
               Crews On-Site Dispatch
             </p>
             <div className="flex items-baseline gap-2 mt-2">
-              <span className="text-3.5xl font-black text-emerald-600 dark:text-emerald-500">
+              <span className="text-3.5xl font-black text-emerald-600 dark:text-green-500">
                 {crews.filter(c => c.status === 'active').length} / {crews.length}
               </span>
-              <span className="text-xs font-mono text-emerald-500">Crews deployed</span>
+              <span className="text-xs font-mono text-green-500">Crews deployed</span>
             </div>
             <p className="text-[10px] text-slate-400 font-mono mt-1">Telemetry-monitored vehicles</p>
           </div>
 
-          <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] p-5 rounded-2.5xl relative overflow-hidden shadow-xs">
+          <div className="bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90 border border-white/10 p-5 rounded-2.5xl relative overflow-hidden shadow-xs">
             <div className="absolute top-0 right-0 w-20 h-20 bg-purple-500/5 rounded-bl-full pointer-events-none" />
             <p className="text-[10px] text-slate-400 dark:text-slate-500 font-mono uppercase font-black tracking-wider flex items-center gap-1">
               <CheckCircle2 className="w-3.5 h-3.5 text-purple-500" />
@@ -474,7 +474,7 @@ export default function AuthorityDashboard({ currentUser, onBack }: AuthorityDas
             </p>
             <div className="flex items-baseline gap-2 mt-2">
               <span className="text-3.5xl font-black text-purple-600 dark:text-purple-400">96.4%</span>
-              <span className="text-xs font-mono text-emerald-500 flex items-center">
+              <span className="text-xs font-mono text-green-500 flex items-center">
                 <TrendingUp className="w-3.5 h-3.5" /> +1.2%
               </span>
             </div>
@@ -487,9 +487,9 @@ export default function AuthorityDashboard({ currentUser, onBack }: AuthorityDas
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
           {/* Weekly SLA Compliance & Resolution Volume Chart */}
-          <div className="lg:col-span-7 bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] p-5 sm:p-6 rounded-3xl shadow-xs space-y-4">
+          <div className="lg:col-span-7 bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90 border border-white/10 p-5 sm:p-6 rounded-3xl shadow-xs space-y-4">
             <div>
-              <h3 className="text-base font-extrabold text-slate-950 dark:text-white flex items-center gap-2">
+              <h3 className="text-base font-extrabold text-slate-950 dark:text-slate-900 dark:text-white flex items-center gap-2">
                 <Activity className="w-5 h-5 text-indigo-500" />
                 SLA Compliance & Resolution Volatility
               </h3>
@@ -523,10 +523,10 @@ export default function AuthorityDashboard({ currentUser, onBack }: AuthorityDas
           </div>
 
           {/* Operational Team Efficiency Index Chart */}
-          <div className="lg:col-span-5 bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] p-5 sm:p-6 rounded-3xl shadow-xs space-y-4">
+          <div className="lg:col-span-5 bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90 border border-white/10 p-5 sm:p-6 rounded-3xl shadow-xs space-y-4">
             <div>
-              <h3 className="text-base font-extrabold text-slate-950 dark:text-white flex items-center gap-2">
-                <Users className="w-5 h-5 text-[#8EB69B]" />
+              <h3 className="text-base font-extrabold text-slate-950 dark:text-slate-900 dark:text-white flex items-center gap-2">
+                <Users className="w-5 h-5 text-[#7C3AED]" />
                 Operational Crew Efficiency Scorecard
               </h3>
               <p className="text-xs text-slate-400 dark:text-slate-500 font-mono">
@@ -571,10 +571,10 @@ export default function AuthorityDashboard({ currentUser, onBack }: AuthorityDas
           {/* LEFT: Asssigned Issue queue and advanced filters list */}
           <div className="lg:col-span-7 space-y-6">
             
-            <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] rounded-3xl p-5 shadow-xs space-y-4">
+            <div className="bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90 border border-white/10 rounded-3xl p-5 shadow-xs space-y-4">
               
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <h3 className="text-sm font-extrabold text-slate-950 dark:text-white font-mono uppercase tracking-wider">
+                <h3 className="text-sm font-extrabold text-slate-950 dark:text-slate-900 dark:text-white font-mono uppercase tracking-wider">
                   Operational Queue ({filteredIssues.length} issues)
                 </h3>
 
@@ -585,7 +585,7 @@ export default function AuthorityDashboard({ currentUser, onBack }: AuthorityDas
                   <select
                     value={categoryFilter}
                     onChange={(e) => setCategoryFilter(e.target.value)}
-                    className="bg-slate-105 dark:bg-[#051F20] border border-slate-200 dark:border-slate-850 p-2 rounded-xl focus:outline-hidden text-xs font-mono font-bold"
+                    className="bg-slate-105 dark:bg-[#0A0A0F] border border-slate-200 dark:border-white/5 p-2 rounded-xl focus:outline-hidden text-xs font-mono font-bold"
                   >
                     <option value="all">All Sectors</option>
                     <option value="Roads">Roads</option>
@@ -598,7 +598,7 @@ export default function AuthorityDashboard({ currentUser, onBack }: AuthorityDas
                   <select
                     value={priorityFilter}
                     onChange={(e) => setPriorityFilter(e.target.value)}
-                    className="bg-slate-105 dark:bg-[#051F20] border border-slate-200 dark:border-slate-850 p-2 rounded-xl focus:outline-hidden text-xs font-mono font-bold"
+                    className="bg-slate-105 dark:bg-[#0A0A0F] border border-slate-200 dark:border-white/5 p-2 rounded-xl focus:outline-hidden text-xs font-mono font-bold"
                   >
                     <option value="all">All Priorities</option>
                     <option value="CRITICAL">Critical</option>
@@ -618,7 +618,7 @@ export default function AuthorityDashboard({ currentUser, onBack }: AuthorityDas
                   placeholder="Search dispatcher queue by issue ID, location, or telemetry description..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-[#DAF1DE]/30 dark:bg-[#051F20]/60 border border-slate-200 dark:border-slate-850 rounded-xl pl-10 pr-4 py-2.5 text-xs focus:outline-hidden"
+                  className="w-full bg-slate-50 dark:bg-transparent/60 border border-slate-200 dark:border-white/5 rounded-xl pl-10 pr-4 py-2.5 text-xs focus:outline-hidden"
                 />
               </div>
 
@@ -631,8 +631,8 @@ export default function AuthorityDashboard({ currentUser, onBack }: AuthorityDas
                     const styles = {
                       CRITICAL: 'bg-red-500/10 text-red-500 border-red-500/25',
                       HIGH: 'bg-amber-500/10 text-amber-500 border-amber-500/25',
-                      MEDIUM: 'bg-[#8EB69B]/10 text-[#8EB69B] border-[#235347]/25',
-                      LOW: 'bg-[#DAF1DE]/300/10 text-slate-500 border-slate-500/25'
+                      MEDIUM: 'bg-[#7C3AED]/10 text-[#7C3AED] border-white/10/25',
+                      LOW: 'bg-[#16161D]/90 backdrop-blur-md0/10 text-slate-500 border-slate-500/25'
                     };
                     return styles[priority];
                   };
@@ -644,23 +644,23 @@ export default function AuthorityDashboard({ currentUser, onBack }: AuthorityDas
                       className={`w-full text-left p-4 rounded-2xl border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4 cursor-pointer ${
                         isSelected 
                           ? 'bg-indigo-500/10 border-indigo-500/70 ring-1 ring-indigo-500/20' 
-                          : 'bg-[#DAF1DE]/30/70 dark:bg-[#051F20]/20 border-slate-200 dark:border-slate-850 hover:bg-slate-100 dark:hover:bg-slate-950'
+                          : 'bg-[#16161D]/90 backdrop-blur-md/70 dark:bg-[#0A0A0F]/20 border-slate-200 dark:border-white/5 hover:bg-slate-100 dark:hover:bg-slate-950'
                       }`}
                     >
                       <div className="space-y-1.5 flex-1">
                         <div className="flex flex-wrap items-center gap-2">
-                          <span className="text-[9px] font-mono font-bold bg-slate-200 dark:bg-[#0B2B26] px-2 py-0.5 rounded border border-slate-300 dark:border-[#163832] text-slate-500 dark:text-slate-400">
+                          <span className="text-[9px] font-mono font-bold bg-slate-200 dark:bg-[#16161D]/90 px-2 py-0.5 rounded border border-slate-300 dark:border-white/10 text-slate-500 dark:text-slate-400">
                             {item.id}
                           </span>
                           <span className={`text-[9px] font-mono font-bold border px-2 py-0.5 rounded ${getPriorityStyle(item.priority)}`}>
                             {item.priority}
                           </span>
                           <span className="text-xs text-slate-400 flex items-center gap-1 font-sans">
-                            <MapPin className="w-3.5 h-3.5 text-rose-500" />
+                            <MapPin className="w-3.5 h-3.5 text-red-500" />
                             {item.location}
                           </span>
                         </div>
-                        <h4 className="text-xs font-black text-slate-950 dark:text-white leading-tight">{item.title}</h4>
+                        <h4 className="text-xs font-black text-slate-950 dark:text-slate-900 dark:text-white leading-tight">{item.title}</h4>
                       </div>
 
                       <div className="flex items-center gap-4 shrink-0 justify-between sm:justify-end">
@@ -673,8 +673,8 @@ export default function AuthorityDashboard({ currentUser, onBack }: AuthorityDas
 
                         {/* Interactive Status flow indicator */}
                         <span className={`text-[10px] font-mono font-bold px-2.5 py-1 rounded-full uppercase ${
-                          item.status === 'resolved' ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20' :
-                          item.status === 'resolving' ? 'bg-[#8EB69B]/10 text-[#8EB69B] border border-[#235347]/20 animate-pulse' :
+                          item.status === 'resolved' ? 'bg-green-500/10 text-green-500 border border-green-500/20' :
+                          item.status === 'resolving' ? 'bg-[#7C3AED]/10 text-[#7C3AED] border border-white/10/20 animate-pulse' :
                           item.status === 'dispatching' ? 'bg-purple-500/10 text-purple-500 border border-purple-500/20' :
                           'bg-amber-500/10 text-amber-500 border border-amber-500/20'
                         }`}>
@@ -695,14 +695,14 @@ export default function AuthorityDashboard({ currentUser, onBack }: AuthorityDas
           {/* RIGHT: Selected Issue Resolution Center (Resource allocation + SLA Timers + Dispatches) */}
           <div className="lg:col-span-5 space-y-6">
             
-            <div className="bg-[#DAF1DE]/20 dark:bg-[#0B2B26] border border-slate-200 dark:border-[#163832] rounded-3xl p-6 shadow-xs space-y-6">
+            <div className="bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90 border border-white/10 rounded-3xl p-6 shadow-xs space-y-6">
               
-              <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-850">
+              <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-white/5">
                 <span className="text-xs font-mono font-black text-indigo-600 dark:text-indigo-400 uppercase flex items-center gap-1.5">
                   <Settings className="w-4 h-4 text-indigo-500" />
                   Resolution Workstation
                 </span>
-                <span className="text-[10px] bg-slate-100 dark:bg-[#051F20] border border-slate-200 dark:border-[#163832] px-2.5 py-0.5 rounded font-mono text-slate-500 dark:text-slate-400 uppercase font-bold">
+                <span className="text-[10px] bg-slate-100 dark:bg-[#0A0A0F] border border-white/10 px-2.5 py-0.5 rounded font-mono text-slate-500 dark:text-slate-400 uppercase font-bold">
                   {activeIssue.id}
                 </span>
               </div>
@@ -710,15 +710,15 @@ export default function AuthorityDashboard({ currentUser, onBack }: AuthorityDas
               {/* Title & Metadata */}
               <div className="space-y-1">
                 <span className="text-[10px] font-mono text-slate-400 uppercase">TITLE & telemetry SECTOR</span>
-                <h4 className="text-sm font-black text-slate-950 dark:text-white leading-tight">{activeIssue.title}</h4>
+                <h4 className="text-sm font-black text-slate-950 dark:text-slate-900 dark:text-white leading-tight">{activeIssue.title}</h4>
                 <p className="text-xs text-slate-400 flex items-center gap-1">
-                  <MapPin className="w-3.5 h-3.5 text-rose-500" />
+                  <MapPin className="w-3.5 h-3.5 text-red-500" />
                   {activeIssue.location} • Upvoted {activeIssue.upvotes} times by locals
                 </p>
               </div>
 
               {/* Interactive Status Workflow Slider / Steps */}
-              <div className="space-y-3 bg-[#DAF1DE]/30 dark:bg-[#051F20] p-4 rounded-2.5xl border border-slate-200 dark:border-slate-850/60">
+              <div className="space-y-3 bg-slate-50 dark:bg-transparent p-4 rounded-2.5xl border border-slate-200 dark:border-white/5/60">
                 <div className="flex justify-between items-center text-xs font-mono font-bold">
                   <span className="text-slate-400 uppercase text-[9px]">SLA Timer Status</span>
                   <span className={activeIssue.slaRemainingHours <= 6 ? 'text-red-500 animate-pulse' : 'text-indigo-500'}>
@@ -750,14 +750,14 @@ export default function AuthorityDashboard({ currentUser, onBack }: AuthorityDas
                 {/* Workflow Transition Action Button */}
                 <div className="pt-2">
                   {activeIssue.status === 'resolved' ? (
-                    <div className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 text-xs p-3 rounded-xl flex items-center justify-center gap-2 font-mono font-bold">
-                      <ShieldCheck className="w-4 h-4 text-emerald-500" />
+                    <div className="bg-green-500/10 border border-green-500/20 text-green-500 text-xs p-3 rounded-xl flex items-center justify-center gap-2 font-mono font-bold">
+                      <ShieldCheck className="w-4 h-4 text-green-500" />
                       SLA RESOLUTION COMPLETED SUCCESSFULLY
                     </div>
                   ) : (
                     <button
                       onClick={() => handleNextStatus(activeIssue.id)}
-                      className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-mono text-xs font-black py-3 rounded-xl flex items-center justify-center gap-2 cursor-pointer transition-all duration-300 shadow-md active:scale-98"
+                      className="w-full bg-indigo-600 hover:bg-indigo-700 text-slate-900 dark:text-white font-mono text-xs font-black py-3 rounded-xl flex items-center justify-center gap-2 cursor-pointer transition-all duration-300 shadow-md active:scale-98"
                     >
                       <Play className="w-3.5 h-3.5 fill-current" />
                       PROGRESS STATUS TO {
@@ -777,16 +777,16 @@ export default function AuthorityDashboard({ currentUser, onBack }: AuthorityDas
                   <select
                     value={activeIssue.assignedCrew}
                     onChange={(e) => handleAssignCrew(activeIssue.id, e.target.value)}
-                    className="flex-1 bg-[#DAF1DE]/30 dark:bg-[#051F20] border border-slate-250 dark:border-slate-850/60 p-3 rounded-xl text-xs font-mono font-bold"
+                    className="flex-1 bg-slate-50 dark:bg-transparent border border-slate-250 dark:border-white/5/60 p-3 rounded-xl text-xs font-mono font-bold"
                   >
                     {crews.map(c => (
                       <option key={c.id} value={c.name}>{c.name} ({c.specialty})</option>
                     ))}
                   </select>
 
-                  <div className="bg-[#DAF1DE]/30 dark:bg-[#051F20] border border-slate-200 dark:border-slate-850 px-3.5 py-2.5 rounded-xl text-center shrink-0">
+                  <div className="bg-slate-50 dark:bg-transparent border border-slate-200 dark:border-white/5 px-3.5 py-2.5 rounded-xl text-center shrink-0">
                     <p className="text-[8px] font-mono text-slate-400">CREW RATING</p>
-                    <p className="text-xs font-mono font-bold text-emerald-500">
+                    <p className="text-xs font-mono font-bold text-green-500">
                       {crews.find(c => c.name === activeIssue.assignedCrew)?.efficiencyRating || 95}% Eff
                     </p>
                   </div>
@@ -818,11 +818,11 @@ export default function AuthorityDashboard({ currentUser, onBack }: AuthorityDas
                     placeholder="Enter asset tag (e.g. Compactor Heavy-3)..."
                     value={customVehicle}
                     onChange={(e) => setCustomVehicle(e.target.value)}
-                    className="flex-1 bg-[#DAF1DE]/30 dark:bg-[#051F20] border border-slate-250 dark:border-slate-850/60 px-3 py-2 text-xs rounded-lg focus:outline-hidden"
+                    className="flex-1 bg-slate-50 dark:bg-transparent border border-slate-250 dark:border-white/5/60 px-3 py-2 text-xs rounded-lg focus:outline-hidden"
                   />
                   <button
                     onClick={() => handleAllocateVehicle(activeIssue.id)}
-                    className="bg-slate-950 dark:bg-[#DAF1DE]/20 text-white dark:text-slate-900 font-mono text-xs font-bold px-3 py-2 rounded-lg cursor-pointer hover:opacity-90"
+                    className="bg-slate-950 dark:bg-[#16161D]/90 backdrop-blur-md text-slate-900 dark:text-white dark:text-slate-900 font-mono text-xs font-bold px-3 py-2 rounded-lg cursor-pointer hover:opacity-90"
                   >
                     Allocate
                   </button>
@@ -835,7 +835,7 @@ export default function AuthorityDashboard({ currentUser, onBack }: AuthorityDas
                 
                 <div className="space-y-2 max-h-[160px] overflow-y-auto pr-1">
                   {activeIssue.historyLogs.map((log, idx) => (
-                    <div key={idx} className="bg-[#DAF1DE]/30 dark:bg-[#051F20]/40 p-3 rounded-xl border border-slate-200/60 dark:border-slate-850/50 text-xs font-sans space-y-1">
+                    <div key={idx} className="bg-slate-50 dark:bg-transparent/40 p-3 rounded-xl border border-slate-200/60 dark:border-white/5/50 text-xs font-sans space-y-1">
                       <div className="flex justify-between text-[10px] font-mono text-slate-400">
                         <span>Timestamp: {log.timestamp}</span>
                         <span className="text-indigo-500 font-bold">Actor: {log.actor}</span>
@@ -851,7 +851,7 @@ export default function AuthorityDashboard({ currentUser, onBack }: AuthorityDas
             </div>
 
             {/* General Dashboard Audit Log Terminal */}
-            <div className="bg-slate-950 text-white rounded-3xl p-6 relative overflow-hidden border border-slate-800 space-y-4">
+            <div className="bg-slate-950 text-slate-900 dark:text-white rounded-3xl p-6 relative overflow-hidden border border-slate-800 space-y-4">
               <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(99,102,241,0.1),transparent_60%)] pointer-events-none" />
               
               <div className="space-y-1">

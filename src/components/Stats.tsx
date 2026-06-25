@@ -14,7 +14,7 @@ export default function Stats({ stats }: StatsProps) {
       value: stats.issuesReported.toLocaleString(),
       change: '+14% this week',
       icon: FileText,
-      color: 'text-[#8EB69B]',
+      color: 'text-[#7C3AED]',
       bgColor: 'bg-[#163832]/10',
       borderColor: 'border-slate-200 dark:border-[#1E293B]'
     },
@@ -34,7 +34,7 @@ export default function Stats({ stats }: StatsProps) {
       value: stats.activeVolunteers.toLocaleString(),
       change: '+38 joined today',
       icon: Users,
-      color: 'text-[#8EB69B]',
+      color: 'text-[#7C3AED]',
       bgColor: 'bg-[#163832]/10',
       borderColor: 'border-slate-200 dark:border-[#1E293B]'
     },
@@ -51,7 +51,7 @@ export default function Stats({ stats }: StatsProps) {
   ];
 
   return (
-    <section className="relative py-12 bg-[#DAF1DE]/30 dark:bg-[#051F20] border-y border-slate-200 dark:border-[#1E293B] transition-colors duration-300">
+    <section className="relative py-12 bg-slate-50 dark:bg-transparent border-y border-slate-200 dark:border-[#1E293B] transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {statsList.map((stat, index) => {
@@ -64,7 +64,7 @@ export default function Stats({ stats }: StatsProps) {
                 viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.4, delay: index * 0.1 }}
                 whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                className={`p-6 bg-[#DAF1DE]/20 dark:bg-[#0F172A] border ${stat.borderColor} rounded-2xl flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300`}
+                className={`p-6 bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D] border ${stat.borderColor} rounded-2xl flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300`}
               >
                 <div className="flex items-center justify-between">
                   <div className={`p-2.5 rounded-xl ${stat.bgColor} ${stat.color}`}>
@@ -87,7 +87,7 @@ export default function Stats({ stats }: StatsProps) {
                   </div>
                 </div>
 
-                <div className="mt-4 pt-3.5 border-t border-slate-100 dark:border-[#163832]/60">
+                <div className="mt-4 pt-3.5 border-t border-slate-100 dark:border-white/10/60">
                   <span className="text-xs font-mono font-bold text-[#10B981]">
                     {stat.change}
                   </span>
