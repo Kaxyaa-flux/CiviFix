@@ -31,7 +31,7 @@ export default function Hero({ onOpenReportModal, onExploreMap }: HeroProps) {
   return (
     <section
       id="home"
-      className="relative min-h-[90vh] pt-40 pb-20 flex items-center justify-center overflow-hidden text-slate-900 dark:text-[#F8FAFC] aurora-bg"
+      className="relative min-h-[90vh] pt-[7rem] md:pt-[7.5rem] pb-20 flex items-center justify-center overflow-hidden text-slate-900 dark:text-[#F8FAFC] aurora-bg"
     >
       {/* Background Gradient Mesh */}
       <div 
