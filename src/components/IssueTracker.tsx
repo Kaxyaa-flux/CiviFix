@@ -25,6 +25,7 @@ interface TrackedIssue {
   aiVerificationPercentage: number;
   resolutionTimeHours?: number; // hours taken to resolve if status is resolved
   mediaPlaceholder: 'water_hydrant_spurt' | 'deep_road_crater' | 'drooping_power_lines' | 'woodland_garbage_dump' | 'shattered_school_beacon' | 'general_hazard';
+  imageUrls?: string[];
   timeline: {
     status: string;
     label: string;
@@ -366,8 +367,20 @@ export default function IssueTracker({ onBack }: IssueTrackerProps) {
     </span>;
   };
 
-  // SVG Media Mockup Render
-  const renderMediaPreview = (placeholder: string) => {
+  // Media Preview Render
+  const renderMediaPreview = (issue: TrackedIssue) => {
+    if (issue.imageUrls && issue.imageUrls.length > 0) {
+      return (
+        <div className="relative h-44 bg-slate-950 rounded-xl border border-white/10 flex flex-col items-center justify-center overflow-hidden">
+          <img src={issue.imageUrls[0]} alt="Issue Media" className="w-full h-full object-cover" />
+          <div className="absolute top-2 left-2 bg-slate-900/90 text-[8px] font-mono text-slate-400 px-2 py-0.5 rounded border border-slate-800 z-10">
+            MEDIA INDEX: {issue.imageUrls.length} PHOTO(S)
+          </div>
+        </div>
+      );
+    }
+    
+    const placeholder = issue.mediaPlaceholder;
     return (
       <div className="relative h-44 bg-slate-950 rounded-xl border border-white/10 flex flex-col items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:12px_12px] pointer-events-none" />
@@ -413,7 +426,7 @@ export default function IssueTracker({ onBack }: IssueTrackerProps) {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-transparent text-slate-900 dark:text-slate-50 pt-32 pb-16 transition-colors duration-300">
+    <div className="min-h-screen bg-slate-50 dark:bg-transparent text-slate-900 dark:text-slate-50 pt-[7rem] pb-16 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         
         {/* Navigation & Title Section */}

@@ -92,7 +92,7 @@ export default function SignUpPage({ onAuthSuccess }: SignUpPageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-transparent text-slate-900 dark:text-slate-50 pt-36 pb-16 flex items-center justify-center transition-colors duration-300 px-4">
+    <div className="min-h-screen bg-slate-50 dark:bg-transparent text-slate-900 dark:text-slate-50 pt-[7rem] pb-16 flex items-center justify-center transition-colors duration-300 px-4">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(37,99,235,0.08),transparent_50%)] pointer-events-none" />
       
       <div className="w-full max-w-5xl bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90 border border-white/10 rounded-3xl overflow-hidden shadow-xl flex flex-col md:flex-row relative z-10">

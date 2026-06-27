@@ -195,12 +195,13 @@ export default function ReportPage({ onBack, onSubmit }: ReportPageProps) {
       status: 'verified', // Pre-verified via automated dispatching
       locationName: address.trim(),
       coordinates: mapPin,
-      reporterName: 'Resident Advocate (You)'
+      reporterName: 'Resident Advocate (You)',
+      images: uploadedImages.map(img => img.file)
     });
   };
 
   return (
-    <div className="min-h-screen bg-[#020617] text-slate-50 pt-32 pb-16 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#020617] text-slate-50 pt-[7rem] pb-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto space-y-8">
         
         {/* Back Link / Breadcrumb */}

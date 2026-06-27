@@ -420,7 +420,7 @@ export default function VerificationCenter({ onBack, onVerifyGameAction, onFlagG
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-transparent text-slate-900 dark:text-slate-50 pt-32 pb-16 transition-colors duration-300">
+    <div className="min-h-screen bg-slate-50 dark:bg-transparent text-slate-900 dark:text-slate-50 pt-[7rem] pb-16 transition-colors duration-300">
       
       {/* Floating score toast points */}
       <AnimatePresence>

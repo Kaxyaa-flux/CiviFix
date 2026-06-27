@@ -193,7 +193,7 @@ export default function ContactPage({ onBack }: ContactPageProps) {
   };
 
   return (
-    <div className="pt-32 pb-20 bg-slate-50 dark:bg-transparent transition-colors duration-300 min-h-screen">
+    <div className="pt-[7rem] pb-20 bg-slate-50 dark:bg-transparent transition-colors duration-300 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         
         {/* Navigation & Header */}
