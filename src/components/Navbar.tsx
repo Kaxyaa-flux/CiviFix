@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Shield, Sun, Moon, Menu, X, ArrowRight, ShieldCheck, BarChart3,
-  LogOut, LogIn, UserPlus, Award, ChevronDown, Check, UserCheck, BrainCircuit,
+  LogOut, LogIn, UserPlus, Award, ChevronDown, BrainCircuit,
   ShieldAlert
 } from 'lucide-react';
 import { User } from '../types';
@@ -30,7 +30,8 @@ interface NavbarProps {
   onNavigateToGamification: () => void;
   onNavigateToAuthority: () => void;
   onNavigateToHome: () => void;
-  currentView: 'landing' | 'report' | 'verification' | 'tracker' | 'analytics' | 'gamification' | 'authority' | 'signin' | 'signup' | 'about' | 'contact';
+  onNavigateToCivic?: () => void;
+  currentView: 'landing' | 'report' | 'verification' | 'tracker' | 'analytics' | 'gamification' | 'authority' | 'signin' | 'signup' | 'about' | 'contact' | 'civic';
   currentUser: User | null;
   onSignOut: () => void;
   onNavigateToAuth: (mode: 'signin' | 'signup') => void;
@@ -46,6 +47,7 @@ export default function Navbar({
   onNavigateToGamification,
   onNavigateToAuthority,
   onNavigateToHome,
+  onNavigateToCivic,
   currentView,
   currentUser,
   onSignOut,
@@ -306,6 +308,19 @@ export default function Navbar({
       {/* Feature Bar (Row 2) - Hidden on mobile */}
       <div className="hidden md:block w-full glass-feature-bar">
         <div className="flex items-center justify-center gap-2 flex-wrap px-4 py-2 max-w-7xl mx-auto">
+          {/* Civic Dashboard */}
+          <button
+            onClick={onNavigateToCivic}
+            className={`flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-lg border transition-all cursor-pointer ${
+              currentView === 'civic'
+                ? 'bg-[#163832] border-[#7C3AED] text-[#DAF1DE]'
+                : 'bg-transparent border-white/10 text-[#7C3AED] hover:bg-[#163832]'
+            }`}
+          >
+            <Shield className="w-3.5 h-3.5" />
+            Civic Dashboard
+          </button>
+
           {/* Authority Console */}
           <button
             onClick={onNavigateToAuthority}
@@ -483,6 +498,22 @@ export default function Navbar({
                 >
                   <ShieldAlert className="w-5 h-5 text-indigo-500 animate-pulse" />
                   Authority Dashboard
+                </button>
+
+                {/* Civic Dashboard Button on Mobile */}
+                <button
+                  onClick={() => {
+                    setIsOpen(false);
+                    if (onNavigateToCivic) onNavigateToCivic();
+                  }}
+                  className={`flex items-center justify-center gap-2 w-full px-5 py-3 font-sans text-base font-bold rounded-xl border transition-all cursor-pointer ${
+                    currentView === 'civic'
+                      ? 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500 shadow-md'
+                      : 'bg-[#16161D]/90 backdrop-blur-md dark:bg-[#16161D]/90 text-blue-600 dark:text-blue-400 border-blue-500/35 hover:bg-blue-500/5'
+                  }`}
+                >
+                  <Shield className="w-5 h-5 text-blue-500" />
+                  Civic Dashboard
                 </button>
 
                 {/* AI Verification Button on Mobile */}
