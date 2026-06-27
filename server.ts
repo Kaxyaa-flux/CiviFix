@@ -8,6 +8,8 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import http from "http";
 import { Server } from "socket.io";
+import multer from "multer";
+import fs from "fs";
 
 dotenv.config();
 
@@ -115,6 +117,9 @@ async function setupDatabase() {
 
     INSERT INTO stats (id) VALUES (1) ON CONFLICT (id) DO NOTHING;
   `);
+  
+  // Retroactively add image_urls to incidents if it doesn't exist
+  await pool.query(`ALTER TABLE incidents ADD COLUMN IF NOT EXISTS image_urls TEXT;`);
   console.log("Database tables initialized.");
 }
 
@@ -154,6 +159,35 @@ async function startServer() {
   const PORT = 3000;
 
   app.use(express.json({ limit: '10mb' }));
+
+  const uploadDir = path.join(process.cwd(), 'uploads');
+  if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir);
+  }
+
+  const storage = multer.diskStorage({
+    destination: (req, file, cb) => cb(null, uploadDir),
+    filename: (req, file, cb) => {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+      const ext = path.extname(file.originalname);
+      cb(null, file.fieldname + '-' + uniqueSuffix + ext);
+    }
+  });
+
+  const upload = multer({ 
+    storage,
+    limits: { fileSize: 5 * 1024 * 1024 },
+    fileFilter: (req, file, cb) => {
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+      if (allowedTypes.includes(file.mimetype)) {
+        cb(null, true);
+      } else {
+        cb(new Error('Only .jpg, .png, and .webp formats allowed!'));
+      }
+    }
+  });
+
+  app.use('/uploads', express.static(uploadDir));
 
   await setupDatabase();
 
@@ -240,6 +274,7 @@ async function startServer() {
           reportedAt: issue.reported_at,
           upvotes: issue.upvotes,
           reporterName: issue.reporter_name,
+          imageUrls: issue.image_urls ? JSON.parse(issue.image_urls) : [],
           timeline
         };
       });
@@ -250,14 +285,24 @@ async function startServer() {
     }
   });
 
-  app.post("/api/issues", authenticateToken, async (req: any, res: any) => {
+  app.post("/api/issues", authenticateToken, upload.array('images', 3), async (req: any, res: any) => {
     try {
-      const { id, title, description, category, priority, status, locationName, coordinates, reportedAt, upvotes, reporterName, timeline } = req.body;
+      const { id, title, description, category, priority, status, locationName, reportedAt, reporterName } = req.body;
+      const coordinates = typeof req.body.coordinates === 'string' ? JSON.parse(req.body.coordinates) : req.body.coordinates;
+      const timeline = typeof req.body.timeline === 'string' ? JSON.parse(req.body.timeline) : req.body.timeline;
+      const upvotes = parseInt(req.body.upvotes, 10) || 0;
+      
       const userId = req.user.id;
 
+      const imageUrls = req.files && req.files.length > 0 
+        ? req.files.map((file: any) => `/uploads/${file.filename}`) 
+        : [];
+      
+      const imageUrlsStr = JSON.stringify(imageUrls);
+
       await pool.query(
-        "INSERT INTO incidents (id, title, description, category, priority, status, location_name, coord_x, coord_y, reported_at, upvotes, reporter_name, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)",
-        [id, title, description, category, priority, status, locationName, coordinates.lat, coordinates.lng, reportedAt, upvotes, reporterName, userId]
+        "INSERT INTO incidents (id, title, description, category, priority, status, location_name, coord_x, coord_y, reported_at, upvotes, reporter_name, user_id, image_urls) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)",
+        [id, title, description, category, priority, status, locationName, coordinates.lat, coordinates.lng, reportedAt, upvotes, reporterName, userId, imageUrlsStr]
       );
 
       if (timeline && timeline.length > 0) {

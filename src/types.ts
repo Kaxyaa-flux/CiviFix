@@ -16,6 +16,7 @@ export interface CivicIssue {
     date: string;
     completed: boolean;
   }[];
+  imageUrls?: string[];
 }
 
 export interface CommunityHero {

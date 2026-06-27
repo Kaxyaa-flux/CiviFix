@@ -9,7 +9,7 @@ import { CivicIssue } from '../types';
 interface ReportModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (newIssue: Omit<CivicIssue, 'id' | 'reportedAt' | 'upvotes' | 'timeline'>) => void;
+  onSubmit: (newIssue: Omit<CivicIssue, 'id' | 'reportedAt' | 'upvotes' | 'timeline'> & { images?: File[] }) => void;
 }
 
 const PRESETS = [
