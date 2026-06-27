@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { triggerToast } from '../lib/toast';
 import { 
@@ -254,6 +254,16 @@ export default function AiAnalyticsDashboard({ onBack }: AiAnalyticsDashboardPro
   const [riskModels, setRiskModels] = useState<RiskModel[]>(INITIAL_RISK_MODELS);
   const [recommendations, setRecommendations] = useState<Recommendation[]>(INITIAL_RECOMMENDATIONS);
   
+  // Real stats from DB
+  const [realStats, setRealStats] = useState({ issuesReported: 0, issuesResolved: 0, activeVolunteers: 0 });
+
+  useEffect(() => {
+    fetch('/api/stats')
+      .then(res => res.json())
+      .then(data => setRealStats(data))
+      .catch(console.error);
+  }, []);
+  
   // Interactive filters
   const [selectedCategoryFilter, setSelectedCategoryFilter] = useState<string>('all');
   const [selectedModelId, setSelectedModelId] = useState<string>('PRD-WTR-02');
@@ -414,6 +424,14 @@ export default function AiAnalyticsDashboard({ onBack }: AiAnalyticsDashboardPro
             <p className="text-slate-500 dark:text-slate-400 text-sm max-w-2xl">
               Real-time predictive core analyzing municipal infrastructure stress variables, hydraulic pressure forecasts, thermal grid failures, and waste sensor telemetry.
             </p>
+            <div className="flex gap-4 mt-2">
+              <div className="px-3 py-1 bg-[#10B981]/10 text-[#10B981] rounded-full text-xs font-mono font-bold border border-[#10B981]/20">
+                DB Incidents: {realStats.issuesReported}
+              </div>
+              <div className="px-3 py-1 bg-blue-500/10 text-blue-400 rounded-full text-xs font-mono font-bold border border-blue-500/20">
+                Volunteers Online: {realStats.activeVolunteers}
+              </div>
+            </div>
           </div>
 
           <div className="flex items-center gap-3 shrink-0">
