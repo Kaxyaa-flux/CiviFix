@@ -31,7 +31,7 @@ export default function Hero({ onOpenReportModal, onExploreMap }: HeroProps) {
   return (
     <section
       id="home"
-      className="relative min-h-[90vh] pt-40 pb-20 flex items-center justify-center overflow-hidden text-[#F8FAFC] aurora-bg"
+      className="relative min-h-[90vh] pt-40 pb-20 flex items-center justify-center overflow-hidden text-slate-900 dark:text-[#F8FAFC] aurora-bg"
     >
       {/* Background Gradient Mesh */}
       <div 
@@ -74,22 +74,22 @@ export default function Hero({ onOpenReportModal, onExploreMap }: HeroProps) {
           <CheckCircle2 className="w-5 h-5" />
         </div>
         <div>
-          <p className="text-[10px] text-slate-400 font-mono">RESOLVED YESTERDAY</p>
-          <p className="text-xs font-bold font-sans text-slate-100">Pothole fixed on Oak Ave</p>
+          <p className="text-[10px] text-slate-600 dark:text-slate-400 font-mono">RESOLVED YESTERDAY</p>
+          <p className="text-xs font-bold font-sans text-slate-900 dark:text-slate-100">Pothole fixed on Oak Ave</p>
         </div>
       </motion.div>
 
       <motion.div 
         animate={{ y: [0, 10, 0] }}
         transition={{ repeat: Infinity, duration: 5, ease: "easeInOut", delay: 1.5 }}
-        className="absolute bottom-32 left-[8%] hidden xl:flex items-center gap-3 glass-card-aurora p-3 rounded-2xl pointer-events-none z-20"
+        className="absolute bottom-24 right-[5%] hidden xl:flex items-center gap-3 glass-card-aurora p-3 rounded-2xl pointer-events-none z-20"
       >
         <div className="w-8 h-8 rounded-full bg-[#7C3AED]/15 flex items-center justify-center text-[#7C3AED]">
           <Activity className="w-5 h-5" />
         </div>
         <div>
-          <p className="text-[10px] text-slate-400 font-mono">AI DESPATCH CONSENSUS</p>
-          <p className="text-xs font-bold font-sans text-slate-100">98.4% Confidence Score</p>
+          <p className="text-[10px] text-slate-600 dark:text-slate-400 font-mono">AI DESPATCH CONSENSUS</p>
+          <p className="text-xs font-bold font-sans text-slate-900 dark:text-slate-100">98.4% Confidence Score</p>
         </div>
       </motion.div>
 
@@ -112,7 +112,7 @@ export default function Hero({ onOpenReportModal, onExploreMap }: HeroProps) {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#22D3EE] opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-[#22D3EE]"></span>
               </span>
-              <span className="font-mono tracking-wider text-slate-300">CiviFix • Next-Gen Response</span>
+              <span className="font-mono tracking-wider text-slate-700 dark:text-slate-300">CiviFix • Next-Gen Response</span>
             </motion.div>
 
             {/* Main Title */}
@@ -129,7 +129,7 @@ export default function Hero({ onOpenReportModal, onExploreMap }: HeroProps) {
             {/* Subheading */}
             <motion.p
               variants={itemVariants}
-              className="max-w-xl mx-auto lg:mx-0 text-base sm:text-lg text-slate-300 leading-relaxed font-sans font-normal"
+              className="max-w-xl mx-auto lg:mx-0 text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-sans font-normal"
             >
               The premier AI-powered community problem solving platform. Empowering citizens to flag safety hazards and infrastructure failures with instant routing to municipal dispatch crews.
             </motion.p>
@@ -149,7 +149,7 @@ export default function Hero({ onOpenReportModal, onExploreMap }: HeroProps) {
 
               <button
                 onClick={onExploreMap}
-                className="w-full sm:w-auto px-8 py-4 glass-card-aurora hover:border-[#22D3EE]/50 hover:text-[#22D3EE] text-white font-sans font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-8 py-4 glass-card-aurora hover:border-[#22D3EE]/50 hover:text-[#22D3EE] text-slate-900 dark:text-white font-sans font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center gap-2"
               >
                 <MapPin className="w-5 h-5" />
                 Explore Live Map
@@ -159,7 +159,7 @@ export default function Hero({ onOpenReportModal, onExploreMap }: HeroProps) {
             {/* Success Trust Badges */}
             <motion.div
               variants={itemVariants}
-              className="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-slate-400"
+              className="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-slate-600 dark:text-slate-400"
             >
               <div className="flex items-center gap-1.5 text-xs font-mono">
                 <CheckCircle className="w-4 h-4 text-[#22C55E]" />
