@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Shield, Sparkles, CheckCircle, AlertTriangle, AlertCircle, Info, X, Cpu, Database } from 'lucide-react';
+import { Shield, CheckCircle, AlertTriangle, AlertCircle, Info, X, Cpu } from 'lucide-react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Stats from './components/Stats';
@@ -10,7 +10,7 @@ import Features from './components/Features';
 import Testimonials from './components/Testimonials';
 import Impact from './components/Impact';
 import Footer from './components/Footer';
-import ReportModal from './components/ReportModal';
+// import ReportModal from './components/ReportModal';
 import ReportPage from './components/ReportPage';
 import VerificationCenter from './components/VerificationCenter';
 import IssueTracker from './components/IssueTracker';
@@ -24,7 +24,7 @@ import ContactPage from './components/ContactPage';
 import AiEmergencyAssistant from './components/AiEmergencyAssistant';
 import { CivicIssue, CivicStats, User } from './types';
 import { ToastItem, ToastType } from './lib/toast';
-import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate, Navigate } from 'react-router-dom';
 import { io } from 'socket.io-client';
 
 
@@ -60,7 +60,7 @@ export default function App() {
     }
     return null;
   });
-  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+  // Modal state removed
   const [selectedIssueId, setSelectedIssueId] = useState<string | null>(null);
   const [issues, setIssues] = useState<CivicIssue[]>([]);
   const [stats, setStats] = useState<CivicStats>({
@@ -82,14 +82,22 @@ export default function App() {
         if (issuesRes.ok) {
           const data = await issuesRes.json();
           setIssues(data);
+        } else {
+          throw new Error('Failed to fetch issues');
         }
         const statsRes = await fetch('/api/stats');
         if (statsRes.ok) {
           const statsData = await statsRes.json();
           setStats(statsData);
+        } else {
+          throw new Error('Failed to fetch stats');
         }
       } catch (err) {
         console.error('Error fetching data:', err);
+        const event = new CustomEvent('civic_toast', {
+          detail: { message: 'Failed to connect to municipal data nodes. Retrying in background...', type: 'error' }
+        });
+        window.dispatchEvent(event);
       } finally {
         setIsLoading(false);
       }
@@ -110,7 +118,21 @@ export default function App() {
       setStats(prev => ({...prev, issuesReported: prev.issuesReported + 1}));
       
       // Global Notification for Real-Time Dashboard effect
-      const event = new CustomEvent('toast', { detail: { message: `Live Alert: ${issue.title}`, type: 'info' } });
+      const event = new CustomEvent('civic_toast', { detail: { message: `Live Alert: ${issue.title}`, type: 'info' } });
+      window.dispatchEvent(event);
+    });
+
+    socket.on('disconnect', () => {
+      const event = new CustomEvent('civic_toast', {
+        detail: { message: 'Lost connection to real-time municipal data stream.', type: 'warning' }
+      });
+      window.dispatchEvent(event);
+    });
+
+    socket.io.on('reconnect', () => {
+      const event = new CustomEvent('civic_toast', {
+        detail: { message: 'Reconnected to real-time municipal data stream.', type: 'success' }
+      });
       window.dispatchEvent(event);
     });
 
@@ -200,10 +222,6 @@ export default function App() {
     navigate('/report');
   };
 
-  const handleCloseReportModal = () => {
-    setIsReportModalOpen(false);
-  };
-
   // Scroll to Community Map
   const handleScrollToMap = () => {
     const mapSection = document.getElementById('community-map');
@@ -291,9 +309,12 @@ export default function App() {
 
       const res = await fetch('/api/issues', fetchOptions);
       if (!res.ok) throw new Error("Failed to submit issue");
+      
+      const responseData = await res.json();
+      const finalId = responseData.id || freshId;
 
       setIssues(prev => [createdIssue, ...prev]);
-      setSelectedIssueId(freshId); // Auto select on map to showcase the magic
+      setSelectedIssueId(finalId); // Auto select on map to showcase the magic
       
       // Update global indicators
       setStats(prev => ({
@@ -449,8 +470,9 @@ export default function App() {
         onNavigateToAnalytics={() => navigate('/analytics')}
         onNavigateToGamification={() => navigate('/gamification')}
         onNavigateToAuthority={() => navigate('/authority')}
+        onNavigateToCivic={() => navigate('/civic')}
         onNavigateToHome={() => navigate('/')}
-        currentView={currentView as 'landing' | 'report' | 'verification' | 'tracker' | 'analytics' | 'gamification' | 'authority' | 'signin' | 'signup' | 'about' | 'contact'}
+        currentView={currentView as 'landing' | 'report' | 'verification' | 'tracker' | 'analytics' | 'gamification' | 'authority' | 'signin' | 'signup' | 'about' | 'contact' | 'civic'}
         currentUser={currentUser}
         onSignOut={handleSignOut}
         onNavigateToAuth={handleNavigateToAuth}
@@ -489,9 +511,13 @@ export default function App() {
             </motion.div>
           } />
           <Route path="/authority" element={
-            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.25 }}>
-              <AuthorityDashboard currentUser={currentUser} onBack={() => navigate('/')} />
-            </motion.div>
+            currentUser && (currentUser.role === 'moderator' || currentUser.role === 'admin') ? (
+              <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.25 }}>
+                <AuthorityDashboard currentUser={currentUser} onBack={() => navigate('/')} />
+              </motion.div>
+            ) : (
+              <Navigate to="/signin" replace />
+            )
           } />
           <Route path="/signin" element={
             <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.25 }}>
@@ -526,6 +552,7 @@ export default function App() {
               </main>
             </motion.div>
           } />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </AnimatePresence>
 
@@ -535,18 +562,13 @@ export default function App() {
         onNavigateToContact={() => navigate('/contact')} 
       />
 
-      {/* AI Incident Reporter drawer modal */}
-      <ReportModal 
-        isOpen={isReportModalOpen} 
-        onClose={handleCloseReportModal}
-        onSubmit={handleNewReport}
-      />
+      {/* AI Incident Reporter drawer modal removed since it is now a dedicated page */}
 
       {/* AI Chatbot Assistant */}
       <AiEmergencyAssistant />
 
       {/* Real-time Dynamic Toast Notification Overlay */}
-      <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3 max-w-sm w-full pointer-events-none" id="toast-container">
+      <div className="fixed bottom-24 right-6 z-50 flex flex-col gap-3 max-w-sm w-full pointer-events-none" id="toast-container">
         <AnimatePresence>
           {toasts.map(toast => (
             <motion.div
