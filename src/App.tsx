@@ -21,9 +21,11 @@ import GamificationSystem from './components/GamificationSystem';
 import AuthorityDashboard from './components/AuthorityDashboard';
 import AboutPage from './components/AboutPage';
 import ContactPage from './components/ContactPage';
+import AiEmergencyAssistant from './components/AiEmergencyAssistant';
 import { CivicIssue, CivicStats, User } from './types';
 import { ToastItem, ToastType } from './lib/toast';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { io } from 'socket.io-client';
 
 
 // INITIAL_ISSUES moved to backend database
@@ -93,6 +95,28 @@ export default function App() {
       }
     };
     fetchData();
+  }, []);
+
+  // Socket.io Real-Time Updates
+  useEffect(() => {
+    const socket = io(); // Connects to window.location.origin
+    
+    socket.on("new_issue", (issue: CivicIssue) => {
+      // Prevent duplicates if the user themselves created it and state was already updated locally
+      setIssues(prev => {
+        if (prev.some(i => i.id === issue.id)) return prev;
+        return [issue, ...prev];
+      });
+      setStats(prev => ({...prev, issuesReported: prev.issuesReported + 1}));
+      
+      // Global Notification for Real-Time Dashboard effect
+      const event = new CustomEvent('toast', { detail: { message: `Live Alert: ${issue.title}`, type: 'info' } });
+      window.dispatchEvent(event);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
   }, []);
 
   // Capture global toast events
@@ -485,6 +509,9 @@ export default function App() {
         onClose={handleCloseReportModal}
         onSubmit={handleNewReport}
       />
+
+      {/* AI Chatbot Assistant */}
+      <AiEmergencyAssistant />
 
       {/* Real-time Dynamic Toast Notification Overlay */}
       <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3 max-w-sm w-full pointer-events-none" id="toast-container">
