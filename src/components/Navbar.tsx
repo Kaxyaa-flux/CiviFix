@@ -30,7 +30,7 @@ interface NavbarProps {
   onNavigateToGamification: () => void;
   onNavigateToAuthority: () => void;
   onNavigateToHome: () => void;
-  currentView: 'landing' | 'report' | 'verification' | 'tracker' | 'analytics' | 'gamification' | 'authority' | 'auth' | 'about' | 'contact';
+  currentView: 'landing' | 'report' | 'verification' | 'tracker' | 'analytics' | 'gamification' | 'authority' | 'signin' | 'signup' | 'about' | 'contact';
   currentUser: User | null;
   onSignOut: () => void;
   onNavigateToAuth: (mode: 'signin' | 'signup') => void;
@@ -304,7 +304,7 @@ export default function Navbar({
       </div>
 
       {/* Feature Bar (Row 2) - Hidden on mobile */}
-      <div className="hidden md:block w-full bg-[#163832] dark:bg-[#16161D]/90 border-t border-slate-200/50 dark:border-white/10/50 shadow-sm">
+      <div className="hidden md:block w-full glass-feature-bar">
         <div className="flex items-center justify-center gap-2 flex-wrap px-4 py-2 max-w-7xl mx-auto">
           {/* Authority Console */}
           <button

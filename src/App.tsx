@@ -234,10 +234,11 @@ export default function App() {
   };
 
   // Adding a new verified report from modal or report page
-  const handleNewReport = async (newReport: Omit<CivicIssue, 'id' | 'reportedAt' | 'upvotes' | 'timeline'>) => {
+  const handleNewReport = async (newReport: Omit<CivicIssue, 'id' | 'reportedAt' | 'upvotes' | 'timeline'> & { images?: File[] }) => {
     const freshId = `iss-${Math.random().toString(36).substr(2, 9)}`;
+    const { images, ...reportData } = newReport;
     const createdIssue: CivicIssue = {
-      ...newReport,
+      ...reportData,
       id: freshId,
       reportedAt: 'Just now',
       upvotes: 1,
@@ -251,14 +252,45 @@ export default function App() {
 
     try {
       const token = localStorage.getItem('civic_token');
-      await fetch('/api/issues', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          ...(token ? { 'Authorization': `Bearer ${token}` } : {})
-        },
-        body: JSON.stringify({ ...createdIssue, reporterName: currentUser?.fullName || newReport.reporterName })
-      });
+      const headers: Record<string, string> = {
+        ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+      };
+      
+      const payload = { ...createdIssue, reporterName: currentUser?.fullName || newReport.reporterName };
+      let fetchOptions: RequestInit;
+
+      if (images && images.length > 0) {
+        const formData = new FormData();
+        Object.entries(payload).forEach(([key, value]) => {
+          if (value !== undefined) {
+            if (typeof value === 'object') {
+              formData.append(key, JSON.stringify(value));
+            } else {
+              formData.append(key, String(value));
+            }
+          }
+        });
+        
+        images.forEach(file => {
+          formData.append('images', file);
+        });
+
+        fetchOptions = {
+          method: 'POST',
+          headers, // Let browser set Content-Type to multipart/form-data with boundary
+          body: formData
+        };
+      } else {
+        headers['Content-Type'] = 'application/json';
+        fetchOptions = {
+          method: 'POST',
+          headers,
+          body: JSON.stringify(payload)
+        };
+      }
+
+      const res = await fetch('/api/issues', fetchOptions);
+      if (!res.ok) throw new Error("Failed to submit issue");
 
       setIssues(prev => [createdIssue, ...prev]);
       setSelectedIssueId(freshId); // Auto select on map to showcase the magic
@@ -418,7 +450,7 @@ export default function App() {
         onNavigateToGamification={() => navigate('/gamification')}
         onNavigateToAuthority={() => navigate('/authority')}
         onNavigateToHome={() => navigate('/')}
-        currentView={currentView as 'landing' | 'report' | 'verification' | 'tracker' | 'analytics' | 'gamification' | 'authority' | 'auth' | 'about' | 'contact'}
+        currentView={currentView as 'landing' | 'report' | 'verification' | 'tracker' | 'analytics' | 'gamification' | 'authority' | 'signin' | 'signup' | 'about' | 'contact'}
         currentUser={currentUser}
         onSignOut={handleSignOut}
         onNavigateToAuth={handleNavigateToAuth}
