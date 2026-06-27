@@ -147,8 +147,8 @@ export default function ReportModal({ isOpen, onClose, onSubmit }: ReportModalPr
       priority,
       status: 'verified', // Directly verified via our smart citizen engine
       coordinates: {
-        x: Math.floor(Math.random() * 40) + 30, // center areas mostly
-        y: Math.floor(Math.random() * 40) + 30,
+        lat: 37.7749 + (Math.random() - 0.5) * 0.1, // center areas mostly
+        lng: -122.4194 + (Math.random() - 0.5) * 0.1,
       },
       reporterName: "You (Verified Citizen)"
     });

@@ -269,23 +269,55 @@ export default function SignUpPage({ onAuthSuccess }: SignUpPageProps) {
                   <UserCheck className={`w-4 h-4 mt-0.5 ${signUpRole === 'citizen' ? 'text-[#7C3AED]' : 'text-slate-400'}`} />
                   <div>
                     <h4 className="text-xs font-bold text-slate-900 dark:text-slate-900 dark:text-white">Citizen Reporter</h4>
-                    <p className="text-[10px] text-slate-400 mt-0.5">Submit incident reports, vote on issues.</p>
+                    <p className="text-[10px] text-slate-400 mt-0.5">Submit incident reports.</p>
                   </div>
                 </button>
 
                 <button
                   type="button"
-                  onClick={() => setSignUpRole('moderator')}
+                  onClick={() => setSignUpRole('volunteer' as any)}
                   className={`p-3 rounded-xl border text-left transition-all flex items-start gap-2.5 cursor-pointer ${
-                    signUpRole === 'moderator'
+                    signUpRole === 'volunteer'
                       ? 'bg-green-500/10 border-green-500'
                       : 'bg-slate-50 dark:bg-transparent/40 border-slate-200 dark:border-white/5 hover:border-slate-300 dark:hover:border-slate-750'
                   }`}
                 >
-                  <Shield className={`w-4 h-4 mt-0.5 ${signUpRole === 'moderator' ? 'text-green-500' : 'text-slate-400'}`} />
+                  <Shield className={`w-4 h-4 mt-0.5 ${signUpRole === 'volunteer' ? 'text-green-500' : 'text-slate-400'}`} />
                   <div>
-                    <h4 className="text-xs font-bold text-slate-900 dark:text-slate-900 dark:text-white">Municipal Volunteer</h4>
-                    <p className="text-[10px] text-slate-400 mt-0.5">Audit files, update dispatch state.</p>
+                    <h4 className="text-xs font-bold text-slate-900 dark:text-slate-900 dark:text-white">Volunteer</h4>
+                    <p className="text-[10px] text-slate-400 mt-0.5">Respond to emergencies.</p>
+                  </div>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setSignUpRole('coordinator' as any)}
+                  className={`p-3 rounded-xl border text-left transition-all flex items-start gap-2.5 cursor-pointer ${
+                    signUpRole === 'coordinator'
+                      ? 'bg-amber-500/10 border-amber-500'
+                      : 'bg-slate-50 dark:bg-transparent/40 border-slate-200 dark:border-white/5 hover:border-slate-300 dark:hover:border-slate-750'
+                  }`}
+                >
+                  <Building2 className={`w-4 h-4 mt-0.5 ${signUpRole === 'coordinator' ? 'text-amber-500' : 'text-slate-400'}`} />
+                  <div>
+                    <h4 className="text-xs font-bold text-slate-900 dark:text-slate-900 dark:text-white">Coordinator</h4>
+                    <p className="text-[10px] text-slate-400 mt-0.5">Manage resource allocation.</p>
+                  </div>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setSignUpRole('admin' as any)}
+                  className={`p-3 rounded-xl border text-left transition-all flex items-start gap-2.5 cursor-pointer ${
+                    signUpRole === 'admin'
+                      ? 'bg-red-500/10 border-red-500'
+                      : 'bg-slate-50 dark:bg-transparent/40 border-slate-200 dark:border-white/5 hover:border-slate-300 dark:hover:border-slate-750'
+                  }`}
+                >
+                  <ShieldCheck className={`w-4 h-4 mt-0.5 ${signUpRole === 'admin' ? 'text-red-500' : 'text-slate-400'}`} />
+                  <div>
+                    <h4 className="text-xs font-bold text-slate-900 dark:text-slate-900 dark:text-white">Admin</h4>
+                    <p className="text-[10px] text-slate-400 mt-0.5">Full system access.</p>
                   </div>
                 </button>
               </div>

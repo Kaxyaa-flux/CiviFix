@@ -15,12 +15,12 @@ interface ReportPageProps {
 
 // Pre-defined sectors for the Interactive Location Preview Map
 const SECTORS = [
-  { name: "Oakwood District Sector A", lat: 40.7142, lng: -74.0064, address: "122 Oakwood Blvd, Near Central Park" },
-  { name: "Pine Street Crossing Sector B", lat: 40.7158, lng: -74.0042, address: "448 Pine St, Junction 5th Ave" },
-  { name: "Elm Road Library Sector C", lat: 40.7121, lng: -74.0091, address: "450 Elm Road (Opposite Public Library)" },
-  { name: "Sunset Boulevard Sector D", lat: 40.7185, lng: -74.0015, address: " Sunset Blvd Alley, Close to 3rd Ave" },
-  { name: "Civic Center Sector E", lat: 40.7105, lng: -74.0035, address: "Civic Boulevard East Intersection" },
-  { name: "Green Park North Corridor Sector F", lat: 40.7132, lng: -74.0080, address: "Green Park North Gate Corridor" }
+  { name: "Oakwood District Sector A", lat: 37.7749, lng: -122.4194, address: "122 Oakwood Blvd, Near Central Park" },
+  { name: "Pine Street Crossing Sector B", lat: 37.7849, lng: -122.4094, address: "448 Pine St, Junction 5th Ave" },
+  { name: "Elm Road Library Sector C", lat: 37.7649, lng: -122.4294, address: "450 Elm Road (Opposite Public Library)" },
+  { name: "Sunset Boulevard Sector D", lat: 37.7949, lng: -122.3994, address: "Sunset Blvd Alley, Close to 3rd Ave" },
+  { name: "Civic Center Sector E", lat: 37.7549, lng: -122.4394, address: "Civic Boulevard East Intersection" },
+  { name: "Green Park North Corridor Sector F", lat: 37.7700, lng: -122.4100, address: "Green Park North Gate Corridor" }
 ];
 
 export default function ReportPage({ onBack, onSubmit }: ReportPageProps) {
@@ -39,8 +39,8 @@ export default function ReportPage({ onBack, onSubmit }: ReportPageProps) {
   const [uploadedVideos, setUploadedVideos] = useState<{ id: string; name: string; size: string; file: File }[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   
-  // Custom interactive map coordinates state (0-100 percentage layout)
-  const [mapPin, setMapPin] = useState({ x: 45, y: 35 });
+  // Custom interactive map coordinates state (San Francisco area)
+  const [mapPin, setMapPin] = useState({ lat: SECTORS[0].lat, lng: SECTORS[0].lng });
   
   // AI analysis states
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -61,10 +61,7 @@ export default function ReportPage({ onBack, onSubmit }: ReportPageProps) {
   const selectSector = (sector: typeof SECTORS[0], index: number) => {
     setAddress(sector.address);
     setGps({ lat: sector.lat, lng: sector.lng });
-    // Distribute pins across the map grid visually
-    const xCoords = [25, 65, 30, 75, 15, 48];
-    const yCoords = [35, 42, 60, 22, 75, 65];
-    setMapPin({ x: xCoords[index] || 50, y: yCoords[index] || 50 });
+    setMapPin({ lat: sector.lat, lng: sector.lng });
   };
 
   // Drag and Drop handlers
@@ -537,7 +534,7 @@ export default function ReportPage({ onBack, onSubmit }: ReportPageProps) {
               </div>
 
               {/* Animated Interactive Map Grid */}
-              <div className="relative w-full h-56 bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden group select-none">
+              <div className="relative w-full h-56 bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden group select-none flex items-center justify-center">
                 
                 {/* SVG background grid lines */}
                 <svg className="absolute inset-0 w-full h-full text-slate-900/40" xmlns="http://www.w3.org/2000/svg">
@@ -547,52 +544,31 @@ export default function ReportPage({ onBack, onSubmit }: ReportPageProps) {
                     </pattern>
                   </defs>
                   <rect width="100%" height="100%" fill="url(#grid)" />
-                  {/* Municipal roads mockups */}
-                  <line x1="0" y1="35%" x2="100%" y2="35%" stroke="currentColor" strokeWidth="2" strokeDasharray="4" />
-                  <line x1="0" y1="75%" x2="100%" y2="75%" stroke="currentColor" strokeWidth="3" />
-                  <line x1="30%" y1="0" x2="30%" y2="100%" stroke="currentColor" strokeWidth="2" />
-                  <line x1="75%" y1="0" x2="75%" y2="100%" stroke="currentColor" strokeWidth="2" strokeDasharray="6" />
                 </svg>
 
-                {/* Topographic Rings mockups */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 border border-slate-900/60 rounded-full pointer-events-none"></div>
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 border border-slate-900/40 rounded-full pointer-events-none"></div>
-
+                <div className="text-center z-10 flex flex-col items-center gap-2">
+                   <MapPin className="w-12 h-12 text-[#10B981] animate-bounce" />
+                   <p className="font-mono text-slate-400 text-xs">GPS Locked to Address</p>
+                </div>
+                
                 {/* Clickable Sector overlay buttons on the map */}
-                {SECTORS.map((sec, i) => {
-                  const xCoords = [25, 65, 30, 75, 15, 48];
-                  const yCoords = [35, 42, 60, 22, 75, 65];
-                  const x = xCoords[i];
-                  const y = yCoords[i];
-                  return (
-                    <button
-                      key={sec.name}
-                      type="button"
-                      onClick={() => selectSector(sec, i)}
-                      className="absolute p-1 text-[9px] font-semibold text-slate-400 hover:text-slate-900 dark:text-white bg-slate-900/90 hover:bg-[#163832] border border-slate-800 rounded-md transition-all cursor-pointer transform -translate-x-1/2 -translate-y-1/2 z-10"
-                      style={{ left: `${x}%`, top: `${y}%` }}
-                    >
-                      {sec.name.replace(" Sector ", " ")}
-                    </button>
-                  );
-                })}
-
-                {/* Glowing Active Marker pin */}
-                <motion.div 
-                  className="absolute z-25 pointer-events-none transform -translate-x-1/2 -translate-y-1/2"
-                  style={{ left: `${mapPin.x}%`, top: `${mapPin.y}%` }}
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ repeat: Infinity, duration: 2 }}
-                >
-                  <div className="relative flex items-center justify-center">
-                    <div className="absolute w-8 h-8 rounded-full bg-[#163832]/30 animate-ping"></div>
-                    <div className="absolute w-4 h-4 rounded-full bg-[#10B981]/50 animate-pulse"></div>
-                    <MapPin className="w-6 h-6 text-red-500 relative z-10" />
-                  </div>
-                </motion.div>
+                <div className="absolute inset-0 flex flex-wrap content-start gap-1 p-2 opacity-0 hover:opacity-100 transition-opacity bg-black/80">
+                  {SECTORS.map((sec, i) => {
+                    return (
+                      <button
+                        key={sec.name}
+                        type="button"
+                        onClick={() => selectSector(sec, i)}
+                        className="p-1 text-[9px] font-semibold text-slate-400 hover:text-slate-900 dark:text-white bg-slate-900/90 hover:bg-[#163832] border border-slate-800 rounded-md transition-all cursor-pointer"
+                      >
+                        {sec.name.replace(" Sector ", " ")}
+                      </button>
+                    );
+                  })}
+                </div>
 
                 {/* Bottom coordinates status display */}
-                <div className="absolute bottom-2 left-2 right-2 bg-slate-900/95 border border-slate-800/80 rounded-lg px-3 py-1.5 flex items-center justify-between text-[10px] font-mono text-slate-400">
+                <div className="absolute bottom-2 left-2 right-2 bg-slate-900/95 border border-slate-800/80 rounded-lg px-3 py-1.5 flex items-center justify-between text-[10px] font-mono text-slate-400 z-20">
                   <div className="flex gap-4">
                     <span>LAT: {gps.lat.toFixed(4)}° N</span>
                     <span>LNG: {gps.lng.toFixed(4)}° W</span>

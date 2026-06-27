@@ -6,7 +6,7 @@ export interface CivicIssue {
   priority: 'low' | 'medium' | 'high' | 'critical';
   status: 'new' | 'verified' | 'in-progress' | 'resolved';
   locationName: string;
-  coordinates: { x: number; y: number }; // Percentage values for SVG positioning (0-100)
+  coordinates: { lat: number; lng: number };
   reportedAt: string;
   upvotes: number;
   reporterName: string;
