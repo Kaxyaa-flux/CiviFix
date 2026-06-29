@@ -22,10 +22,11 @@ function dbRowToUser(row: any) {
 router.post('/signup', async (req, res) => {
   try {
     const { email, password, fullName, role, avatar } = req.body;
+    const finalRole = ['citizen', 'moderator'].includes(role) ? role : 'citizen';
     const hashedPassword = await bcrypt.hash(password, 10);
     const result = await pool.query(
       'INSERT INTO users (email, password_hash, full_name, role, reputation_points, avatar) VALUES ($1, $2, $3, $4, 0, $5) RETURNING id, email, full_name, role, reputation_points, joined_at, avatar',
-      [email, hashedPassword, fullName, role || 'citizen', avatar || 'av1']
+      [email, hashedPassword, fullName, finalRole, avatar || 'av1']
     );
     const user = dbRowToUser(result.rows[0]);
     const token = jwt.sign(
