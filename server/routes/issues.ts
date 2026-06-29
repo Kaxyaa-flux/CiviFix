@@ -91,7 +91,7 @@ router.post('/', authenticateToken, (req: any, res: any, next: any) => {
     const timeline = typeof req.body.timeline === 'string'
       ? JSON.parse(req.body.timeline)
       : req.body.timeline;
-    const upvotes = parseInt(req.body.upvotes, 10) || 0;
+    const upvotes = 0;
     const userId = req.user.id;
 
     const imageUrls = req.files && req.files.length > 0
@@ -126,7 +126,7 @@ router.post('/', authenticateToken, (req: any, res: any, next: any) => {
 });
 
 // PATCH /api/issues/:id/upvote
-router.patch('/:id/upvote', async (req, res) => {
+router.patch('/:id/upvote', authenticateToken, async (req, res) => {
   try {
     const { id } = req.params;
     const result = await pool.query(
