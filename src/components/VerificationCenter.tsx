@@ -169,7 +169,8 @@ export default function VerificationCenter({ onBack, onVerifyGameAction, onFlagG
     }, 600);
 
     try {
-      const response = await fetch('/api/verify-issue', {
+      const API_URL = import.meta.env.VITE_API_URL || '';
+      const response = await fetch(`${API_URL}/api/verify-issue`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

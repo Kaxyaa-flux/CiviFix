@@ -41,7 +41,8 @@ export default function ReportModal({ isOpen, onClose, onSubmit, currentUser }: 
     setAiAnalysisResult(null);
 
     try {
-      const response = await fetch('/api/analyze-issue', {
+      const API_URL = import.meta.env.VITE_API_URL || '';
+      const response = await fetch(`${API_URL}/api/analyze-issue`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title, description })
