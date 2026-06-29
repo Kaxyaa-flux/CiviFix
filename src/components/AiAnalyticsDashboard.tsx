@@ -258,7 +258,7 @@ export default function AiAnalyticsDashboard({ onBack }: AiAnalyticsDashboardPro
   const [realStats, setRealStats] = useState({ issuesReported: 0, issuesResolved: 0, activeVolunteers: 0 });
 
   useEffect(() => {
-    fetch('/api/stats')
+    fetch('/api/issues/stats')
       .then(res => res.json())
       .then(data => setRealStats(data))
       .catch(console.error);

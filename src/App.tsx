@@ -78,7 +78,7 @@ export default function App() {
       try {
         const [issuesData, statsData] = await Promise.all([
           api.get<CivicIssue[]>('/api/issues'),
-          api.get<CivicStats>('/api/stats'),
+          api.get<CivicStats>('/api/issues/stats'),
         ]);
         setIssues(issuesData);
         setStats(statsData);
