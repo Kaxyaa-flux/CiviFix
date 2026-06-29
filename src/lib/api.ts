@@ -4,7 +4,7 @@
  * Content-Type to application/json (skipped for FormData uploads).
  */
 
-const BASE = ''; // Same-origin; Vite proxies /api → Express in dev
+const BASE = import.meta.env.VITE_API_URL || ''; // Same-origin; Vite proxies /api → Express in dev
 
 async function request<T>(url: string, options: RequestInit = {}): Promise<T> {
   const token = localStorage.getItem('civic_token');
