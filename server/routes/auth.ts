@@ -11,6 +11,7 @@ function dbRowToUser(row: any) {
     id: row.id,
     email: row.email,
     fullName: row.full_name,
+    avatar: row.avatar || 'av1',
     role: row.role,
     reputationPoints: row.reputation_points,
     joinedAt: row.joined_at,
@@ -20,11 +21,11 @@ function dbRowToUser(row: any) {
 // POST /api/auth/signup
 router.post('/signup', async (req, res) => {
   try {
-    const { email, password, fullName, role } = req.body;
+    const { email, password, fullName, role, avatar } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
     const result = await pool.query(
-      'INSERT INTO users (email, password_hash, full_name, role, reputation_points) VALUES ($1, $2, $3, $4, 0) RETURNING id, email, full_name, role, reputation_points, joined_at',
-      [email, hashedPassword, fullName, role || 'citizen']
+      'INSERT INTO users (email, password_hash, full_name, role, reputation_points, avatar) VALUES ($1, $2, $3, $4, 0, $5) RETURNING id, email, full_name, role, reputation_points, joined_at, avatar',
+      [email, hashedPassword, fullName, role || 'citizen', avatar || 'av1']
     );
     const user = dbRowToUser(result.rows[0]);
     const token = jwt.sign(
