@@ -19,33 +19,7 @@ export default function SignInPage({ onAuthSuccess }: SignInPageProps) {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSelectDemo = (role: 'citizen' | 'moderator') => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      const demoUser: User = role === 'moderator' 
-        ? {
-            id: 'demo-mod',
-            email: 'clara.moderator@municipal.gov',
-            fullName: 'Clara J. (Gov Moderator)',
-            avatar: 'av2',
-            role: 'moderator',
-            reputationPoints: 480,
-            joinedAt: '2026-03-12'
-          }
-        : {
-            id: 'demo-user',
-            email: 'sandro.citizen@civic.org',
-            fullName: 'Sandro K. (Citizen)',
-            avatar: 'av1',
-            role: 'citizen',
-            reputationPoints: 120,
-            joinedAt: '2026-05-20'
-          };
-      onAuthSuccess(demoUser);
-      navigate('/');
-    }, 700);
-  };
+
 
   const handleSignInSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -198,7 +172,6 @@ export default function SignInPage({ onAuthSuccess }: SignInPageProps) {
             <div className="space-y-1">
               <div className="flex justify-between items-center">
                 <label className="text-xs font-bold text-slate-500 dark:text-slate-400">Password</label>
-                <span className="text-[10px] text-slate-400 font-mono">Demo: Enter any 4 chars</span>
               </div>
               <div className="relative">
                 <Lock className="w-4.5 h-4.5 text-slate-400 absolute left-3 top-3" />
@@ -236,41 +209,7 @@ export default function SignInPage({ onAuthSuccess }: SignInPageProps) {
               </Link>
             </div>
 
-            {/* Demo Quick Entry Block */}
-            <div className="pt-6 border-t border-slate-100 dark:border-white/5 mt-6">
-              <p className="text-[10px] font-mono text-slate-400 uppercase font-bold tracking-wider mb-2.5 text-center">
-                Instant Demo Workspace Access
-              </p>
-              <div className="grid grid-cols-2 gap-3">
-                <button
-                  type="button"
-                  onClick={() => handleSelectDemo('citizen')}
-                  className="bg-slate-100 dark:bg-[#0A0A0F] border border-white/10 p-2.5 rounded-xl hover:border-white/10/50 text-left transition-all cursor-pointer group"
-                >
-                  <div className="flex items-center gap-1.5 text-xs font-bold text-slate-800 dark:text-slate-200">
-                    <UserIcon className="w-3.5 h-3.5 text-[#7C3AED]" />
-                    Citizen Demo
-                  </div>
-                  <p className="text-[10px] text-slate-400 mt-1 line-clamp-1 group-hover:text-[#7C3AED] font-mono">
-                    sandro.citizen@civic.org
-                  </p>
-                </button>
 
-                <button
-                  type="button"
-                  onClick={() => handleSelectDemo('moderator')}
-                  className="bg-slate-100 dark:bg-[#0A0A0F] border border-white/10 p-2.5 rounded-xl hover:border-green-500/50 text-left transition-all cursor-pointer group"
-                >
-                  <div className="flex items-center gap-1.5 text-xs font-bold text-slate-800 dark:text-slate-200">
-                    <Shield className="w-3.5 h-3.5 text-green-500" />
-                    Moderator Demo
-                  </div>
-                  <p className="text-[10px] text-slate-400 mt-1 line-clamp-1 group-hover:text-green-500 font-mono">
-                    clara.moderator@municipal.gov
-                  </p>
-                </button>
-              </div>
-            </div>
 
           </motion.form>
 
