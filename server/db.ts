@@ -94,10 +94,10 @@ export async function setupDatabase(): Promise<void> {
 
     CREATE TABLE IF NOT EXISTS stats (
       id INTEGER PRIMARY KEY,
-      issues_reported INTEGER DEFAULT 14258,
-      issues_resolved INTEGER DEFAULT 12891,
-      active_volunteers INTEGER DEFAULT 4320,
-      impact_score FLOAT DEFAULT 98.4
+      issues_reported INTEGER DEFAULT 0,
+      issues_resolved INTEGER DEFAULT 0,
+      active_volunteers INTEGER DEFAULT 0,
+      impact_score FLOAT DEFAULT 0
     );
 
     INSERT INTO stats (id) VALUES (1) ON CONFLICT (id) DO NOTHING;
@@ -105,5 +105,6 @@ export async function setupDatabase(): Promise<void> {
 
   // Retroactively add image_urls to incidents if it doesn't exist
   await pool.query(`ALTER TABLE incidents ADD COLUMN IF NOT EXISTS image_urls TEXT;`);
+  await pool.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS avatar VARCHAR(50) DEFAULT 'av1';`);
   console.log('Database tables initialized.');
 }

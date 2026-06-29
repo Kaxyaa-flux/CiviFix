@@ -66,10 +66,10 @@ export default function App() {
   const [selectedIssueId, setSelectedIssueId] = useState<string | null>(null);
   const [issues, setIssues] = useState<CivicIssue[]>([]);
   const [stats, setStats] = useState<CivicStats>({
-    issuesReported: 14258,
-    issuesResolved: 12891,
-    activeVolunteers: 4320,
-    impactScore: 98.4,
+    issuesReported: 0,
+    issuesResolved: 0,
+    activeVolunteers: 0,
+    impactScore: 0,
   });
   const [isLoading, setIsLoading] = useState(true);
 
