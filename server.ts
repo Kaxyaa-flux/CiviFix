@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import path from 'path';
 import http from 'http';
 import { Server } from 'socket.io';
@@ -19,6 +20,16 @@ async function startServer() {
   const app = express();
   const PORT = process.env.PORT || 3000;
 
+  app.use(cors({
+    origin: [
+      "https://civi-fix-sand.vercel.app",
+      "http://localhost:5173",
+      "http://localhost:3000"
+    ],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  }));
   app.use(express.json({ limit: '10mb' }));
 
   // ── File upload middleware ──────────────────────────────────────────────────
@@ -80,8 +91,13 @@ async function startServer() {
   const httpServer = http.createServer(app);
   const io = new Server(httpServer, {
     cors: {
-      origin: '*', // Restrict to exact origin in production
-      methods: ['GET', 'POST'],
+      origin: [
+        "https://civi-fix-sand.vercel.app",
+        "http://localhost:5173",
+        "http://localhost:3000"
+      ],
+      methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+      credentials: true,
     },
   });
 
