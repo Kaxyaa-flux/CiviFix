@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Shield, CheckCircle, AlertTriangle, AlertCircle, Info, X, Cpu } from 'lucide-react';
 import Navbar from './components/Navbar';
@@ -10,7 +10,6 @@ import Features from './components/Features';
 import Testimonials from './components/Testimonials';
 import Impact from './components/Impact';
 import Footer from './components/Footer';
-// import ReportModal from './components/ReportModal';
 import ReportPage from './components/ReportPage';
 import VerificationCenter from './components/VerificationCenter';
 import IssueTracker from './components/IssueTracker';
@@ -22,173 +21,24 @@ import AuthorityDashboard from './components/AuthorityDashboard';
 import AboutPage from './components/AboutPage';
 import ContactPage from './components/ContactPage';
 import AiEmergencyAssistant from './components/AiEmergencyAssistant';
-import { CivicIssue, CivicStats, User } from './types';
-import { ToastItem, ToastType } from './lib/toast';
+import { CivicIssue, CivicStats } from './types';
+import { ToastItem, ToastType, triggerToast } from './lib/toast';
+import { api } from './lib/api';
+import { useAuth } from './hooks/useAuth';
+import { useSocket } from './hooks/useSocket';
 import { Routes, Route, useLocation, useNavigate, Navigate } from 'react-router-dom';
-import { io } from 'socket.io-client';
-
-
-// INITIAL_ISSUES moved to backend database
 
 export default function App() {
   const location = useLocation();
   const navigate = useNavigate();
+
+  // ── Theme ──────────────────────────────────────────────────────────────────
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
     const savedTheme = localStorage.getItem('civic_theme');
-    if (savedTheme !== null) {
-      return savedTheme === 'dark';
-    }
-    return true; // default to glorious dark mode
-  });
-  const currentView = location.pathname.substring(1) || 'landing';
-  const [currentUser, setCurrentUser] = useState<User | null>(() => {
-    const saved = localStorage.getItem('civic_current_user');
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        // Handle old schema migration to prevent crashes
-        if (parsed && !parsed.fullName && parsed.name) {
-          parsed.fullName = parsed.name;
-        }
-        if (parsed && !parsed.fullName) {
-          return null; // Force sign out if corrupted
-        }
-        return parsed;
-      } catch (err) {
-        return null;
-      }
-    }
-    return null;
-  });
-  // Modal state removed
-  const [selectedIssueId, setSelectedIssueId] = useState<string | null>(null);
-  const [issues, setIssues] = useState<CivicIssue[]>([]);
-  const [stats, setStats] = useState<CivicStats>({
-    issuesReported: 14258,
-    issuesResolved: 12891,
-    activeVolunteers: 4320,
-    impactScore: 98.4
+    if (savedTheme !== null) return savedTheme === 'dark';
+    return true; // default to dark mode
   });
 
-  // State for animated startup loader and notifications
-  const [isLoading, setIsLoading] = useState(true);
-  const [toasts, setToasts] = useState<ToastItem[]>([]);
-
-  // Fetch issues and stats from backend
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const issuesRes = await fetch('/api/issues');
-        if (issuesRes.ok) {
-          const data = await issuesRes.json();
-          setIssues(data);
-        } else {
-          throw new Error('Failed to fetch issues');
-        }
-        const statsRes = await fetch('/api/stats');
-        if (statsRes.ok) {
-          const statsData = await statsRes.json();
-          setStats(statsData);
-        } else {
-          throw new Error('Failed to fetch stats');
-        }
-      } catch (err) {
-        console.error('Error fetching data:', err);
-        const event = new CustomEvent('civic_toast', {
-          detail: { message: 'Failed to connect to municipal data nodes. Retrying in background...', type: 'error' }
-        });
-        window.dispatchEvent(event);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
-
-  // Socket.io Real-Time Updates
-  useEffect(() => {
-    const socket = io(); // Connects to window.location.origin
-    
-    socket.on("new_issue", (issue: CivicIssue) => {
-      // Prevent duplicates if the user themselves created it and state was already updated locally
-      setIssues(prev => {
-        if (prev.some(i => i.id === issue.id)) return prev;
-        return [issue, ...prev];
-      });
-      setStats(prev => ({...prev, issuesReported: prev.issuesReported + 1}));
-      
-      // Global Notification for Real-Time Dashboard effect
-      const event = new CustomEvent('civic_toast', { detail: { message: `Live Alert: ${issue.title}`, type: 'info' } });
-      window.dispatchEvent(event);
-    });
-
-    socket.on('disconnect', () => {
-      const event = new CustomEvent('civic_toast', {
-        detail: { message: 'Lost connection to real-time municipal data stream.', type: 'warning' }
-      });
-      window.dispatchEvent(event);
-    });
-
-    socket.io.on('reconnect', () => {
-      const event = new CustomEvent('civic_toast', {
-        detail: { message: 'Reconnected to real-time municipal data stream.', type: 'success' }
-      });
-      window.dispatchEvent(event);
-    });
-
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
-
-  // Capture global toast events
-  useEffect(() => {
-    const handleToastEvent = (e: Event) => {
-      const customEvent = e as CustomEvent<{ message: string; type: ToastType }>;
-      if (customEvent.detail) {
-        const { message, type } = customEvent.detail;
-        const id = Math.random().toString(36).substring(2, 9);
-        setToasts(prev => [...prev, { id, message, type }]);
-        
-        // Auto remove toast
-        setTimeout(() => {
-          setToasts(prev => prev.filter(t => t.id !== id));
-        }, 4000);
-      }
-    };
-    window.addEventListener('civic_toast', handleToastEvent);
-    return () => window.removeEventListener('civic_toast', handleToastEvent);
-  }, []);
-
-  const handleAuthSuccess = (user: User) => {
-    setCurrentUser(user);
-    localStorage.setItem('civic_current_user', JSON.stringify(user));
-    
-    // Trigger toast using browser event
-    const event = new CustomEvent('civic_toast', {
-      detail: { message: `Welcome back, ${user.fullName}! Access granted.`, type: 'success' }
-    });
-    window.dispatchEvent(event);
-  };
-
-  const handleSignOut = () => {
-    setCurrentUser(null);
-    localStorage.removeItem('civic_current_user');
-    localStorage.removeItem('civic_token');
-    navigate('/');
-    
-    const event = new CustomEvent('civic_toast', {
-      detail: { message: 'Signed out securely. Session ended.', type: 'info' }
-    });
-    window.dispatchEvent(event);
-  };
-
-  const handleNavigateToAuth = (mode: 'signin' | 'signup') => {
-    navigate('/' + mode);
-  };
-
-
-  // Sync dark mode class with root html element
   useEffect(() => {
     const root = window.document.documentElement;
     if (isDarkMode) {
@@ -200,59 +50,111 @@ export default function App() {
     }
   }, [isDarkMode]);
 
+  const handleToggleTheme = () => {
+    const nextMode = !isDarkMode;
+    setIsDarkMode(nextMode);
+    triggerToast(
+      `Activated ${nextMode ? 'glorious Dark Theme' : 'high-contrast Light Theme'}. Theme persisted!`,
+      'info'
+    );
+  };
+
+  // ── Auth (extracted to useAuth) ────────────────────────────────────────────
+  const { currentUser, handleAuthSuccess, handleSignOut, handleUpdateUserPoints } = useAuth();
+
+  // ── Issues & Stats ─────────────────────────────────────────────────────────
+  const [selectedIssueId, setSelectedIssueId] = useState<string | null>(null);
+  const [issues, setIssues] = useState<CivicIssue[]>([]);
+  const [stats, setStats] = useState<CivicStats>({
+    issuesReported: 14258,
+    issuesResolved: 12891,
+    activeVolunteers: 4320,
+    impactScore: 98.4,
+  });
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [issuesData, statsData] = await Promise.all([
+          api.get<CivicIssue[]>('/api/issues'),
+          api.get<CivicStats>('/api/stats'),
+        ]);
+        setIssues(issuesData);
+        setStats(statsData);
+      } catch (err) {
+        console.error('Error fetching data:', err);
+        triggerToast('Failed to connect to municipal data nodes. Retrying in background...', 'error');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  // ── Socket.io real-time (extracted to useSocket) ───────────────────────────
+  useSocket({
+    onNewIssue: (issue) => {
+      setIssues(prev => {
+        if (prev.some(i => i.id === issue.id)) return prev;
+        return [issue, ...prev];
+      });
+    },
+    onStatsIncrement: () => {
+      setStats(prev => ({ ...prev, issuesReported: prev.issuesReported + 1 }));
+    },
+  });
+
+  // ── Toast system ───────────────────────────────────────────────────────────
+  const [toasts, setToasts] = useState<ToastItem[]>([]);
+
+  useEffect(() => {
+    const handleToastEvent = (e: Event) => {
+      const customEvent = e as CustomEvent<{ message: string; type: ToastType }>;
+      if (customEvent.detail) {
+        const { message, type } = customEvent.detail;
+        const id = Math.random().toString(36).substring(2, 9);
+        setToasts(prev => [...prev, { id, message, type }]);
+        setTimeout(() => {
+          setToasts(prev => prev.filter(t => t.id !== id));
+        }, 4000);
+      }
+    };
+    window.addEventListener('civic_toast', handleToastEvent);
+    return () => window.removeEventListener('civic_toast', handleToastEvent);
+  }, []);
+
+  // ── Navigation helpers ─────────────────────────────────────────────────────
+  const currentView = location.pathname.substring(1) || 'landing';
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, [currentView]);
 
-  const handleToggleTheme = () => {
-    const nextMode = !isDarkMode;
-    setIsDarkMode(nextMode);
-    
-    // Trigger theme change toast
-    const event = new CustomEvent('civic_toast', {
-      detail: { 
-        message: `Activated ${nextMode ? 'glorious Dark Theme' : 'high-contrast Light Theme'}. Theme persisted!`, 
-        type: 'info' 
-      }
-    });
-    window.dispatchEvent(event);
-  };
+  const handleNavigateToAuth = (mode: 'signin' | 'signup') => navigate('/' + mode);
+  const handleOpenReportModal = () => navigate('/report');
 
-  const handleOpenReportModal = () => {
-    navigate('/report');
-  };
-
-  // Scroll to Community Map
   const handleScrollToMap = () => {
     const mapSection = document.getElementById('community-map');
-    if (mapSection) {
-      mapSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    if (mapSection) mapSection.scrollIntoView({ behavior: 'smooth' });
   };
 
-  // Upvote issue on Map
+  // ── Issue actions ──────────────────────────────────────────────────────────
   const handleUpvoteIssue = async (id: string) => {
     try {
-      const res = await fetch(`/api/issues/${id}/upvote`, { method: 'PATCH' });
-      if (res.ok) {
-        const data = await res.json();
-        setIssues(prevIssues =>
-          prevIssues.map(issue =>
-            issue.id === id ? { ...issue, upvotes: data.upvotes } : issue
-          )
-        );
-        const event = new CustomEvent('civic_toast', {
-          detail: { message: 'Upvoted successfully! Thank you for verifying.', type: 'success' }
-        });
-        window.dispatchEvent(event);
-      }
+      const data = await api.patch<{ upvotes: number }>(`/api/issues/${id}/upvote`, {});
+      setIssues(prev =>
+        prev.map(issue => (issue.id === id ? { ...issue, upvotes: data.upvotes } : issue))
+      );
+      triggerToast('Upvoted successfully! Thank you for verifying.', 'success');
     } catch (err) {
       console.error(err);
     }
   };
 
-  // Adding a new verified report from modal or report page
-  const handleNewReport = async (newReport: Omit<CivicIssue, 'id' | 'reportedAt' | 'upvotes' | 'timeline'> & { images?: File[] }) => {
+  const handleNewReport = async (
+    newReport: Omit<CivicIssue, 'id' | 'reportedAt' | 'upvotes' | 'timeline'> & { images?: File[] }
+  ) => {
     const freshId = `iss-${Math.random().toString(36).substr(2, 9)}`;
     const { images, ...reportData } = newReport;
     const createdIssue: CivicIssue = {
@@ -261,158 +163,98 @@ export default function App() {
       reportedAt: 'Just now',
       upvotes: 1,
       timeline: [
-        { status: 'reported', label: 'Reported', date: 'Just now', completed: true },
-        { status: 'verified', label: 'AI Pre-Verification Done', date: 'Just now', completed: true },
-        { status: 'dispatched', label: 'Queued for Dispatch', date: 'Pending', completed: false },
-        { status: 'resolved', label: 'Pending Action', date: 'Pending', completed: false }
-      ]
+        { status: 'reported',   label: 'Reported',                date: 'Just now', completed: true },
+        { status: 'verified',   label: 'AI Pre-Verification Done', date: 'Just now', completed: true },
+        { status: 'dispatched', label: 'Queued for Dispatch',      date: 'Pending',  completed: false },
+        { status: 'resolved',   label: 'Pending Action',           date: 'Pending',  completed: false },
+      ],
     };
 
     try {
-      const token = localStorage.getItem('civic_token');
-      const headers: Record<string, string> = {
-        ...(token ? { 'Authorization': `Bearer ${token}` } : {})
-      };
-      
       const payload = { ...createdIssue, reporterName: currentUser?.fullName || newReport.reporterName };
-      let fetchOptions: RequestInit;
 
       if (images && images.length > 0) {
         const formData = new FormData();
         Object.entries(payload).forEach(([key, value]) => {
           if (value !== undefined) {
-            if (typeof value === 'object') {
-              formData.append(key, JSON.stringify(value));
-            } else {
-              formData.append(key, String(value));
-            }
+            formData.append(key, typeof value === 'object' ? JSON.stringify(value) : String(value));
           }
         });
-        
-        images.forEach(file => {
-          formData.append('images', file);
-        });
-
-        fetchOptions = {
-          method: 'POST',
-          headers, // Let browser set Content-Type to multipart/form-data with boundary
-          body: formData
-        };
+        images.forEach(file => formData.append('images', file));
+        await api.upload('/api/issues', formData);
       } else {
-        headers['Content-Type'] = 'application/json';
-        fetchOptions = {
-          method: 'POST',
-          headers,
-          body: JSON.stringify(payload)
-        };
+        await api.post('/api/issues', payload);
       }
 
-      const res = await fetch('/api/issues', fetchOptions);
-      if (!res.ok) throw new Error("Failed to submit issue");
-      
-      const responseData = await res.json();
-      const finalId = responseData.id || freshId;
-
       setIssues(prev => [createdIssue, ...prev]);
-      setSelectedIssueId(finalId); // Auto select on map to showcase the magic
-      
-      // Update global indicators
+      setSelectedIssueId(freshId);
       setStats(prev => ({
         ...prev,
         issuesReported: prev.issuesReported + 1,
-        impactScore: Math.min(100, prev.impactScore + 0.1)
+        impactScore: Math.min(100, prev.impactScore + 0.1),
       }));
 
-      // Trigger success toast
-      const event = new CustomEvent('civic_toast', {
-        detail: { 
-          message: `Report geodispatched! NLP categorized as ${newReport.category}.`, 
-          type: 'success' 
-        }
-      });
-      window.dispatchEvent(event);
-
-      // Switch view back and scroll to map
+      triggerToast(`Report geodispatched! NLP categorized as ${newReport.category}.`, 'success');
       navigate('/');
-      setTimeout(() => {
-        handleScrollToMap();
-      }, 400);
+      setTimeout(handleScrollToMap, 400);
     } catch (err) {
       console.error(err);
     }
   };
 
-  const handleUpdateUserPoints = async (newPoints: number) => {
-    if (currentUser) {
-      const updatedUser = { ...currentUser, reputationPoints: newPoints };
-      setCurrentUser(updatedUser);
-      localStorage.setItem('civic_current_user', JSON.stringify(updatedUser));
-      const token = localStorage.getItem('civic_token');
-      if (token) {
-        await fetch(`/api/users/${currentUser.id}/points`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify({ points: newPoints })
-        });
-      }
-    }
-  };
-
-  // Simulated validation game rewards
+  // ── Verification game actions ──────────────────────────────────────────────
   const handleVerifyGameAction = () => {
     setStats(prev => ({
       ...prev,
       activeVolunteers: prev.activeVolunteers + 1,
       issuesResolved: prev.issuesResolved + 1,
-      impactScore: Math.min(100, prev.impactScore + 0.2)
+      impactScore: Math.min(100, prev.impactScore + 0.2),
     }));
-
-    // Reward reputation points (+15 points per audit sweep)
     if (currentUser) {
       handleUpdateUserPoints(currentUser.reputationPoints + 15);
     } else {
       const saved = localStorage.getItem('civic_demo_points');
-      const currentVal = saved ? parseInt(saved, 10) : 135;
-      localStorage.setItem('civic_demo_points', (currentVal + 15).toString());
+      const current = saved ? parseInt(saved, 10) : 135;
+      localStorage.setItem('civic_demo_points', (current + 15).toString());
     }
-
-    const event = new CustomEvent('civic_toast', {
-      detail: { message: 'Audit recorded! You earned +15 civic reputation points.', type: 'success' }
-    });
-    window.dispatchEvent(event);
+    triggerToast('Audit recorded! You earned +15 civic reputation points.', 'success');
   };
 
   const handleFlagGameAction = () => {
     setStats(prev => ({
       ...prev,
       activeVolunteers: prev.activeVolunteers + 1,
-      impactScore: Math.max(0, prev.impactScore - 0.05)
+      impactScore: Math.max(0, prev.impactScore - 0.05),
     }));
-
-    // Reward small points (+5 points for flag audits)
     if (currentUser) {
       handleUpdateUserPoints(currentUser.reputationPoints + 5);
     } else {
       const saved = localStorage.getItem('civic_demo_points');
-      const currentVal = saved ? parseInt(saved, 10) : 135;
-      localStorage.setItem('civic_demo_points', (currentVal + 5).toString());
+      const current = saved ? parseInt(saved, 10) : 135;
+      localStorage.setItem('civic_demo_points', (current + 5).toString());
     }
-
-    const event = new CustomEvent('civic_toast', {
-      detail: { message: 'Flag approved! Peer verification registered (+5 reputation).', type: 'info' }
-    });
-    window.dispatchEvent(event);
+    triggerToast('Flag approved! Peer verification registered (+5 reputation).', 'info');
   };
+
+  // ── Page transition wrapper ────────────────────────────────────────────────
+  const PageTransition = ({ children }: { children: React.ReactNode }) => (
+    <motion.div
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -15 }}
+      transition={{ duration: 0.25 }}
+    >
+      {children}
+    </motion.div>
+  );
 
   return (
     <div className="min-h-screen font-sans bg-slate-50 dark:bg-transparent text-slate-900 dark:text-slate-100 transition-colors duration-300 antialiased selection:bg-[#7C3AED] selection:text-slate-900 dark:text-white overflow-x-hidden">
-      {/* Animated Startup Loader Screen */}
+
+      {/* Animated startup loader */}
       <AnimatePresence>
         {isLoading && (
-          <motion.div 
+          <motion.div
             key="startup-loader"
             className="fixed inset-0 bg-slate-950 z-50 flex flex-col items-center justify-center p-6 text-slate-900 dark:text-white font-sans"
             initial={{ opacity: 1 }}
@@ -420,7 +262,7 @@ export default function App() {
             transition={{ duration: 0.4 }}
           >
             <div className="max-w-md w-full text-center space-y-8">
-              <motion.div 
+              <motion.div
                 className="flex items-center justify-center space-x-3"
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
@@ -436,21 +278,16 @@ export default function App() {
 
               <div className="space-y-4">
                 <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
-                  <motion.div 
+                  <motion.div
                     className="h-full bg-[#7C3AED] rounded-full"
-                    initial={{ width: "0%" }}
-                    animate={{ width: "100%" }}
-                    transition={{ duration: 1.4, ease: "easeInOut" }}
+                    initial={{ width: '0%' }}
+                    animate={{ width: '100%' }}
+                    transition={{ duration: 1.4, ease: 'easeInOut' }}
                   />
                 </div>
-                
                 <div className="h-6 text-xs text-slate-400 font-mono flex items-center justify-center space-x-2">
                   <Cpu className="w-3.5 h-3.5 text-[#7C3AED] animate-spin" />
-                  <motion.span
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.2 }}
-                  >
+                  <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
                     Calibrating Municipal AI Consensus Nodes...
                   </motion.span>
                 </div>
@@ -460,10 +297,10 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* Sticky Top-level Navigation */}
-      <Navbar 
-        isDarkMode={isDarkMode} 
-        onToggleTheme={handleToggleTheme} 
+      {/* Navigation */}
+      <Navbar
+        isDarkMode={isDarkMode}
+        onToggleTheme={handleToggleTheme}
         onOpenReportModal={handleOpenReportModal}
         onNavigateToVerification={() => navigate('/verification')}
         onNavigateToTracker={() => navigate('/tracker')}
@@ -478,69 +315,70 @@ export default function App() {
         onNavigateToAuth={handleNavigateToAuth}
       />
 
+      {/* Routes */}
       <AnimatePresence mode="wait">
         <Routes location={location}>
           <Route path="/report" element={
-            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.25 }}>
+            <PageTransition>
               <ReportPage onBack={() => navigate('/')} onSubmit={handleNewReport} />
-            </motion.div>
+            </PageTransition>
           } />
           <Route path="/verification" element={
-            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.25 }}>
+            <PageTransition>
               <VerificationCenter onBack={() => navigate('/')} onVerifyGameAction={handleVerifyGameAction} onFlagGameAction={handleFlagGameAction} />
-            </motion.div>
+            </PageTransition>
           } />
           <Route path="/tracker" element={
-            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.25 }}>
+            <PageTransition>
               <IssueTracker onBack={() => navigate('/')} />
-            </motion.div>
+            </PageTransition>
           } />
           <Route path="/civic" element={
-            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.25 }}>
+            <PageTransition>
               <CivicDashboard onBack={() => navigate('/')} onVerifyIssue={handleVerifyGameAction} onFlagIssue={handleFlagGameAction} />
-            </motion.div>
+            </PageTransition>
           } />
           <Route path="/analytics" element={
-            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.25 }}>
+            <PageTransition>
               <AiAnalyticsDashboard onBack={() => navigate('/')} />
-            </motion.div>
+            </PageTransition>
           } />
           <Route path="/gamification" element={
-            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.25 }}>
+            <PageTransition>
               <GamificationSystem currentUser={currentUser} onUpdateUserPoints={handleUpdateUserPoints} onNavigateToAuth={handleNavigateToAuth} onBack={() => navigate('/')} />
-            </motion.div>
+            </PageTransition>
           } />
           <Route path="/authority" element={
             currentUser && (currentUser.role === 'moderator' || currentUser.role === 'admin') ? (
-              <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.25 }}>
+              <PageTransition>
                 <AuthorityDashboard currentUser={currentUser} onBack={() => navigate('/')} />
-              </motion.div>
+              </PageTransition>
             ) : (
               <Navigate to="/signin" replace />
             )
           } />
           <Route path="/signin" element={
-            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.25 }}>
+            <PageTransition>
               <SignInPage onAuthSuccess={handleAuthSuccess} />
-            </motion.div>
+            </PageTransition>
           } />
           <Route path="/signup" element={
-            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.25 }}>
+            <PageTransition>
               <SignUpPage onAuthSuccess={handleAuthSuccess} />
-            </motion.div>
+            </PageTransition>
           } />
           <Route path="/about" element={
-            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.25 }}>
+            <PageTransition>
               <AboutPage onBack={() => navigate('/')} />
-            </motion.div>
+            </PageTransition>
           } />
           <Route path="/contact" element={
-            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.25 }}>
+            <PageTransition>
               <ContactPage onBack={() => navigate('/')} />
-            </motion.div>
+            </PageTransition>
           } />
           <Route path="/" element={
-            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.25 }}>
+            <PageTransition>
               <main className="relative">
                 <Hero onOpenReportModal={handleOpenReportModal} onExploreMap={handleScrollToMap} />
                 <Stats stats={stats} />
@@ -550,24 +388,21 @@ export default function App() {
                 <Impact />
                 <Testimonials />
               </main>
-            </motion.div>
+            </PageTransition>
           } />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </AnimatePresence>
 
-      {/* Styled Footer */}
-      <Footer 
-        onNavigateToAbout={() => navigate('/about')} 
-        onNavigateToContact={() => navigate('/contact')} 
+      <Footer
+        onNavigateToAbout={() => navigate('/about')}
+        onNavigateToContact={() => navigate('/contact')}
       />
-
-      {/* AI Incident Reporter drawer modal removed since it is now a dedicated page */}
 
       {/* AI Chatbot Assistant */}
       <AiEmergencyAssistant />
 
-      {/* Real-time Dynamic Toast Notification Overlay */}
+      {/* Toast notification overlay */}
       <div className="fixed bottom-24 right-6 z-50 flex flex-col gap-3 max-w-sm w-full pointer-events-none" id="toast-container">
         <AnimatePresence>
           {toasts.map(toast => (
@@ -604,7 +439,7 @@ export default function App() {
                   {toast.message}
                 </p>
               </div>
-              <button 
+              <button
                 onClick={() => setToasts(prev => prev.filter(t => t.id !== toast.id))}
                 className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-900 dark:text-white p-0.5 rounded-lg transition-colors cursor-pointer"
               >
