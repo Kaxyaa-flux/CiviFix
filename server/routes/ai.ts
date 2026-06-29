@@ -27,7 +27,7 @@ router.post('/analyze-issue', async (req, res) => {
   if (ai) {
     try {
       const response = await ai.models.generateContent({
-        model: 'gemini-3.5-flash',
+        model: 'gemini-2.5-flash',
         contents: `Analyze this citizen reported civic issue.\nTitle: ${title}\nDescription: ${description}\n\nProvide suggestions for category, severity, confidence, responsible department, and a polished summary title.`,
         config: {
           systemInstruction: "You are an advanced Municipal AI dispatcher. Categorize the issue, calculate severity (1-10) and confidence (0-100%). Categories must be one of: 'Street Maintenance', 'Water & Utilities', 'Environmental & Sanitation', 'Road Safety & Forestry', 'Public Safety', 'Health'. Return structured JSON matching the requested schema.",
@@ -114,7 +114,7 @@ router.post('/chat', async (req, res) => {
   if (ai) {
     try {
       const response = await ai.models.generateContent({
-        model: 'gemini-3.5-flash',
+        model: 'gemini-2.5-flash',
         contents: message,
         config: {
           systemInstruction: 'You are the CiviFix AI Emergency Assistant. Your role is to help citizens report issues, check emergency procedures, or guide them through using the platform. Keep your responses concise, helpful, and reassuring. If there\'s a life-threatening emergency, instruct them to call 911 immediately.',
@@ -122,7 +122,23 @@ router.post('/chat', async (req, res) => {
       });
       return res.json({ reply: response.text });
     } catch (err: any) {
-      console.error('Gemini Chat API Error:', err);
+      if (err.status === 503) {
+        try {
+          await new Promise(r => setTimeout(r, 1500));
+          const response = await ai.models.generateContent({
+            model: 'gemini-2.5-flash',
+            contents: message,
+            config: {
+              systemInstruction: 'You are the CiviFix AI Emergency Assistant. Your role is to help citizens report issues, check emergency procedures, or guide them through using the platform. Keep your responses concise, helpful, and reassuring. If there\'s a life-threatening emergency, instruct them to call 911 immediately.',
+            },
+          });
+          return res.json({ reply: response.text });
+        } catch (retryErr) {
+          console.error('Gemini Chat API Retry Error:', retryErr);
+        }
+      } else {
+        console.error('Gemini Chat API Error:', err);
+      }
     }
   }
 
@@ -140,7 +156,7 @@ router.post('/verify-issue', async (req, res) => {
   if (ai) {
     try {
       const response = await ai.models.generateContent({
-        model: 'gemini-3.5-flash',
+        model: 'gemini-2.5-flash',
         contents: `Perform a deep forensic verification scan on this reported civic issue.\nTitle: ${title}\nDescription: ${description}\nCategory: ${category || 'General'}\nLocation: ${locationName || 'Unspecified'}`,
         config: {
           systemInstruction: `You are an advanced civic forensic auditor and municipal inspector. Analyze the issue for:\n1. Duplicate Detection (evaluate if similar reports are expected, return similarity percentage and reasoning).\n2. Authenticity Analysis (verify if description matches common actual physical anomalies of this category, return authenticity rating and reasoning).\n3. Fraud Detection (evaluate potential of fake or test reports, return risk level and fraud probability).\n4. Overall Verification percentage (0-100%).\nReturn structured JSON matching the requested schema. Make the reasonings realistic, highly detailed, professional, and helpful.`,
