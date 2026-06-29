@@ -12,38 +12,13 @@ import {
   TrendingUp, Calendar, MapPin, BadgeAlert, Layers, MessageSquare, ClipboardList,
   Flame, Mail, Info, Terminal, ChevronDown
 } from 'lucide-react';
-import { User } from '../types';
+import { User, AssignedIssue, AuthorityCrew } from '../types';
 
 interface AuthorityDashboardProps {
   currentUser: User | null;
   onBack: () => void;
 }
 
-interface AssignedIssue {
-  id: string;
-  title: string;
-  category: 'Roads' | 'Water' | 'Electricity' | 'Sanitation' | 'Safety';
-  location: string;
-  reportedAt: string;
-  slaLimitHours: number;
-  slaRemainingHours: number;
-  priority: 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW';
-  status: 'assigned' | 'investigating' | 'dispatching' | 'resolving' | 'resolved';
-  assignedCrew: string;
-  allocatedVehicles: string[];
-  reportedBy: string;
-  upvotes: number;
-  historyLogs: { timestamp: string; action: string; actor: string }[];
-}
-
-interface AuthorityCrew {
-  id: string;
-  name: string;
-  specialty: 'Hydraulics' | 'Structural engineering' | 'Grid systems' | 'Refuse logistics' | 'Public security';
-  status: 'idle' | 'en-route' | 'active' | 'on-break';
-  efficiencyRating: number; // e.g. 96
-  activeJobId: string | null;
-}
 
 const INITIAL_CREWS: AuthorityCrew[] = [
   { id: 'CRW-01', name: 'Rapid Response Hydraulics 4', specialty: 'Hydraulics', status: 'idle', efficiencyRating: 98, activeJobId: null },

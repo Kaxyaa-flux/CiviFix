@@ -6,34 +6,8 @@ import {
   Image as ImageIcon, Eye, BarChart3, Users, Award, Shield, ChevronRight
 } from 'lucide-react';
 
-// Define structures for internal Verification state
-interface UnverifiedIssue {
-  id: string;
-  title: string;
-  description: string;
-  category: string;
-  locationName: string;
-  reportedAt: string;
-  reporterName: string;
-  priority: 'low' | 'medium' | 'high' | 'critical';
-  mediaType: 'image' | 'video';
-  mediaPlaceholder: string; // Describes visual representation
-  peerVotesAgree: number;
-  peerVotesDisagree: number;
-  userVoted?: 'agree' | 'disagree';
-}
+import { UnverifiedIssue, AIScanResult } from '../types';
 
-interface AIScanResult {
-  duplicateStatus: string;
-  duplicateSimilarity: number;
-  duplicateReasoning: string;
-  authenticityScore: number;
-  authenticityDetails: string;
-  fraudRisk: string;
-  fraudProbability: number;
-  fraudDetails: string;
-  verificationPercentage: number;
-}
 
 const SEED_PENDING_ISSUES: UnverifiedIssue[] = [
   {

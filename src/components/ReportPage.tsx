@@ -10,7 +10,7 @@ import { CivicIssue } from '../types';
 
 interface ReportPageProps {
   onBack: () => void;
-  onSubmit: (newIssue: Omit<CivicIssue, 'id' | 'reportedAt' | 'upvotes' | 'timeline'>) => void;
+  onSubmit: (newIssue: Omit<CivicIssue, 'id' | 'reportedAt' | 'upvotes' | 'timeline'> & { images?: File[] }) => void;
 }
 
 // Pre-defined sectors for the Interactive Location Preview Map

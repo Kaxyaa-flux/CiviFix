@@ -10,30 +10,8 @@ import {
   BarChart3, RefreshCw, Calendar, Sparkles, Building2, TrendingUp, Inbox
 } from 'lucide-react';
 
-// Define Interface for Tracked Issue
-interface TrackedIssue {
-  id: string;
-  title: string;
-  description: string;
-  category: string;
-  priority: 'low' | 'medium' | 'high' | 'critical';
-  status: 'new' | 'verified' | 'in-progress' | 'resolved' | 'escalated';
-  locationName: string;
-  reportedAt: string; // e.g. "2026-06-10"
-  reporterName: string;
-  upvotes: number;
-  aiVerificationPercentage: number;
-  resolutionTimeHours?: number; // hours taken to resolve if status is resolved
-  mediaPlaceholder: 'water_hydrant_spurt' | 'deep_road_crater' | 'drooping_power_lines' | 'woodland_garbage_dump' | 'shattered_school_beacon' | 'general_hazard';
-  imageUrls?: string[];
-  timeline: {
-    status: string;
-    label: string;
-    date: string;
-    completed: boolean;
-    details?: string;
-  }[];
-}
+import { TrackedIssue } from '../types';
+
 
 const SEED_TRACKED_ISSUES: TrackedIssue[] = [
   {
